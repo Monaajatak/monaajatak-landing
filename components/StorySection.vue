@@ -1,5 +1,5 @@
 <template>
-  <section id="vision" class="story-section container reveal">
+  <section id="about" class="story-section container reveal">
     <div class="section-header">
       <h2 class="reveal-delay-1">أثرٌ يبقى.. وبِعلمٍ يُنتفَعُ به</h2>
       <p class="reveal-delay-2">عندما تلتقي التقنية بالإخلاص، يولد الجمال.</p>
@@ -10,7 +10,7 @@
         <div class="cta-content">
           <h3>خُذ لحظتك الآن.. دعاءٌ يقرّبك ويطمئن قلبك</h3>
           <p>
-            تطبيق مناجاة صُمّم ليكون رفيقك اليومي: بلا إعلانات، باحترام كامل لخصوصيتك،
+            تطبيق مناجاتك التطبيق الإسلامي الذي يجمع بين الجمال والروحانية. صُمّم ليكون رفيقك اليومي: بلا إعلانات، باحترام كامل لخصوصيتك،
             وبروحٍ تجمعك بالله في خلوتك. ابدأ اليوم، وشارك الأثر مع من تحب.
           </p>
         </div>
