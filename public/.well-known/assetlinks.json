@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.mahmoudmourad.monologue",
+      "sha256_cert_fingerprints": [
+        "B6:03:42:9C:E3:64:92:DF:82:07:B7:7D:E8:F6:C6:B4:5E:DA:0A:C9:E0:04:55:3C:8F:E0:32:7A:09:9E:EE:02"
+      ]
+    }
+  }
+]

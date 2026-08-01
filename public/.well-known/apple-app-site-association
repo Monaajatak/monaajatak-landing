@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["ZM62NCPLGS.com.monaajatak"],
+        "components": [
+          {
+            "/": "/app",
+            "comment": "اللينك الأساسي لفتح التطبيق"
+          },
+          {
+            "/": "/app/*",
+            "comment": "روابط فتح ميزة داخل التطبيق"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -99,6 +99,9 @@ onMounted(() => {
       <a class="btn btn-primary btn-sm" href="/download">
         تحميل التطبيق
       </a>
+      <a class="btn btn-outline btn-sm" href="/app">
+        افتح التطبيق
+      </a>
     </div>
   </header>
 </template>
