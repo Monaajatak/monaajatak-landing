@@ -2,7 +2,10 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["ZM62NCPLGS.com.monaajatak"],
+        "appIDs": [
+          "ZM62NCPLGS.com.monaajatak.prayertime",
+          "ZM62NCPLGS.com.monaajatak"
+        ],
         "components": [
           {
             "/": "/app",
