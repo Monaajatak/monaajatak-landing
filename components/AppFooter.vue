@@ -1,4 +1,4 @@
-Anyway. Yeah. Eh. Variant. Yep. Traveling for Mr Nichols. Customs their sleepiness. Gail Travis. Dirty. Dirty. Anyway, my birthday. iOS. <template>
+<template>
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -20,6 +20,7 @@ Anyway. Yeah. Eh. Variant. Yep. Traveling for Mr Nichols. Customs their sleepine
         <div class="footer-col">
           <h4>القانونية</h4>
           <NuxtLink to="/privacy-policy">سياسة الخصوصية</NuxtLink>
+          <NuxtLink to="/resources">الموارد المفتوحة</NuxtLink>
         </div>
         <div class="footer-col">
           <h4>تواصل معنا</h4>

@@ -45,6 +45,7 @@ onMounted(() => {
       <NuxtLink :to="{ path: '/', hash: '#about' }" @click="closeMenu">القصة</NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#team' }" @click="closeMenu">الفريق</NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#faq' }" @click="closeMenu">الأسئلة</NuxtLink>
+      <NuxtLink to="/resources" @click="closeMenu">الموارد</NuxtLink>
 
       <button @click="toggleTheme" class="btn btn-outline theme-toggle nav-theme-toggle" type="button" aria-label="تبديل الوضع">
         <span v-if="theme === 'dark'">الوضع الفاتح</span>
