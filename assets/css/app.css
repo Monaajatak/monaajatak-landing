@@ -121,7 +121,7 @@
     --shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
     --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.40);
     --nav-bg: rgba(15, 23, 42, 0.85);
-    --card-bg: #1e293b;
+    --card-bg: #111827;
     --overlay: rgba(0, 0, 0, 0.6);
     --brand-orange: #ff9d6a;
 
@@ -250,13 +250,13 @@ body {
     background-color: var(--body-bg);
     color: var(--text);
     line-height: 1.7;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 html {
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 /* Subtle radial glow at top */
@@ -374,8 +374,13 @@ h6 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 16px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: calc(100% - 32px);
+    max-width: 1200px;
+    margin: 16px auto 20px auto;
     background: var(--nav-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -383,9 +388,14 @@ h6 {
     border-radius: var(--radius-pill);
     border: var(--border);
     z-index: 1000;
-    margin-bottom: 20px;
     box-shadow: var(--shadow-xs);
-    transition: background var(--transition);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, background var(--transition);
+}
+
+.nav.nav-hidden {
+    transform: translateY(-150%);
+    opacity: 0;
+    pointer-events: none;
 }
 
 .brand {

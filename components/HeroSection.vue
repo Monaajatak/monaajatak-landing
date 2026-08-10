@@ -1,6 +1,12 @@
 <template>
   <section id="hero" class="hero reveal">
-    <div class="hero-bg-pattern"></div>
+    <!-- Animated Glowing Orbs -->
+    <div class="hero-bg-glow glow-1"></div>
+    <div class="hero-bg-glow glow-2"></div>
+    
+    <!-- Subtle Islamic Watermark Pattern -->
+    <svg class="hero-islamic-watermark" width="100%" height="100%"><defs><pattern id="hero-star" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse" viewBox="0 0 120 120"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 40 L40 40 L40 0 M80 0 L80 40 L120 40 M120 80 L80 80 L80 120 M40 120 L40 80 L0 80" /><path d="M60 20 L75 35 L95 25 L85 45 L100 60 L85 75 L95 95 L75 85 L60 100 L45 85 L25 95 L35 75 L20 60 L35 45 L25 25 L45 35 Z" /><path d="M0 -40 L15 -25 L35 -35 L25 -15 L40 0 L25 15 L35 35 L15 25 L0 40 L-15 25 L-35 35 L-25 15 L-40 0 L-25 -15 L-35 -35 L-15 -25 Z" /><path d="M120 -40 L135 -25 L155 -35 L145 -15 L160 0 L145 15 L155 35 L135 25 L120 40 L105 25 L85 35 L95 15 L80 0 L95 -15 L85 -35 L105 -25 Z" /><path d="M0 80 L15 95 L35 85 L25 105 L40 120 L25 135 L35 155 L15 145 L0 160 L-15 145 L-35 155 L-25 135 L-40 120 L-25 105 L-35 85 L-15 95 Z" /><path d="M120 80 L135 95 L155 85 L145 105 L160 120 L145 135 L155 155 L135 145 L120 160 L105 145 L85 155 L95 135 L80 120 L95 105 L85 85 L105 95 Z" /></g></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="url(#hero-star)" /></svg>
+
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="hero-logo-tagline reveal-delay-1">
@@ -39,8 +45,6 @@
             <span class="capsule-text">مجاني تماماً</span>
           </div>
         </div>
-
-
       </div>
     </div>
   </section>
@@ -48,10 +52,60 @@
 
 <style scoped>
 .hero {
-    min-height: 88vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
-    padding: 72px 0 84px;
+    padding: 100px 0 60px;
+    position: relative;
+    /* Removed overflow to allow glow to bleed freely; body already clips horizontally */
+}
+
+/* Background Animated Orbs */
+.hero-bg-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+    opacity: 0.15;
+    pointer-events: none;
+    animation: floatGlow 10s infinite alternate ease-in-out;
+}
+
+.glow-1 {
+    top: -200px;
+    left: -200px;
+    background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+}
+
+.glow-2 {
+    bottom: -200px;
+    right: -200px;
+    background: radial-gradient(circle, rgba(0, 209, 227, 0.8) 0%, transparent 70%);
+    animation-delay: -5s;
+}
+
+@keyframes floatGlow {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 50px) scale(1.1); }
+}
+
+/* Islamic Watermark */
+.hero-islamic-watermark {
+    position: absolute;
+    inset: 0;
+    color: var(--primary);
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+    mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 65%);
+    -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 65%);
+}
+
+:global(html.dark) .hero-islamic-watermark {
+    color: #ffffff;
+    opacity: 0.03;
 }
 
 .hero-grid {
@@ -62,6 +116,8 @@
     text-align: center;
     max-width: 800px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 .ml-2 { margin-left: 8px; }
@@ -93,11 +149,14 @@
     margin-bottom: 40px;
 }
 
-/* Brand emphasis aligned to mobile teal identity (no orange in hero). */
+/* Brand emphasis */
 .text-teal {
-    color: var(--primary);
-    background: none;
-    -webkit-text-fill-color: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--primary-2, #00d1e3));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: var(--primary); /* fallback */
+    font-weight: 900;
 }
 
 /* Hero Capsules */

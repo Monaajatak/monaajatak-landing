@@ -1,6 +1,8 @@
 <script setup>
 const isMenuOpen = ref(false)
 const theme = ref('light')
+const isHidden = ref(false)
+let lastScrollPosition = 0
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
@@ -17,6 +19,35 @@ const toggleTheme = () => {
   localStorage.setItem('munajat-theme', nextTheme)
 }
 
+const handleScroll = () => {
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop
+  if (currentScroll <= 0) {
+    isHidden.value = false
+    return
+  }
+
+  // Stop hiding if menu is open
+  if (isMenuOpen.value) {
+    isHidden.value = false
+    return
+  }
+
+  // Ignore small scrolls
+  if (Math.abs(currentScroll - lastScrollPosition) < 20) {
+    return
+  }
+
+  if (currentScroll > lastScrollPosition && currentScroll > 150) {
+    // Scrolling down -> hide
+    isHidden.value = true
+  } else if (currentScroll < lastScrollPosition) {
+    // Scrolling up -> show
+    isHidden.value = false
+  }
+  
+  lastScrollPosition = currentScroll
+}
+
 onMounted(() => {
   const storedTheme = localStorage.getItem('munajat-theme')
   if (storedTheme) {
@@ -25,11 +56,17 @@ onMounted(() => {
     theme.value = 'dark'
   }
   document.body.dataset.theme = theme.value
+
+  window.addEventListener('scroll', handleScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
 })
 </script>
 
 <template>
-  <header class="nav container">
+  <header class="nav" :class="{ 'nav-hidden': isHidden }">
     <NuxtLink to="/" class="brand">
       <img src="/images/Icon_Teal_SVG.svg" alt="شعار مُناجاتك" width="40" height="40" class="logo-light">
       <img src="/images/Icon_White_SVG.svg" alt="شعار مُناجاتك" width="40" height="40" class="logo-dark">

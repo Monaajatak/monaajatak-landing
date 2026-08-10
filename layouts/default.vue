@@ -3,12 +3,12 @@ const cursorDot = ref(null)
 const cursorOutline = ref(null)
 const isPointerFine = ref(true)
 const route = useRoute()
+let domMutationObserver = null
 let revealObserver = null
 
 const setupReveal = () => {
-  if (revealObserver) {
-    revealObserver.disconnect()
-  }
+  if (revealObserver) revealObserver.disconnect()
+  if (domMutationObserver) domMutationObserver.disconnect()
 
   revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -19,11 +19,22 @@ const setupReveal = () => {
     })
   }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" })
 
-  document.querySelectorAll('.reveal').forEach(el => {
-    if (!el.classList.contains('active')) {
+  const observeElements = () => {
+    document.querySelectorAll('.reveal:not(.active)').forEach(el => {
       revealObserver.observe(el)
-    }
+    })
+  }
+
+  observeElements()
+
+  // Watch for lazy-loaded components injected into the DOM later
+  domMutationObserver = new MutationObserver(() => {
+    observeElements()
   })
+
+  if (document.body) {
+    domMutationObserver.observe(document.body, { childList: true, subtree: true })
+  }
 }
 
 onMounted(() => {
