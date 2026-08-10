@@ -2,7 +2,6 @@
   <div>
     <HeroSection />
     <LazyAppScreensSection />
-    <LazyTrustBar />
     <LazyFeaturesSection />
     <LazyStorySection />
     <LazyTeamSection />

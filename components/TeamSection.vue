@@ -10,13 +10,11 @@
       <!-- Mahmoud Mourad -->
       <div class="member-card card-glass reveal-delay-2">
         <div class="member-avatar">
-          <div class="avatar-ring"></div>
-          <img src="https://github.com/mahmoudmourad9.png" alt="Mahmoud Mourad" loading="lazy" decoding="async">
+          <img src="https://github.com/mahmoudmourad9.png" alt="محمود مراد" loading="lazy" decoding="async">
         </div>
         <div class="member-info">
           <h3>محمود مراد</h3>
-          <span class="member-role">Software Engineer & Flutter Developer</span>
-          <p class="member-bio">مؤسس مُناجاتك ومهندس برمجيات متخصص في تقنيات Flutter. يُكرس خبرته لبناء جسور رقمية تربط المسلم بعبادته، مؤمناً بأن التكنولوجيا وسيلة لإحداث أثر إيماني مستدام وصدقة جارية تنفع الأمة.</p>
+          <span class="member-role">مؤسس مُناجاتك | مهندس برمجيات</span>
           <div class="social-links">
             <a href="https://mahmoud-mourad.vercel.app/" target="_blank" class="social-btn" aria-label="Website">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
@@ -31,13 +29,11 @@
       <!-- Mohamed Elsayed -->
       <div class="member-card card-glass reveal-delay-3">
         <div class="member-avatar">
-          <div class="avatar-ring"></div>
-          <img src="https://github.com/mosayyyed.png" alt="Mohamed Elsayed" loading="lazy" decoding="async">
+          <img src="https://github.com/mosayyyed.png" alt="محمد السيد" loading="lazy" decoding="async">
         </div>
         <div class="member-info">
           <h3>محمد السيد</h3>
-          <span class="member-role">Software Engineer & Flutter Developer</span>
-          <p class="member-bio">مهندس برمجيات ومطور تطبيقات الهاتف المحمول. يجمع بين الدقة البرمجية واللمسة الفنية لبناء تجارب مستخدم استثنائية، مساهماً في تحويل الرؤية التقنية لمُناجاتك إلى واقع رقمي متكامل وعالي الأداء.</p>
+          <span class="member-role">مؤسس مُناجاتك | مهندس برمجيات</span>
           <div class="social-links">
             <a href="https://mosayyyed.me" target="_blank" class="social-btn" aria-label="Website">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
@@ -67,29 +63,31 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .member-card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
-    padding: 40px 30px;
+    text-align: right;
+    padding: 24px;
     border-radius: 32px;
     transition: all 0.4s var(--transition-spring);
+    gap: 24px;
 }
 
 .member-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
     border-color: rgba(var(--primary-rgb), 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 .member-avatar {
-    position: relative;
     width: 100px;
     height: 100px;
-    margin-bottom: 24px;
+    flex-shrink: 0;
 }
 
 .member-avatar img {
@@ -97,47 +95,31 @@
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    position: relative;
-    z-index: 2;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     border: 3px solid var(--card-bg);
 }
 
-.avatar-ring {
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    border: 2px dashed rgba(var(--primary-rgb), 0.3);
-    border-radius: 50%;
-    animation: rotate 20s linear infinite;
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+.member-info {
+    flex-grow: 1;
 }
 
 .member-info h3 {
     font-size: 22px;
     font-weight: 800;
     margin-bottom: 8px;
+    color: var(--text);
 }
 
 .member-role {
     color: var(--primary);
     font-weight: 700;
     font-size: 14px;
-    display: block;
+    display: inline-block;
+    padding: 4px 14px;
+    background: rgba(var(--primary-rgb), 0.1);
+    border-radius: 99px;
     margin-bottom: 16px;
-    opacity: 0.9;
-}
-
-.member-bio {
-    color: var(--text-secondary);
-    font-size: 15px;
-    line-height: 1.7;
-    margin-bottom: 24px;
+    letter-spacing: 0.5px;
 }
 
 .social-links {
@@ -146,10 +128,10 @@
 }
 
 .social-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 12px;
-    background: rgba(var(--primary-rgb), 0.05);
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    background: rgba(var(--text-rgb, 0,0,0), 0.04);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,16 +147,22 @@
 }
 
 @media (max-width: 768px) {
-    .team-section { padding: 60px 0; }
-    .member-card { padding: 30px 20px; }
+    .team-section { padding: 80px 0; }
+    .team-grid { max-width: 500px; }
 }
 
 @media (max-width: 480px) {
-  .team-section { padding: 48px 0; }
-  .section-header { margin-bottom: 40px; }
-  .team-grid { grid-template-columns: 1fr; }
-  .member-info h3 { font-size: 20px; }
-  .member-bio { font-size: 14px; }
-  .member-avatar { width: 88px; height: 88px; }
+    .team-section { padding: 60px 0; }
+    .section-header { margin-bottom: 40px; }
+    .member-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+        gap: 20px;
+    }
+    .social-links {
+        justify-content: center;
+    }
+    .member-avatar { width: 90px; height: 90px; }
 }
 </style>
