@@ -91,7 +91,7 @@ watch(() => route.fullPath, async () => {
 <template>
   <div class="app-wrapper">
     <AppHeader />
-    <main>
+    <main :class="{ 'inner-page': route.path !== '/' }">
       <slot />
     </main>
     <AppFooter />
@@ -113,5 +113,9 @@ watch(() => route.fullPath, async () => {
 
 main {
   flex: 1;
+}
+
+.inner-page {
+  padding-top: 110px; /* Offset for fixed navbar on all non-home pages */
 }
 </style>
