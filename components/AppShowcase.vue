@@ -238,6 +238,9 @@ onUnmounted(() => {
     opacity: 0.3;
     transform: scale(0.85);
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
 }
 
 .carousel-track.transitioning .carousel-slide {
