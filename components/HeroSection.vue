@@ -25,26 +25,22 @@
           </a>
         </div>
 
-        <div class="hero-trust-bar card card-glass reveal-delay-5">
-           <div class="trust-item">
-              <span class="trust-count">2000+</span>
-              <span class="trust-label">تحميل التطبيق</span>
-           </div>
-           <div class="trust-divider"></div>
-           <div class="trust-item">
-              <span class="trust-count">4.9/5</span>
-              <span class="trust-label">تقييم النجوم</span>
-           </div>
-           <div class="trust-divider"></div>
-           <div class="trust-item">
-              <span class="trust-count">100%</span>
-              <span class="trust-label">مجاني للأبد</span>
-           </div>
+        <div class="hero-capsules reveal-delay-5">
+          <div class="capsule">
+            <span class="capsule-icon">⭐</span>
+            <span class="capsule-text">تقييم 4.9/5</span>
+          </div>
+          <div class="capsule">
+            <span class="capsule-icon">📥</span>
+            <span class="capsule-text">+2000 مستخدم</span>
+          </div>
+          <div class="capsule">
+            <span class="capsule-icon">🎁</span>
+            <span class="capsule-text">مجاني تماماً</span>
+          </div>
         </div>
-      </div>
 
-      <div class="hero-visual reveal-delay-3">
-        <AppShowcase />
+
       </div>
     </div>
   </section>
@@ -59,29 +55,42 @@
 }
 
 .hero-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 80px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .ml-2 { margin-left: 8px; }
 
 /* Content Styling */
 .hero-content {
-    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .hero-content h1 {
-    font-size: clamp(32px, 4.5vw, 54px);
-    margin: 20px 0 18px;
+    font-size: clamp(38px, 5vw, 64px);
+    margin: 24px auto 20px;
     line-height: 1.2;
+}
+
+.hero-content .lead {
+    margin: 0 auto 36px;
+    max-width: 650px;
+    font-size: 18px;
 }
 
 .hero-actions {
     display: flex;
+    justify-content: center;
     gap: 16px;
-    margin-bottom: 36px;
+    margin-bottom: 40px;
 }
 
 /* Brand emphasis aligned to mobile teal identity (no orange in hero). */
@@ -91,78 +100,49 @@
     -webkit-text-fill-color: var(--primary);
 }
 
-/* Trust Bar */
-.hero-trust-bar {
+/* Hero Capsules */
+.hero-capsules {
     display: flex;
-    align-items: center;
-    gap: 24px;
-    padding: 14px 26px;
-    width: fit-content;
-    border-radius: 20px;
-}
-
-.trust-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    flex: 1;
-}
-
-.trust-count {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--primary);
-}
-
-.trust-label {
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 600;
-}
-
-.trust-divider {
-    width: 1px;
-    height: 32px;
-    background: var(--border-color);
-    opacity: 0.5;
-}
-
-/* Visual Styling */
-.hero-visual {
-    display: flex;
+    gap: 12px;
     justify-content: center;
-    align-items: center;
-    width: 100%;
+    flex-wrap: wrap;
+    margin-top: -16px;
+    margin-bottom: 40px;
 }
+
+.capsule {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: rgba(128, 128, 128, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 99px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.capsule:hover {
+    transform: translateY(-2px);
+    background: rgba(128, 128, 128, 0.12);
+}
+
+.capsule-icon {
+    font-size: 14px;
+}
+
+.capsule-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+
 
 @media (max-width: 1024px) {
     .hero {
-        padding: 36px 0 56px;
-    }
-    .hero-grid {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 40px;
-    }
-    .hero-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-    .hero-content h1 {
-        margin: 0 auto 24px;
-    }
-    .hero-content .lead {
-        margin: 0 auto 32px;
-        max-width: 600px;
-    }
-    .hero-actions {
-        justify-content: center;
-    }
-    .hero-trust-bar {
-        margin: 0 auto;
+        padding: 56px 0 76px;
     }
 }
 
@@ -190,19 +170,6 @@
         font-size: 16px;
         gap: 10px;
     }
-    .hero-trust-bar {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        display: grid;
-        width: 100%;
-        padding: 12px 10px;
-        gap: 8px;
-    }
-    .hero-trust-bar .trust-item:last-child {
-        grid-column: 1 / -1;
-    }
-    .trust-divider { display: none; }
-    .trust-label { font-size: 10px; white-space: normal; }
-    .trust-count { font-size: 17px; }
 }
 
 @media (max-width: 360px) {

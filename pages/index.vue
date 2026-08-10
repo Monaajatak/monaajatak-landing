@@ -1,6 +1,7 @@
 <template>
   <div>
     <HeroSection />
+    <LazyAppScreensSection />
     <LazyTrustBar />
     <LazyFeaturesSection />
     <LazyStorySection />
