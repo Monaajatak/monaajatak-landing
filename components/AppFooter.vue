@@ -16,6 +16,7 @@
           <NuxtLink to="/#about">القصة</NuxtLink>
           <NuxtLink to="/#team">الفريق</NuxtLink>
           <NuxtLink to="/#faq">الأسئلة الشائعة</NuxtLink>
+          <NuxtLink to="/volunteer">التطوع معنا</NuxtLink>
         </div>
         <div class="footer-col">
           <h4>القانونية</h4>
