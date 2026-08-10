@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getResourceById } from '~/utils/resourcesData'
 
@@ -8,13 +8,12 @@ const router = useRouter()
 
 const resourceId = route.params.id
 const resource = computed(() => getResourceById(resourceId))
+const showToast = ref(false)
 
 if (!resource.value) {
-  // Redirect to resources index if not found
   router.push('/resources')
 }
 
-// Helper for icons
 const getIconType = (format) => {
   if (!format) return 'file';
   const f = format.toLowerCase();
@@ -24,7 +23,16 @@ const getIconType = (format) => {
   return 'file';
 }
 
-// SEO meta tags for social sharing
+const copyLink = () => {
+  if (typeof window !== 'undefined') {
+    navigator.clipboard.writeText(window.location.href);
+    showToast.value = true;
+    setTimeout(() => {
+      showToast.value = false;
+    }, 3000);
+  }
+}
+
 useHead(() => {
   if (!resource.value) return {}
   return {
@@ -97,21 +105,14 @@ useHead(() => {
         
       </div>
     </div>
+    
+    <!-- Toast Notification -->
+    <div class="toast-notification" :class="{ 'toast-visible': showToast }">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+      <span>تم نسخ الرابط! يمكنك الآن مشاركته.</span>
+    </div>
   </section>
 </template>
-
-<script>
-export default {
-  methods: {
-    copyLink() {
-      if (typeof window !== 'undefined') {
-        navigator.clipboard.writeText(window.location.href);
-        alert('تم نسخ الرابط! يمكنك الآن مشاركته.');
-      }
-    }
-  }
-}
-</script>
 
 <style scoped>
 .resource-detail-page {
@@ -336,5 +337,36 @@ export default {
   .btn-download, .btn-share {
     width: 100%;
   }
+}
+
+/* Toast Notification Styles */
+.toast-notification {
+  position: fixed;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  color: var(--text);
+  padding: 16px 24px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toast-notification svg {
+  color: #10b981;
+}
+
+.toast-visible {
+  bottom: 40px;
+  opacity: 1;
 }
 </style>
