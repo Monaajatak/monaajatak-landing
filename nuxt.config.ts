@@ -36,8 +36,17 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    '@nuxtjs/sitemap' // إضافة موديول خريطة الموقع
+    '@nuxtjs/sitemap', // إضافة موديول خريطة الموقع
+    'nuxt-gtag' // ربط جوجل أنالاتيكس
   ],
+
+  gtag: {
+    // معرف التتبع الخاص بجوجل أنالاتيكس
+    id: 'G-14VLRZE6D7',
+    config: {
+      page_title: 'مُناجاتك'
+    }
+  },
 
   site: {
     url: 'https://monaajatak.app', 
