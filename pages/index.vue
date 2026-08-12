@@ -3,6 +3,7 @@
     <HeroSection />
     <LazyAppScreensSection />
     <LazyFeaturesSection />
+    <LazyAudioLibrarySection />
     <LazyStorySection />
     <LazyTeamSection />
     <LazyReviewsSection />

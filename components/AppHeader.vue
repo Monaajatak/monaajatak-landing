@@ -79,6 +79,7 @@ onUnmounted(() => {
     <div class="nav-links" :class="{ 'open': isMenuOpen }" id="navLinks">
       <NuxtLink :to="{ path: '/', hash: '#hero' }" @click="closeMenu">الرئيسية</NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#features' }" @click="closeMenu">المميزات</NuxtLink>
+      <NuxtLink to="/listen" @click="closeMenu">المكتبة الصوتية</NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#about' }" @click="closeMenu">القصة</NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#team' }" @click="closeMenu">الفريق</NuxtLink>
       <NuxtLink :to="{ path: '/', hash: '#faq' }" @click="closeMenu">الأسئلة</NuxtLink>
