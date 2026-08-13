@@ -36,7 +36,7 @@ export const useAudioPlayer = () => {
     audioEl.addEventListener('ended', () => {
       if (loopMode.value === 'one') {
         audioEl.currentTime = 0
-        audioEl.play()
+        safePlay()
         return
       }
       if (currentIndex.value < currentQueue.value.length - 1) {
@@ -62,8 +62,15 @@ export const useAudioPlayer = () => {
     audioEl.src = track.url
     audioEl.playbackRate = playbackRate.value
     audioEl.volume = volume.value
-    audioEl.play()
+    // المتصفّح يرفض التشغيل التلقائي بلا إيماءة (مثلاً عند الفتح من رابط
+    // مشاركة). الرفض متوقَّع: المقطع يبقى محمَّلاً وينتظر ضغطة المستخدم.
+    safePlay()
     setupListeners()
+  }
+
+  const safePlay = () => {
+    const p = audioEl?.play()
+    if (p && typeof p.catch === 'function') p.catch(() => {})
   }
 
   const playIndex = (index) => {
@@ -73,13 +80,13 @@ export const useAudioPlayer = () => {
     if (!track) return
     currentTrack.value = track
     audioEl.src = track.url
-    audioEl.play()
+    safePlay()
   }
 
   const togglePlay = () => {
     if (!audioEl) return
     if (!currentTrack.value) return
-    if (audioEl.paused) audioEl.play()
+    if (audioEl.paused) safePlay()
     else audioEl.pause()
   }
 

@@ -1,3 +1,3 @@
 <template>
-  <OpenAppFallback />
+  <AppLinkLanding />
 </template>

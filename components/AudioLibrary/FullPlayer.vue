@@ -178,6 +178,7 @@ import { ref, computed, watch, onUnmounted } from 'vue'
 import { useAudioPlayer } from '~/composables/useAudioPlayer'
 import { useAudioLibraryStore } from '~/composables/useAudioLibraryStore'
 import StarNumber from '~/components/AudioLibrary/StarNumber.vue'
+import { recitationLink, radioLink } from '~/utils/shareLinks'
 
 defineEmits(['close'])
 
@@ -335,7 +336,16 @@ const confirmCreate = () => {
 }
 
 const share = async () => {
-  const link = `https://www.monaajatak.app/app/play?surahId=${surahId.value || ''}`
+  // كان الرابط يحمل `surahId` وحده — بلا قارئ لا يعرف التطبيق ماذا يفتح
+  // فيتجاهله. الآن نبني نفس الرابط الذي يبنيه التطبيق.
+  const t = player.currentTrack.value || {}
+  const link = isLive.value
+    ? radioLink({ radioId: t.id, episodeIndex: t.episodeIndex })
+    : recitationLink({
+        reciterId: t.reciterId,
+        surahId: surahId.value,
+        moshafId: t.moshafId,
+      })
   const text = `استمع إلى ${track.value.title} عبر تطبيق مناجاتك:\n${link}`
   if (navigator.share) {
     try { await navigator.share({ text }) } catch {}

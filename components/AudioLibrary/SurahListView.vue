@@ -95,6 +95,8 @@ const playSurah = (s) => {
     surahId: id,
     reciterId: props.reciter.id,
     reciterSlug: reciterSlug(props.reciter),
+    // يسافر مع المقطع ليخرج في رابط المشاركة، فيفتح عند المستقبِل نفس الرواية.
+    moshafId: moshaf.value.id,
     type: 'surah',
   }))
   const track = queue.find((t) => t.surahId === s)

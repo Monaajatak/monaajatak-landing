@@ -149,6 +149,7 @@ import { ref, computed } from 'vue'
 import { useAudioPlayer } from '~/composables/useAudioPlayer'
 import { useAudioLibraryStore } from '~/composables/useAudioLibraryStore'
 import { resolveReciter, reciterSlug } from '~/utils/reciterSlug'
+import { recitationLink } from '~/utils/shareLinks'
 import { surahVerseCount } from '~/utils/surahVerses'
 import StarNumber from '~/components/AudioLibrary/StarNumber.vue'
 
@@ -185,11 +186,25 @@ const load = async () => {
     loading.value = false
   }
 }
-onMounted(load)
+onMounted(async () => {
+  await load()
+  // القادم من رابط مشاركة (`?autoplay=1`) جاء ليسمع، لا ليضغط تشغيل من جديد.
+  if (route.query.autoplay && moshaf.value && surahId.value) {
+    playSurah(surahId.value)
+  }
+})
 
 const reciter = computed(() => resolveReciter(reciters.value, route.params.reciter))
 const surahId = computed(() => parseInt(route.params.surah, 10) || null)
-const moshaf = computed(() => reciter.value?.moshaf?.[0] || null)
+
+// للقارئ الواحد عدة مصاحف/روايات بخوادم وقوائم سور مختلفة. رابط المشاركة
+// القادم من التطبيق يحمل `moshafId`، فنفتح الرواية نفسها لا أول واحدة.
+const moshaf = computed(() => {
+  const list = reciter.value?.moshaf || []
+  if (!list.length) return null
+  const wanted = parseInt(route.query.moshafId, 10)
+  return list.find((m) => m.id === wanted) || list[0]
+})
 const surahIds = computed(() =>
   String(moshaf.value?.surahList || '')
     .split(',')
@@ -219,6 +234,8 @@ const buildQueue = () => {
     surahId: id,
     reciterId: reciter.value.id,
     reciterSlug: reciterSlug(reciter.value),
+    // يسافر مع المقطع ليخرج في رابط المشاركة، فيفتح عند المستقبِل نفس الرواية.
+    moshafId: moshaf.value.id,
     type: 'surah',
   }))
 }
@@ -296,6 +313,7 @@ const addCurrent = (plId) => {
     reciterSlug: reciterSlug(reciter.value),
     surahId: surahId.value,
     surahName: surahName.value,
+    moshafId: moshaf.value?.id,
     url: trackUrl.value,
   })
 }
@@ -310,8 +328,19 @@ const confirmCreate = () => {
 }
 
 const share = () => {
-  const url = `${window.location.origin}/listen/${reciterSlug(reciter.value)}/${surahId.value}`
-  if (navigator.share) navigator.share({ title: `سورة ${surahName.value}`, text: `${surahName.value} - ${reciter.value.name}`, url }).catch(() => {})
+  // نشارك الرابط العميق نفسه الذي يشاركه التطبيق: يفتح التطبيق عند من يملكه،
+  // ويهبط بالباقين على صفحة تعرض التلاوة وتشغّلها هنا.
+  const url = recitationLink({
+    reciterId: reciter.value?.id,
+    surahId: surahId.value,
+    moshafId: moshaf.value?.id,
+  })
+  const payload = {
+    title: `سورة ${surahName.value}`,
+    text: `${surahName.value} - ${reciter.value?.name}`,
+    url,
+  }
+  if (navigator.share) navigator.share(payload).catch(() => {})
   else if (navigator.clipboard) navigator.clipboard.writeText(url)
 }
 

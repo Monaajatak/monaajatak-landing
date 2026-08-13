@@ -371,6 +371,7 @@ useHead(() => ({
 const player = useAudioPlayer()
 const store = useAudioLibraryStore()
 const router = useRouter()
+const route = useRoute()
 
 const segments = [
   { id: 'reciters', label: 'التلاوات' },
@@ -433,7 +434,38 @@ const loadAll = async () => {
   }
 }
 
-onMounted(loadAll)
+onMounted(async () => {
+  await loadAll()
+  applyDeepLink()
+})
+
+/**
+ * فتح ما طلبه رابط المشاركة القادم من التطبيق:
+ * `/listen?tab=radios&radio=<id>[&ep=<n>]`.
+ *
+ * هذه هي وجهة زرّ "استمع الآن على الموقع" في صفحة `/app/radio`، فبدونها يهبط
+ * الزائر على قائمة الإذاعات ويبحث عن إذاعته بنفسه.
+ */
+const applyDeepLink = () => {
+  const q = route.query
+  if (q.tab && segments.some((s) => s.id === q.tab)) activeTab.value = q.tab
+
+  const radioId = parseInt(q.radio, 10)
+  if (Number.isNaN(radioId)) return
+
+  const radio = radios.value.find((r) => r.id === radioId)
+  if (!radio) return
+
+  activeTab.value = 'radios'
+  const epIndex = parseInt(q.ep, 10)
+  const episode = Number.isNaN(epIndex) ? null : (radio.episodes || [])[epIndex]
+  if (episode) {
+    episodesRadio.value = radio
+    playEpisode(episode)
+    return
+  }
+  playRadio(radio)
+}
 
 // ══════════ reciters filtering / grouping ══════════
 const hasFilters = computed(() => !!selectedRewaya.value || selectedSura.value != null)
@@ -512,11 +544,15 @@ const playRadio = (radio) => {
 const isCurrentRadio = (radio) => player.currentTrack.value?.url === radio.url
 
 const playEpisode = (ep) => {
+  const radio = episodesRadio.value
   player.playTrack({
     url: ep.url,
     title: ep.name,
-    subtitle: episodesRadio.value?.name || 'إذاعة القرآن الكريم',
-    id: ep.id || ep.url,
+    subtitle: radio?.name || 'إذاعة القرآن الكريم',
+    // معرّف الإذاعة وموضع الحلقة — يخرجان في رابط المشاركة فيفتح التطبيق
+    // نفس الحلقة لا أول الأرشيف.
+    id: radio?.id ?? null,
+    episodeIndex: radio ? (radio.episodes || []).indexOf(ep) : null,
     type: 'radio',
   }, [])
   episodesRadio.value = null
@@ -586,6 +622,7 @@ const playPlaylistItem = (pl, index) => {
     subtitle: it.reciterName,
     reciterId: it.reciterId,
     surahId: it.surahId,
+    moshafId: it.moshafId,
     type: 'surah',
   }))
   player.playTrack(queue[index], queue)
