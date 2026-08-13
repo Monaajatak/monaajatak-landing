@@ -209,38 +209,6 @@ useHead(() => ({
   max-width: 560px;
 }
 
-.audio-hero-stats {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  margin-bottom: 40px;
-}
-
-.hero-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.hero-stat-value {
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-
-.hero-stat-label {
-  font-size: 13px;
-  color: var(--muted);
-  font-weight: 600;
-}
-
-.hero-stat-divider {
-  width: 1px;
-  height: 40px;
-  background: var(--border-color);
-}
-
 .audio-hero-buttons {
   display: flex;
   gap: 16px;
@@ -554,10 +522,6 @@ useHead(() => ({
     margin: 0 auto 40px;
   }
 
-  .audio-hero-stats {
-    justify-content: center;
-  }
-
   .audio-hero-buttons {
     justify-content: center;
   }
@@ -584,15 +548,6 @@ useHead(() => ({
 
   .floating-card {
     display: none;
-  }
-
-  .audio-hero-stats {
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .hero-stat-value {
-    font-size: 24px;
   }
 
   .audio-hero-buttons {

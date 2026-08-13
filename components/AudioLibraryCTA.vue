@@ -3,22 +3,22 @@
     <div class="container">
       <div class="audio-cta-card">
         <div class="cta-glow"></div>
-        <span class="cta-badge">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          جاهز تبدأ رحلتك الإيمانية؟
+<span class="cta-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          المكتبة الصوتية بانتظارك
         </span>
-        <h2 class="cta-title">حمّل مُناجاتك الآن<br>واستمع للمصحف المسموع من اليوم</h2>
+        <h2 class="cta-title">استمع للمصحف المسموع مباشرة<br>من متصفحك — بدون تحميل</h2>
         <p class="cta-lead">
-          المكتبة الصوتية كاملة مجاناً — تلاوات، إذاعات، قوائم تشغيل، وتحميل للاستماع بلا إنترنت.
+          تلاوات أشهر القراء، وإذاعات قرآنية حية، وقوائم تشغيل مخصصة — كلها متاحة الآن من صفحة الاستماع.
         </p>
         <div class="cta-buttons">
-          <NuxtLink to="/download" class="btn cta-btn-primary">
-            تحميل مجاني للهواتف
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          </NuxtLink>
-          <NuxtLink to="/listen" class="btn cta-btn-ghost">
-            استمع بدون تحميل
+          <NuxtLink to="/listen" class="btn cta-btn-primary">
+            افتح صفحة الاستماع
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          </NuxtLink>
+          <NuxtLink to="/download" class="btn cta-btn-ghost">
+            حمّل التطبيق للهواتف
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           </NuxtLink>
         </div>
         <div class="cta-stores">
