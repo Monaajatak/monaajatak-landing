@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.mahmoudmourad.monologue",
       "sha256_cert_fingerprints": [
-        "B6:03:42:9C:E3:64:92:DF:82:07:B7:7D:E8:F6:C6:B4:5E:DA:0A:C9:E0:04:55:3C:8F:E0:32:7A:09:9E:EE:02"
+        "B6:03:42:9C:E3:64:92:DF:82:07:B7:7D:E8:F6:C6:B4:5E:DA:0A:C9:E0:04:55:3C:8F:E0:32:7A:09:9E:EE:02",
+        "41:13:3F:6B:5D:42:3C:FE:E0:62:AE:CC:D8:24:36:DA:A1:05:49:AB:74:A5:8C:DD:65:1D:5E:1F:AB:A9:75:06"
       ]
     }
   }
