@@ -67,7 +67,7 @@ export default defineCachedEventHandler(async (event) => {
         if (!a.date || !b.date) return 0
         return new Date(b.date).getTime() - new Date(a.date).getTime()
       })
-      .slice(0, 6)
+      .slice(0, 15)
 
     return {
       success: true,

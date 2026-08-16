@@ -44,7 +44,8 @@ export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/sitemap', // إضافة موديول خريطة الموقع
-    'nuxt-gtag' // ربط جوجل أنالاتيكس
+    'nuxt-gtag', // ربط جوجل أنالاتيكس
+    '@vercel/analytics' // ربط تحليلات Vercel
   ],
 
   gtag: {

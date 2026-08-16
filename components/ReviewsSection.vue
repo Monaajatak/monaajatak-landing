@@ -12,25 +12,32 @@ const reviews = computed(() => {
 </script>
 
 <template>
-  <section v-if="reviews.length > 0" id="reviews" class="reviews-section container reveal">
-    <div class="section-header">
-      <span class="badge reveal-delay-1">آراء حقيقية من مستخدمي التطبيق على Google Play</span>
-      <h2 class="reveal-delay-2">ماذا يقول مستخدمو <span class="text-gradient">مُناجاتك؟</span></h2>
-      <p class="reveal-delay-3">
-        تجارب حقيقية من مجتمع مُناجاتك حول العالم. <br>
-        <a href="https://play.google.com/store/apps/details?id=com.mahmoudmourad.monologue" target="_blank" rel="noopener noreferrer" class="play-link">عرض المزيد على Google Play</a>
-      </p>
+  <section v-if="reviews.length > 0" id="reviews" class="reviews-section reveal">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge reveal-delay-1">آراء حقيقية من مستخدمي التطبيق على Google Play</span>
+        <h2 class="reveal-delay-2">ماذا يقول مستخدمو <span class="text-gradient">مُناجاتك؟</span></h2>
+        <p class="reveal-delay-3">
+          تجارب حقيقية من مجتمع مُناجاتك حول العالم. <br>
+          <a href="https://play.google.com/store/apps/details?id=com.mahmoudmourad.monologue" target="_blank" rel="noopener noreferrer" class="play-link">عرض المزيد على Google Play</a>
+        </p>
+      </div>
     </div>
 
-    <div class="reviews-grid">
-      <div v-for="(review, index) in reviews" :key="review.id" class="review-card card-glass reveal-delay-2">
-        <div class="stars" :aria-label="`${review.rating} من 5`">
-          {{ '★'.repeat(review.rating) }}{{ '☆'.repeat(5 - review.rating) }}
-        </div>
-        <p class="review-text">"{{ review.text }}"</p>
-        <div class="reviewer-info">
-          <span class="reviewer">— {{ review.author }}</span>
-          <span class="review-source">Google Play</span>
+    <div class="reviews-marquee-container" dir="rtl">
+      <div class="reviews-marquee-track">
+        <!-- Render the list twice to create the infinite scroll effect -->
+        <div v-for="i in 2" :key="i" class="reviews-marquee-content">
+          <div v-for="review in reviews" :key="review.id + '-' + i" class="review-card card-glass">
+            <div class="stars" :aria-label="`${review.rating} من 5`">
+              {{ '★'.repeat(review.rating) }}{{ '☆'.repeat(5 - review.rating) }}
+            </div>
+            <p class="review-text">"{{ review.text }}"</p>
+            <div class="reviewer-info">
+              <span class="reviewer">— {{ review.author }}</span>
+              <span class="review-source">Google Play</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -41,6 +48,7 @@ const reviews = computed(() => {
 .reviews-section {
     padding: 100px 0;
     position: relative;
+    overflow: hidden;
 }
 
 .section-header {
@@ -63,12 +71,35 @@ const reviews = computed(() => {
     opacity: 0.8;
 }
 
-.reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
+/* Marquee Styles */
+.reviews-marquee-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    padding: 20px 0;
+    /* Optional: gradient fades on the sides for a smooth entering/exiting effect */
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
+.reviews-marquee-track {
+    display: inline-flex;
+    animation: marquee-rtl 40s linear infinite;
+    gap: 24px;
+}
+
+.reviews-marquee-track:hover {
+    animation-play-state: paused;
+}
+
+.reviews-marquee-content {
+    display: inline-flex;
+    gap: 24px;
+    padding-left: 24px; /* Space between the two sets */
+}
+
+/* Review Card Styles */
 .review-card {
     padding: 32px;
     border-radius: 24px;
@@ -77,6 +108,11 @@ const reviews = computed(() => {
     justify-content: space-between;
     transition: all 0.4s ease;
     border: 1px solid var(--border-color);
+    width: 380px; /* Fixed width so they line up perfectly */
+    min-height: 220px;
+    white-space: normal; /* Restore text wrapping */
+    flex-shrink: 0;
+    text-align: right;
 }
 
 .review-card:hover {
@@ -123,8 +159,21 @@ const reviews = computed(() => {
     border-radius: 12px;
 }
 
+@keyframes marquee-rtl {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Move right by exactly 50% of the entire track's width */
+        transform: translateX(50%);
+    }
+}
+
 @media (max-width: 768px) {
     .reviews-section { padding: 60px 0; }
-    .review-card { padding: 24px; }
+    .review-card { 
+        width: 300px;
+        padding: 24px; 
+    }
 }
 </style>
