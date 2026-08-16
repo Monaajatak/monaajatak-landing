@@ -67,7 +67,7 @@ const formatDate = (dateString) => {
             
             <div class="card-top">
               <div class="app-logo-box">
-                <img src="/images/Icon_White_SVG.svg" class="app-logo-img" alt="مُناجاتك">
+                <img src="/images/Icon_Teal_SVG.svg" class="app-logo-img" alt="مُناجاتك">
                 <span class="app-name-sm">مناجاتك</span>
               </div>
               <div class="stars" :aria-label="`${review.rating} من 5`">
@@ -98,13 +98,13 @@ const formatDate = (dateString) => {
                     {{ review.author }} <span class="dash">—</span>
                   </div>
                   <div class="review-meta">
-                    <svg class="verified-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/><path d="M9.999 14.172l-3.586-3.586L5 12l5 5 9-9-1.414-1.414z" fill="#111322"/></svg>
+                    <svg class="verified-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/><path d="M9.999 14.172l-3.586-3.586L5 12l5 5 9-9-1.414-1.414z" fill="#111526"/></svg>
                     <span class="review-date">{{ formatDate(review.date) }}</span>
                   </div>
                 </div>
               </div>
 
-              <div class="google-play-pill">
+              <a href="https://play.google.com/store/apps/details?id=com.mahmoudmourad.monologue" target="_blank" rel="noopener noreferrer" class="google-play-pill">
                 <svg viewBox="0 0 24 24" class="play-icon">
                   <path fill="#EA4335" d="M11.996 11.666L2.355 2.025a2.536 2.536 0 0 0-.355.707v18.536c0 .259.123.51.355.707l9.641-9.641z"/>
                   <path fill="#34A853" d="M16.536 16.205l-4.54-4.539 4.54-4.54 3.738 2.158c1.168.674 1.168 1.77 0 2.444l-3.738 2.477z"/>
@@ -112,7 +112,7 @@ const formatDate = (dateString) => {
                   <path fill="#FBBC04" d="M11.996 11.666L.58 23.082a2.52 2.52 0 0 1-1.775.327l13.191-11.743z"/>
                 </svg>
                 <span>Google Play</span>
-              </div>
+              </a>
             </div>
 
           </div>
@@ -148,7 +148,8 @@ const formatDate = (dateString) => {
 
 .reviews-marquee-track {
     display: inline-flex;
-    animation: marquee-rtl 40s linear infinite;
+    /* Reduced time to 25s for faster movement */
+    animation: marquee-rtl 25s linear infinite;
     gap: 24px;
 }
 
@@ -169,7 +170,7 @@ const formatDate = (dateString) => {
     padding: 32px;
     display: flex;
     flex-direction: column;
-    width: 440px; /* Wider card to fit the new layout properly */
+    width: 440px; 
     min-height: 260px;
     white-space: normal;
     flex-shrink: 0;
@@ -181,7 +182,7 @@ const formatDate = (dateString) => {
 
 .review-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(160, 132, 232, 0.3);
+    border-color: rgba(var(--primary-rgb), 0.5); /* Replaced purple with primary teal */
 }
 
 .card-top {
@@ -193,8 +194,8 @@ const formatDate = (dateString) => {
 
 /* Logo Box */
 .app-logo-box {
-    background: rgba(122, 85, 219, 0.1);
-    border: 1px solid rgba(122, 85, 219, 0.2);
+    background: rgba(var(--primary-rgb), 0.08);
+    border: 1px solid rgba(var(--primary-rgb), 0.2);
     border-radius: 20px;
     width: 72px;
     height: 72px;
@@ -202,20 +203,19 @@ const formatDate = (dateString) => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 20px rgba(122, 85, 219, 0.15);
+    box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.15);
 }
 
 .app-logo-img {
     width: 32px;
     height: auto;
-    filter: drop-shadow(0 0 8px rgba(160, 132, 232, 0.8));
     margin-bottom: 4px;
 }
 
 .app-name-sm {
     font-size: 10px;
     font-weight: 700;
-    color: #fff;
+    color: var(--primary);
 }
 
 /* Stars */
@@ -253,7 +253,7 @@ const formatDate = (dateString) => {
     font-family: Georgia, serif;
     font-size: 64px;
     line-height: 1;
-    color: #5c4b8b;
+    color: var(--primary); /* Teal instead of purple */
     margin-top: -10px;
     user-select: none;
 }
@@ -297,8 +297,8 @@ const formatDate = (dateString) => {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #2d264f;
-    border: 2px solid rgba(160, 132, 232, 0.3);
+    background: rgba(var(--primary-rgb), 0.15); /* Teal instead of purple */
+    border: 2px solid rgba(var(--primary-rgb), 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -307,13 +307,13 @@ const formatDate = (dateString) => {
 .avatar-icon {
     width: 24px;
     height: 24px;
-    fill: #a084e8;
+    fill: var(--primary); /* Teal */
 }
 
 .reviewer-details {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* in RTL, flex-start means right aligned */
+    align-items: flex-start;
 }
 
 .reviewer-name {
@@ -352,18 +352,21 @@ const formatDate = (dateString) => {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 18px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #000;
     font-size: 13px;
     font-weight: 600;
     color: #fff;
-    transition: background 0.3s ease;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
 .google-play-pill:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: #111;
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.02);
 }
 
 .play-icon {
