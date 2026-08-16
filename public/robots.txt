@@ -1,35 +1,30 @@
 # ==========================================
-# Robots.txt for Munajat Web
+# robots.txt for Monaajatak
 # ==========================================
 
-# 1. Allow major Search Engines (Google, Bing, etc.) for SEO
-User-agent: Googlebot
-User-agent: Bingbot
-User-agent: Slurp
-User-agent: DuckDuckBot
-User-agent: Baiduspider
-User-agent: YandexBot
-Allow: /
-
-# 2. Allow AI Crawlers & Scrapers (so the site appears in AI answers like ChatGPT, Perplexity, Gemini)
-User-agent: GPTBot
-User-agent: ChatGPT-User
-User-agent: Google-Extended
-User-agent: Anthropic-ai
-User-agent: Claude-Web
-User-agent: PerplexityBot
-User-agent: Omgilibot
-User-agent: Omgili
-User-agent: CCBot
-User-agent: Cohere-ai
-Allow: /
-
-# 3. Default Rule for all other bots
 User-agent: *
 Allow: /
-# Block sensitive paths (add more if you have admin or private areas)
-Disallow: /api/
-Disallow: /server/
 
-# Sitemap location
-Sitemap: https://monaajatak.app/sitemap.xml
+# Block non-public or API routes
+Disallow: /api/
+
+# AI crawlers explicitly allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.monaajatak.app/sitemap.xml

@@ -6,6 +6,42 @@ const route = useRoute()
 let domMutationObserver = null
 let revealObserver = null
 
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://www.monaajatak.app/#website",
+            "url": "https://www.monaajatak.app/",
+            "name": "مُناجاتك",
+            "description": "مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.",
+            "inLanguage": "ar"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://www.monaajatak.app/#software",
+            "name": "مُناجاتك",
+            "alternateName": "Monaajatak",
+            "applicationCategory": "LifestyleApplication",
+            "operatingSystem": "Android, iOS",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "url": "https://www.monaajatak.app/",
+            "description": "مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد."
+          }
+        ]
+      })
+    }
+  ]
+})
+
 const setupReveal = () => {
   if (revealObserver) revealObserver.disconnect()
   if (domMutationObserver) domMutationObserver.disconnect()

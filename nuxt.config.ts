@@ -9,22 +9,24 @@ export default defineNuxtConfig({
         lang: 'ar',
         dir: 'rtl'
       },
-      title: 'مُناجاتك — رفيق الطاعة اليومي',
+      title: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'مُناجاتك — رفيق الطاعة اليومي. مواقيت الصلاة الحية، القرآن الكريم، الأذكار، الأدعية، والتسبيح في تجربة هادئة وسريعة.' },
+        { name: 'description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
         // SEO Open Graph (OG) - المهمة جداً لظهور الموقع بشكل احترافي في وسائل التواصل ومحركات البحث
-        { property: 'og:title', content: 'مُناجاتك — رفيق الطاعة اليومي' },
-        { property: 'og:description', content: 'مُناجاتك — رفيق الطاعة اليومي. مواقيت الصلاة الحية، القرآن الكريم، الأذكار، الأدعية، والتسبيح في تجربة هادئة وسريعة.' },
+        { property: 'og:title', content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة' },
+        { property: 'og:description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:image', content: '/images/Icon_White_SVG.svg' }, // يُفضل استبدالها بصورة كبيرة بصيغة PNG أو JPG بأبعاد 1200x630
+        { property: 'og:url', content: 'https://www.monaajatak.app/' },
+        { property: 'og:locale', content: 'ar_AR' },
+        { property: 'og:image', content: '/images/app-mockup-dark.png' }, // صورة بديلة مؤقتة
         { property: 'og:site_name', content: 'مُناجاتك' },
         // SEO Twitter Cards
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'مُناجاتك — رفيق الطاعة اليومي' },
-        { name: 'twitter:description', content: 'مُناجاتك — رفيق الطاعة اليومي. مواقيت الصلاة الحية، القرآن الكريم، الأذكار، الأدعية، والتسبيح.' },
-        { name: 'twitter:image', content: '/images/Icon_White_SVG.svg' }
+        { name: 'twitter:title', content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة' },
+        { name: 'twitter:description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
+        { name: 'twitter:image', content: '/images/app-mockup-dark.png' }
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/images/Icon_White_SVG.svg' },
@@ -48,9 +50,14 @@ export default defineNuxtConfig({
     }
   },
 
+  sitemap: {
+    exclude: ['/app/**', '/listen/*'] // نستثني صفحات القراء مؤقتاً لأنها تعتمد على client-side rendering
+  },
+
   site: {
-    url: 'https://monaajatak.app', 
-    name: 'مُناجاتك'
+    url: 'https://www.monaajatak.app', 
+    name: 'مُناجاتك',
+    defaultLocale: 'ar'
   },
 
   experimental: {

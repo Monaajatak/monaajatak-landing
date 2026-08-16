@@ -11,6 +11,15 @@
           <p class="footer-desc">رفيق الطاعة اليومي في رحلتك الإيمانية. تطبيق مجاني، خالي من الإعلانات، ويحترم خصوصيتك.</p>
         </div>
         <div class="footer-col">
+          <h4>أقسام التطبيق</h4>
+          <NuxtLink to="/quran">القرآن الكريم</NuxtLink>
+          <NuxtLink to="/listen">المكتبة الصوتية</NuxtLink>
+          <NuxtLink to="/azkar">الأذكار</NuxtLink>
+          <NuxtLink to="/prayer-times">مواقيت الصلاة</NuxtLink>
+          <NuxtLink to="/qibla">القبلة</NuxtLink>
+          <NuxtLink to="/duas">الأدعية</NuxtLink>
+        </div>
+        <div class="footer-col">
           <h4>روابط سريعة</h4>
           <NuxtLink to="/#features">المميزات</NuxtLink>
           <NuxtLink to="/#about">القصة</NuxtLink>
