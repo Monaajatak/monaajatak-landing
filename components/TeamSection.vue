@@ -1,7 +1,7 @@
 <template>
   <section id="team" class="team-section container reveal">
     <div class="section-header">
-      <span class="badge reveal-delay-1">فريق العمل</span>
+      <span class="badge reveal-delay-1">.فريق العمل</span>
       <h2 class="reveal-delay-2">من يقف خلف <span class="text-gradient">مُناجاتك؟</span></h2>
       <p class="reveal-delay-3">نحن مجموعة من المطورين المهتمين بتطويع التقنية لخدمة المجتمع الإسلامي.</p>
     </div>
