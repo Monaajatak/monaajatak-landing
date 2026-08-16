@@ -1,31 +1,37 @@
+<script setup>
+import { computed } from 'vue'
+
+const { data: reviewsData, status } = await useAsyncData('google-play-reviews', () => $fetch('/api/google-play-reviews'))
+
+const reviews = computed(() => {
+  if (reviewsData.value && reviewsData.value.success && reviewsData.value.reviews) {
+    return reviewsData.value.reviews
+  }
+  return []
+})
+</script>
+
 <template>
-  <section id="reviews" class="reviews-section container reveal">
+  <section v-if="reviews.length > 0" id="reviews" class="reviews-section container reveal">
     <div class="section-header">
-      <span class="badge reveal-delay-1">آراء المستخدمين</span>
-      <h2 class="reveal-delay-2">ماذا يقول <span class="text-gradient">المستخدمون</span></h2>
-      <p class="reveal-delay-3">تجارب حقيقية من مجتمع مُناجاتك حول العالم.</p>
+      <span class="badge reveal-delay-1">آراء حقيقية من مستخدمي التطبيق على Google Play</span>
+      <h2 class="reveal-delay-2">ماذا يقول مستخدمو <span class="text-gradient">مُناجاتك؟</span></h2>
+      <p class="reveal-delay-3">
+        تجارب حقيقية من مجتمع مُناجاتك حول العالم. <br>
+        <a href="https://play.google.com/store/apps/details?id=com.mahmoudmourad.monologue" target="_blank" rel="noopener noreferrer" class="play-link">عرض المزيد على Google Play</a>
+      </p>
     </div>
 
     <div class="reviews-grid">
-      <!-- Review 1 -->
-      <div class="review-card card-glass reveal-delay-1">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"أخيراً تطبيق إسلامي نظيف تماماً من الإعلانات! التصميم هادئ جداً ويساعد على الخشوع، والمصحف خطه ممتاز ومريح للعين. جزاكم الله خيراً."</p>
-        <span class="reviewer">— عبد الرحمن م.</span>
-      </div>
-
-      <!-- Review 2 -->
-      <div class="review-card card-glass reveal-delay-2">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"أحترم جداً اهتمامكم بالخصوصية. فكرة أن التطبيق يعمل أوفلاين بالكامل ولا يطلب تسجيل دخول هي ميزة نادرة اليوم. تطبيق يستحق كل التقدير."</p>
-        <span class="reviewer">— مريم ص.</span>
-      </div>
-
-      <!-- Review 3 -->
-      <div class="review-card card-glass reveal-delay-3">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"مواقيت الصلاة دقيقة جداً، والقبلة تعمل بامتياز. أكثر ما يعجبني هو بساطة الواجهة وعدم وجود أي مشتتات. رفيقي اليومي فعلاً."</p>
-        <span class="reviewer">— عمر خ.</span>
+      <div v-for="(review, index) in reviews" :key="review.id" class="review-card card-glass reveal-delay-2">
+        <div class="stars" :aria-label="`${review.rating} من 5`">
+          {{ '★'.repeat(review.rating) }}{{ '☆'.repeat(5 - review.rating) }}
+        </div>
+        <p class="review-text">"{{ review.text }}"</p>
+        <div class="reviewer-info">
+          <span class="reviewer">— {{ review.author }}</span>
+          <span class="review-source">Google Play</span>
+        </div>
       </div>
     </div>
   </section>
@@ -41,6 +47,20 @@
     text-align: center;
     max-width: 700px;
     margin: 0 auto 60px;
+}
+
+.play-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 14px;
+    transition: opacity 0.3s ease;
+}
+
+.play-link:hover {
+    opacity: 0.8;
 }
 
 .reviews-grid {
@@ -80,11 +100,27 @@
     font-style: italic;
 }
 
+.reviewer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
 .reviewer {
     font-size: 14px;
     font-weight: 700;
     color: var(--primary);
     opacity: 0.8;
+}
+
+.review-source {
+    font-size: 12px;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    background: rgba(var(--text-rgb, 0, 0, 0), 0.05);
+    padding: 4px 10px;
+    border-radius: 12px;
 }
 
 @media (max-width: 768px) {

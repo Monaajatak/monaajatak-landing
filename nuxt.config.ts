@@ -3,6 +3,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   
+  runtimeConfig: {
+    googlePlayServiceAccountJson: process.env.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON,
+    googlePlayPackageName: process.env.GOOGLE_PLAY_PACKAGE_NAME || 'com.mahmoudmourad.monologue',
+  },
+
   app: {
     head: {
       htmlAttrs: {
