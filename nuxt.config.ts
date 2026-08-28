@@ -2,7 +2,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-
   modules: [
     '@nuxtjs/sitemap', // ربط جوجل أنالاتيكس
     'nuxt-gtag', // ربط تحليلات Vercel
@@ -22,10 +21,21 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
+        {
+          name: 'description',
+          content:
+            'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
+        },
         // SEO Open Graph (OG) - المهمة جداً لظهور الموقع بشكل احترافي في وسائل التواصل ومحركات البحث
-        { property: 'og:title', content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة' },
-        { property: 'og:description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
+        {
+          property: 'og:title',
+          content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
+        },
+        {
+          property: 'og:description',
+          content:
+            'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
+        },
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: 'https://www.monaajatak.app/' },
         { property: 'og:locale', content: 'ar_AR' },
@@ -33,25 +43,46 @@ export default defineNuxtConfig({
         { property: 'og:site_name', content: 'مُناجاتك' },
         // SEO Twitter Cards
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة' },
-        { name: 'twitter:description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
+        {
+          name: 'twitter:title',
+          content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
+        },
+        {
+          name: 'twitter:description',
+          content:
+            'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
+        },
         { name: 'twitter:image', content: '/images/app-mockup-dark.png' },
       ],
       link: [
-        { rel: 'icon', type: 'image/png', sizes: '48x48', href: '/favicon-48x48.png' },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '48x48',
+          href: '/favicon-48x48.png',
+        },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
+        },
         { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&display=swap' },
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.gstatic.com',
+          crossorigin: '',
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&display=swap',
+        },
       ],
     },
   },
 
-  css: [
-    '~/assets/css/app.css',
-  ],
+  css: ['~/assets/css/app.css'],
 
   site: {
     url: 'https://www.monaajatak.app',
@@ -60,7 +91,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     googlePlayServiceAccountJson: process.env.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON,
-    googlePlayPackageName: process.env.GOOGLE_PLAY_PACKAGE_NAME || 'com.mahmoudmourad.monologue',
+    googlePlayPackageName:
+      process.env.GOOGLE_PLAY_PACKAGE_NAME || 'com.mahmoudmourad.monologue',
   },
 
   experimental: {
@@ -69,20 +101,11 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-11-01',
   vite: {
-    plugins: [
-      tailwindcss(),
-    ],
+    plugins: [tailwindcss()],
   },
   eslint: {
     config: {
-      stylistic: {
-        indent: 2,
-        quotes: 'single',
-        semi: false,
-        commaDangle: 'always-multiline',
-        braceStyle: '1tbs',
-        arrowParens: true,
-      },
+      stylistic: false,
     },
   },
   gtag: {
