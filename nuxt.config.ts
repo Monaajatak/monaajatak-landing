@@ -2,25 +2,21 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+
+  modules: [
+    '@nuxtjs/sitemap', // ربط جوجل أنالاتيكس
+    'nuxt-gtag', // ربط تحليلات Vercel
+    '@vercel/analytics',
+    'vuetify-nuxt-module',
+    '@nuxt/eslint',
+  ],
   devtools: { enabled: true },
-  
-  vite: {
-    plugins: [
-      tailwindcss()
-    ]
-  },
-  
-  runtimeConfig: {
-    googlePlayServiceAccountJson: process.env.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON,
-    googlePlayPackageName: process.env.GOOGLE_PLAY_PACKAGE_NAME || 'com.mahmoudmourad.monologue',
-  },
 
   app: {
     head: {
       htmlAttrs: {
         lang: 'ar',
-        dir: 'rtl'
+        dir: 'rtl',
       },
       title: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
       meta: [
@@ -39,7 +35,7 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة' },
         { name: 'twitter:description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
-        { name: 'twitter:image', content: '/images/app-mockup-dark.png' }
+        { name: 'twitter:image', content: '/images/app-mockup-dark.png' },
       ],
       link: [
         { rel: 'icon', type: 'image/png', sizes: '48x48', href: '/favicon-48x48.png' },
@@ -48,41 +44,56 @@ export default defineNuxtConfig({
         { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&display=swap' }
-      ]
-    }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&display=swap' },
+      ],
+    },
   },
 
-  modules: [
-    '@nuxtjs/sitemap', // إضافة موديول خريطة الموقع
-    'nuxt-gtag', // ربط جوجل أنالاتيكس
-    '@vercel/analytics' // ربط تحليلات Vercel
+  css: [
+    '~/assets/css/app.css',
   ],
 
-  gtag: {
-    // معرف التتبع الخاص بجوجل أنالاتيكس
-    id: 'G-14VLRZE6D7',
-    config: {
-      page_title: 'مُناجاتك'
-    }
-  },
-
-  sitemap: {
-    exclude: ['/app/**', '/listen/*'] // نستثني صفحات القراء مؤقتاً لأنها تعتمد على client-side rendering
-  },
-
   site: {
-    url: 'https://www.monaajatak.app', 
+    url: 'https://www.monaajatak.app',
     name: 'مُناجاتك',
-    defaultLocale: 'ar'
+    defaultLocale: 'ar',
+  },
+  runtimeConfig: {
+    googlePlayServiceAccountJson: process.env.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON,
+    googlePlayPackageName: process.env.GOOGLE_PLAY_PACKAGE_NAME || 'com.mahmoudmourad.monologue',
   },
 
   experimental: {
     viewTransition: true,
-    componentIslands: true
+    componentIslands: true,
+  },
+  compatibilityDate: '2024-11-01',
+  vite: {
+    plugins: [
+      tailwindcss(),
+    ],
+  },
+  eslint: {
+    config: {
+      stylistic: {
+        indent: 2,
+        quotes: 'single',
+        semi: false,
+        commaDangle: 'always-multiline',
+        braceStyle: '1tbs',
+        arrowParens: true,
+      },
+    },
+  },
+  gtag: {
+    // معرف التتبع الخاص بجوجل أنالاتيكس
+    id: 'G-14VLRZE6D7',
+    config: {
+      page_title: 'مُناجاتك',
+    },
   },
 
-  css: [
-    '~/assets/css/app.css'
-  ]
+  sitemap: {
+    exclude: ['/app/**', '/listen/*'], // نستثني صفحات القراء مؤقتاً لأنها تعتمد على client-side rendering
+  },
 })
