@@ -1,0 +1,22 @@
+{
+  "glopal": {
+    "monaajatak": "Monaajatak"
+  },
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "audioLibrary": "Audio Library",
+    "story": "Our Story",
+    "team": "Team",
+    "faq": "FAQ",
+    "resources": "Resources",
+    "volunteer": "Volunteer",
+    "downloadApp": "Download App",
+    "volunteerToMonaajatak": "Volunteer to Monaajatak",
+    "openApp": "Open App",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "toggleTheme": "Toggle Theme",
+    "menu": "Menu"
+  }
+}

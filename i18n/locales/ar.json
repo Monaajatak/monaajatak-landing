@@ -1,0 +1,22 @@
+{
+  "glopal": {
+    "monaajatak": "مُناجاتك"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "features": "المميزات",
+    "audioLibrary": "المكتبة الصوتية",
+    "story": "القصة",
+    "team": "الفريق",
+    "faq": "الأسئلة",
+    "resources": "الموارد",
+    "volunteer": "التطوع",
+    "downloadApp": "تحميل التطبيق",
+    "openApp": "افتح التطبيق",
+    "volunteerToMonaajatak": "تطوع الي مناجاتك",
+    "lightMode": "الوضع الفاتح",
+    "darkMode": "الوضع الداكن",
+    "toggleTheme": "تبديل الوضع",
+    "menu": "القائمة"
+  }
+}

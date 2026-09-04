@@ -3,12 +3,36 @@ import tailwindcss from '@tailwindcss/vite'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    '@nuxtjs/sitemap', // ربط جوجل أنالاتيكس
-    'nuxt-gtag', // ربط تحليلات Vercel
+    // ربط جوجل أنالاتيكس
+    '@nuxtjs/sitemap', // ربط تحليلات Vercel
+    'nuxt-gtag',
     '@vercel/analytics',
     'vuetify-nuxt-module',
     '@nuxt/eslint',
+    '@nuxtjs/i18n',
+    '@nuxt/image',
   ],
+  i18n: {
+    locales: [
+      { code: 'ar', name: 'العربية', dir: 'rtl' },
+      { code: 'en', name: 'English', dir: 'ltr' },
+    ],
+    defaultLocale: 'ar',
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_locale',
+      fallbackLocale: 'ar',
+    },
+  },
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        pathPrefix: false,
+      },
+    ],
+  },
   devtools: { enabled: true },
 
   app: {
