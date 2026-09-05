@@ -41,44 +41,77 @@ export default defineNuxtConfig({
         lang: 'ar',
         dir: 'rtl',
       },
-      title: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
+      title: 'مناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
           content:
-            'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
+            'مناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
         },
-        // SEO Open Graph (OG) - المهمة جداً لظهور الموقع بشكل احترافي في وسائل التواصل ومحركات البحث
+        // SEO — عام
+        {
+          name: 'robots',
+          content:
+            'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+        },
+        { name: 'author', content: 'مناجاتك' },
+        { name: 'application-name', content: 'مناجاتك' },
+        {
+          name: 'keywords',
+          content:
+            'مناجاتك, القرآن الكريم, أذكار, أذان, مواقيت الصلاة, تسبيح, قبلة, أدعية, تطبيق إسلامي, Monaajatak, Quran, Azkar, Prayer Times',
+        },
+        { name: 'theme-color', content: '#00A2B5' },
+        // SEO — Open Graph
         {
           property: 'og:title',
-          content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
+          content: 'مناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
         },
         {
           property: 'og:description',
           content:
-            'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
+            'مناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
         },
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: 'https://www.monaajatak.app/' },
         { property: 'og:locale', content: 'ar_AR' },
-        { property: 'og:image', content: '/images/app-mockup-dark.png' }, // صورة بديلة مؤقتة
-        { property: 'og:site_name', content: 'مُناجاتك' },
-        // SEO Twitter Cards
+        { property: 'og:locale:alternate', content: 'en_US' },
+        {
+          property: 'og:image',
+          content: 'https://www.monaajatak.app/images/app-mockup-dark.png',
+        },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:type', content: 'image/png' },
+        {
+          property: 'og:image:alt',
+          content: 'تطبيق مناجاتك — القرآن الكريم والأذكار ومواقيت الصلاة',
+        },
+        { property: 'og:site_name', content: 'مناجاتك' },
+        // SEO — Twitter Cards
         { name: 'twitter:card', content: 'summary_large_image' },
         {
           name: 'twitter:title',
-          content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
+          content: 'مناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة',
         },
         {
           name: 'twitter:description',
           content:
-            'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
+            'مناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
         },
-        { name: 'twitter:image', content: '/images/app-mockup-dark.png' },
+        {
+          name: 'twitter:image',
+          content: 'https://www.monaajatak.app/images/app-mockup-dark.png',
+        },
+        {
+          name: 'twitter:image:alt',
+          content: 'تطبيق مناجاتك — القرآن الكريم والأذكار ومواقيت الصلاة',
+        },
       ],
       link: [
+        { rel: 'canonical', href: 'https://www.monaajatak.app/' },
         {
           rel: 'icon',
           type: 'image/png',
@@ -110,7 +143,7 @@ export default defineNuxtConfig({
 
   site: {
     url: 'https://www.monaajatak.app',
-    name: 'مُناجاتك',
+    name: 'مناجاتك',
     defaultLocale: 'ar',
   },
   runtimeConfig: {
@@ -122,6 +155,17 @@ export default defineNuxtConfig({
   experimental: {
     viewTransition: true,
     componentIslands: true,
+    lazyHydration: true,
+  },
+  router: {
+    options: {
+      scrollBehaviorType: 'smooth',
+    },
+  },
+  routeRules: {
+    '/': {
+      prerender: true,
+    },
   },
   compatibilityDate: '2024-11-01',
   vite: {
