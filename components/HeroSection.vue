@@ -21,7 +21,10 @@ const appFeaturs = computed(() => [
 </script>
 
 <template>
-  <section class="container grid grid-cols-1 lg:grid-cols-2">
+  <section
+    id="hero"
+    class="container grid scroll-mt-28 grid-cols-1 lg:grid-cols-2"
+  >
     <article class="mt-8 flex flex-col items-center gap-6 lg:items-start">
       <section class="flex flex-col items-center lg:items-start">
         <h2 class="text-6xl font-black">{{ $t('hero.titlePrefix') }}</h2>
@@ -85,5 +88,3 @@ const appFeaturs = computed(() => [
     </figure>
   </section>
 </template>
-
-<style scoped></style>
