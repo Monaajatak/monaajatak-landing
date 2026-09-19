@@ -1,11 +1,7 @@
-@import '@dawod/thmanyah-font-web';
 @import 'tailwindcss';
 
 @theme {
   /* ── Fonts ── */
-  --font-thmanyah: 'Thmanyah Sans', sans-serif;
-  --font-thmanyah-display: 'Thmanyah Serif Display', serif;
-  --font-thmanyah-text: 'Thmanyah Serif Text', serif;
 
   /* ── Blue (Primary) ── */
   --color-blue-50: #e6f8fa;
@@ -20,16 +16,28 @@
   --color-blue-900: #00444c;
 
   /* ── Green (Secondary) ── */
-  --color-green-50: #eaf0f0;
-  --color-green-100: #c4d5d5;
-  --color-green-200: #a7bebe;
-  --color-green-300: #7ea0a0;
-  --color-green-400: #648d8d;
-  --color-green-500: #3d7070;
-  --color-green-600: #376666;
-  --color-green-700: #2b5050;
-  --color-green-800: #213e3e;
-  --color-green-900: #192f2f;
+  --color-green-50: #e8ebec;
+  --color-green-100: #b7c2c4;
+  --color-green-200: #94a5a8;
+  --color-green-300: #647c80;
+  --color-green-400: #456268;
+  --color-green-500: #173b42;
+  --color-green-600: #15363c;
+  --color-green-700: #102a2f;
+  --color-green-800: #0d2024;
+  --color-green-900: #0a191c;
+
+  /* ── Amber / Gold (Accent) ── */
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
 
   /* ── Black ── */
   --color-black-50: #e7e7e7;
@@ -68,18 +76,23 @@
   --color-white-900: #696969;
 
   /* ── Semantic shortcuts (Tailwind utilities: bg-primary, text-secondary, etc.) ── */
-  --color-primary: var(--color-blue-500) !important;
+  --color-primary: var(--color-blue-500);
   --color-secondary: var(--color-green-500);
+  --color-accent: var(--color-amber-500);
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
 
   /* ── Container ── */
-  --container-max: 1440px;
+  --container-max: 1340px;
 }
 
 .container {
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
-  padding-inline: 24px;
+  padding-inline: 28px;
 }
 
 @media (max-width: 1024px) {
@@ -106,13 +119,141 @@
   }
 }
 
-/* ── Custom Font ── */
+/* ── Custom Fonts ── */
+
+/* Thmanyah Sans (body font) */
 @font-face {
-  font-family: 'arsura';
-  src: url('/fonts/arsura.ttf') format('truetype');
+  font-family: 'Thmanyah Sans';
+  src: url('/fonts/thmanyahsans/woff2/thmanyahsans-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Sans';
+  src: url('/fonts/thmanyahsans/woff2/thmanyahsans-Regular.woff2')
+    format('woff2');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Sans';
+  src: url('/fonts/thmanyahsans/woff2/thmanyahsans-Medium.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Sans';
+  src: url('/fonts/thmanyahsans/woff2/thmanyahsans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Sans';
+  src: url('/fonts/thmanyahsans/woff2/thmanyahsans-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Thmanyah Serif Text */
+@font-face {
+  font-family: 'Thmanyah Serif Text';
+  src: url('/fonts/thmanyahseriftext/woff2/thmanyahseriftext-Light.woff2')
+    format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Serif Text';
+  src: url('/fonts/thmanyahseriftext/woff2/thmanyahseriftext-Regular.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Serif Text';
+  src: url('/fonts/thmanyahseriftext/woff2/thmanyahseriftext-Medium.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Serif Text';
+  src: url('/fonts/thmanyahseriftext/woff2/thmanyahseriftext-Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Serif Text';
+  src: url('/fonts/thmanyahseriftext/woff2/thmanyahseriftext-Black.woff2')
+    format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Thmanyah Serif Display */
+@font-face {
+  font-family: 'Thmanyah Serif Display';
+  src: url('/fonts/thmanyahserifdisplay/woff2/thmanyahserifdisplay-Light.woff2')
+    format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Serif Display';
+  src: url('/fonts/thmanyahserifdisplay/woff2/thmanyahserifdisplay-Regular.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Serif Display';
+  src: url('/fonts/thmanyahserifdisplay/woff2/thmanyahserifdisplay-Medium.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Serif Display';
+  src: url('/fonts/thmanyahserifdisplay/woff2/thmanyahserifdisplay-Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Thmanyah Serif Display';
+  src: url('/fonts/thmanyahserifdisplay/woff2/thmanyahserifdisplay-Black.woff2')
+    format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* ============================================
@@ -127,40 +268,61 @@
   --primary-light: var(--color-blue-50);
   --on-primary: var(--color-white-50);
 
-  /* Secondary */
+  /* Secondary (updated to match new green-500 #173b42) */
   --secondary: var(--color-green-500);
   --secondary-2: var(--color-green-300);
-  --secondary-rgb: 61, 112, 112;
+  --secondary-rgb: 23, 59, 66;
   --secondary-dark: var(--color-green-700);
   --secondary-light: var(--color-green-50);
+  --on-secondary: var(--color-white-50);
 
-  --accent: var(--color-blue-300);
+  /* Accent (warm amber for highlights, stars, badges) */
+  --accent: var(--color-amber-500);
+  --accent-2: var(--color-amber-300);
+  --accent-rgb: 245, 158, 11;
+  --accent-light: var(--color-amber-50);
+  --accent-dark: var(--color-amber-700);
 
+  /* Brand */
+  --brand-orange: #ff8c42;
+
+  --info-light: #eff6ff;
+  --v-theme-primary: var(--color-blue-500);
+  --v-theme-secondary: var(--color-green-500);
+  --v-theme-accent: var(--color-amber-500);
   /* Surfaces */
   --dark: var(--color-black-500);
   --surface: var(--color-white-50);
   --surface-2: var(--color-grey-50);
   --surface-3: var(--color-grey-100);
+  --surface-elevated: var(--color-white-50);
   --body-bg: var(--color-grey-50);
   --card-bg: var(--color-white-50);
   --nav-bg: rgba(255, 255, 255, 0.85);
   --overlay: rgba(18, 18, 18, 0.5);
 
   /* Text */
-  --text: var(--color-black-500);
+  --text: var(--secondary);
   --text-secondary: var(--color-grey-800);
   --muted: var(--color-grey-700);
   --faint: var(--color-grey-400);
+  --link: var(--color-blue-600);
+  --link-hover: var(--color-blue-700);
 
   /* Borders */
   --border: 1px solid rgba(0, 162, 181, 0.14);
   --border-color: rgba(0, 162, 181, 0.14);
+  --border-subtle: rgba(0, 0, 0, 0.06);
+
+  /* Focus (accessibility) */
+  --focus-ring: 0 0 0 3px rgba(0, 162, 181, 0.35);
 
   /* Shadows (tinted with grey-700) */
   --shadow-xs: 0 1px 2px rgba(103, 109, 119, 0.06);
   --shadow-sm: 0 2px 6px rgba(103, 109, 119, 0.08);
   --shadow: 0 6px 16px rgba(103, 109, 119, 0.1);
   --shadow-lg: 0 18px 40px rgba(103, 109, 119, 0.14);
+  --shadow-colored: 0 8px 24px rgba(0, 162, 181, 0.2);
 
   /* Radius */
   --radius: 20px;
@@ -177,10 +339,15 @@
 
   /* Fonts */
   --font-body: 'Thmanyah Sans', 'Cairo', system-ui, -apple-system, sans-serif;
+
   --font-thmanyah: 'Thmanyah Sans', sans-serif;
+
   --font-thmanyah-display: 'Thmanyah Serif Display', serif;
+
   --font-thmanyah-text: 'Thmanyah Serif Text', serif;
+
   --font-quran: 'Amiri', 'Traditional Arabic', serif;
+
   --font-surah: 'arsura', 'Amiri', 'Traditional Arabic', serif;
 
   /* Feature pastels */
@@ -195,7 +362,7 @@
 
   --pastel-quran-fg: #c2640f;
   --pastel-azkar-fg: var(--color-blue-500);
-  --pastel-tasbih-fg: var(--color-green-500);
+  --pastel-tasbih-fg: var(--color-green-400);
   --pastel-names-fg: #7c3aed;
   --pastel-hadith-fg: #0d9488;
   --pastel-qibla-fg: #b45309;
@@ -213,6 +380,21 @@
     var(--color-green-50) 0%,
     #ffffff 100%
   );
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-blue-500),
+    var(--color-blue-300)
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--color-green-500),
+    var(--color-green-300)
+  );
+  --gradient-warm: linear-gradient(
+    135deg,
+    var(--color-amber-400),
+    var(--color-amber-600)
+  );
 }
 
 /* ============================================
@@ -224,12 +406,15 @@
   --text-secondary: var(--color-white-400);
   --muted: var(--color-grey-400);
   --faint: var(--color-grey-700);
+  --link: var(--color-blue-300);
+  --link-hover: var(--color-blue-200);
 
   /* Surfaces */
   --body-bg: var(--color-black-900);
   --surface: var(--color-black-500);
   --surface-2: var(--color-black-800);
   --surface-3: var(--color-black-600);
+  --surface-elevated: var(--color-black-400);
   --card-bg: var(--color-black-600);
   --nav-bg: rgba(18, 18, 18, 0.85);
   --overlay: rgba(0, 0, 0, 0.6);
@@ -237,12 +422,27 @@
   /* Borders & shadows */
   --border: 1px solid rgba(255, 255, 255, 0.1);
   --border-color: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.2);
   --shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   --shadow-lg: 0 18px 40px rgba(0, 0, 0, 0.4);
+  --shadow-colored: 0 8px 24px rgba(0, 162, 181, 0.15);
+
+  /* Focus */
+  --focus-ring: 0 0 0 3px rgba(77, 214, 226, 0.4);
 
   --brand-orange: #ff9d6a;
+
+  /* Status / Feedback — dark overrides */
+  --success: #34d399;
+  --success-light: rgba(16, 185, 129, 0.12);
+  --warning: #fbbf24;
+  --warning-light: rgba(245, 158, 11, 0.12);
+  --error: #f87171;
+  --error-light: rgba(239, 68, 68, 0.12);
+  --info: #60a5fa;
+  --info-light: rgba(59, 130, 246, 0.12);
 
   /* Dark gradients */
   --teal-deep: var(--color-blue-900);
@@ -257,15 +457,30 @@
     var(--color-green-900) 0%,
     var(--color-black-900) 100%
   );
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--color-blue-700),
+    var(--color-blue-500)
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--color-green-700),
+    var(--color-green-500)
+  );
+  --gradient-warm: linear-gradient(
+    135deg,
+    var(--color-amber-600),
+    var(--color-amber-800)
+  );
 
-  /* Pastels → flat dark surface */
-  --pastel-quran: var(--color-black-600);
-  --pastel-azkar: var(--color-black-600);
-  --pastel-tasbih: var(--color-black-600);
-  --pastel-names: var(--color-black-600);
-  --pastel-hadith: var(--color-black-600);
-  --pastel-qibla: var(--color-black-600);
-  --pastel-dua: var(--color-black-600);
+  /* Pastels → tinted dark surfaces (preserve feature identity) */
+  --pastel-quran: rgba(194, 100, 15, 0.1);
+  --pastel-azkar: rgba(0, 162, 181, 0.1);
+  --pastel-tasbih: rgba(23, 59, 66, 0.2);
+  --pastel-names: rgba(124, 58, 237, 0.1);
+  --pastel-hadith: rgba(13, 148, 136, 0.1);
+  --pastel-qibla: rgba(180, 83, 9, 0.1);
+  --pastel-dua: rgba(162, 28, 175, 0.1);
   --pastel-neutral: var(--color-black-600);
 }
 
@@ -2398,40 +2613,6 @@ html {
   opacity: 1;
 }
 
-/* Font Size Controls */
-.font-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--card-bg);
-  padding: 6px 12px;
-  border-radius: 20px;
-  border: 1px solid rgba(var(--border-rgb), 0.5);
-  margin-right: auto;
-}
-
-.font-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  background: transparent;
-  color: var(--text);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 0;
-  transition: all 0.2s;
-}
-
-.font-btn:hover {
-  background: rgba(var(--primary-rgb), 0.1);
-  color: var(--primary);
-  border-color: var(--primary);
-}
-
 /* ============================================
    ICON SYSTEM
    ============================================ */
@@ -2468,4 +2649,19 @@ html {
 
 .section-tab.active .icon {
   opacity: 1;
+}
+
+.main-heading {
+  color: var(--color-white-50);
+  background-color: var(--primary);
+  margin: 16px 0px;
+  padding: 5px 15px;
+  width: fit-content;
+  border-radius: 15px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-thmanyah-display) !important;
 }

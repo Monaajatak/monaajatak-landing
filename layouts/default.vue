@@ -11,49 +11,54 @@ useHead({
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@graph": [
+        '@context': 'https://schema.org',
+        '@graph': [
           {
-            "@type": "WebSite",
-            "@id": "https://www.monaajatak.app/#website",
-            "url": "https://www.monaajatak.app/",
-            "name": "مُناجاتك",
-            "description": "مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.",
-            "inLanguage": "ar"
+            '@type': 'WebSite',
+            '@id': 'https://www.monaajatak.app/#website',
+            url: 'https://www.monaajatak.app/',
+            name: 'مناجاتك',
+            description:
+              'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.',
+            inLanguage: 'ar',
           },
           {
-            "@type": "SoftwareApplication",
-            "@id": "https://www.monaajatak.app/#software",
-            "name": "مُناجاتك",
-            "alternateName": "Monaajatak",
-            "applicationCategory": "LifestyleApplication",
-            "operatingSystem": "Android, iOS",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "USD"
+            '@type': 'SoftwareApplication',
+            '@id': 'https://www.monaajatak.app/#software',
+            name: 'مناجاتك',
+            alternateName: 'Monaajatak',
+            applicationCategory: 'LifestyleApplication',
+            operatingSystem: 'Android, iOS',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD',
             },
-            "url": "https://www.monaajatak.app/",
-            "description": "مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد."
-          }
-        ]
-      })
-    }
-  ]
+            url: 'https://www.monaajatak.app/',
+            description:
+              'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.',
+          },
+        ],
+      }),
+    },
+  ],
 })
 
 const setupReveal = () => {
   if (revealObserver) revealObserver.disconnect()
   if (domMutationObserver) domMutationObserver.disconnect()
 
-  revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active')
-        revealObserver?.unobserve(entry.target)
-      }
-    })
-  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" })
+  revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active')
+          revealObserver?.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+  )
 
   const observeElements = () => {
     document.querySelectorAll('.reveal:not(.active)').forEach(el => {
@@ -69,7 +74,10 @@ const setupReveal = () => {
   })
 
   if (document.body) {
-    domMutationObserver.observe(document.body, { childList: true, subtree: true })
+    domMutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    })
   }
 }
 
@@ -80,10 +88,10 @@ onMounted(() => {
     return
   }
   // --- Custom Cursor Logic ---
-  window.addEventListener('mousemove', (e) => {
+  window.addEventListener('mousemove', e => {
     const posX = e.clientX
     const posY = e.clientY
-    
+
     if (cursorDot.value) {
       cursorDot.value.style.left = `${posX}px`
       cursorDot.value.style.top = `${posY}px`
@@ -91,16 +99,21 @@ onMounted(() => {
     }
 
     if (cursorOutline.value) {
-      cursorOutline.value.animate({
-        left: `${posX}px`,
-        top: `${posY}px`
-      }, { duration: 500, fill: "forwards" })
+      cursorOutline.value.animate(
+        {
+          left: `${posX}px`,
+          top: `${posY}px`,
+        },
+        { duration: 500, fill: 'forwards' },
+      )
       cursorOutline.value.style.opacity = 1
     }
   })
 
   // Hover effects
-  const interactables = document.querySelectorAll('a, button, .card, .nav-item, input, textarea')
+  const interactables = document.querySelectorAll(
+    'a, button, .card, .nav-item, input, textarea',
+  )
   interactables.forEach(el => {
     el.addEventListener('mouseenter', () => {
       if (cursorOutline.value) {
@@ -115,17 +128,24 @@ onMounted(() => {
   })
 
   setupReveal()
-
 })
 
-watch(() => route.fullPath, async () => {
-  await nextTick()
-  setupReveal()
-})
+watch(
+  () => route.fullPath,
+  async () => {
+    await nextTick()
+    setupReveal()
+  },
+)
 </script>
 
 <template>
   <div class="app-wrapper">
+    <NuxtLoadingIndicator
+      color="#00A2B5"
+      :height="3"
+    />
+    <GlobalLoadingScreen />
     <AppHeader />
     <main :class="{ 'inner-page': route.path !== '/' }">
       <slot />
@@ -133,9 +153,16 @@ watch(() => route.fullPath, async () => {
     <AppFooter />
 
     <!-- Custom Cursor -->
-    <div v-if="isPointerFine" class="cursor-dot" ref="cursorDot"></div>
-    <div v-if="isPointerFine" class="cursor-outline" ref="cursorOutline"></div>
-
+    <div
+      v-if="isPointerFine"
+      ref="cursorDot"
+      class="cursor-dot"
+    />
+    <div
+      v-if="isPointerFine"
+      ref="cursorOutline"
+      class="cursor-outline"
+    />
   </div>
 </template>
 

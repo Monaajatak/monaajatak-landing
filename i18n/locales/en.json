@@ -18,5 +18,21 @@
     "darkMode": "Dark Mode",
     "toggleTheme": "Toggle Theme",
     "menu": "Menu"
+  },
+  "hero": {
+    "titlePrefix": "Bring your worship closer with",
+    "title": "Monaajatak",
+    "description": "A serene and fast experience combining the Holy Quran, Adhkar, and Tasbih in one app. Designed to accompany you in every step toward Allah's pleasure, completely ad-free.",
+    "completelyFree": "Completely Free",
+    "noAds": "Ad-Free",
+    "offlineFeatures": "Core features offline",
+    "worshipOnePlace": "Your worship in one place",
+    "worshipSummary": "Quran, Adhkar, recitations, Tasbih, Qibla, and prayer times, all in one simple experience.",
+    "mobileAppAlt": "Monaajatak mobile app",
+    "personAlt": "Person using Monaajatak mobile app"
+  },
+  "loading": {
+    "message": "Loading...",
+    "pleaseWait": "Please wait a moment..."
   }
 }

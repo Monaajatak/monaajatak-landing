@@ -20,9 +20,9 @@ withDefaults(
     variant?: VariantType
     size?: SizeType
     /** Prepend icon (e.g. "mdi-download" or "fas fa-download") */
-    icon?: string
+    icon?: string | Component
     /** Append icon */
-    appendIcon?: string
+    appendIcon?: string | Component
     /** Internal route (rendered as NuxtLink) */
     to?: string
     /** External URL (rendered as <a>) */
@@ -84,7 +84,8 @@ const emit = defineEmits<{
       #prepend
     >
       <slot name="prepend">
-        <v-icon>{{ icon }}</v-icon>
+        <v-icon v-if="typeof icon === 'string'">{{ icon }}</v-icon>
+        <component :is="icon" />
       </slot>
     </template>
 

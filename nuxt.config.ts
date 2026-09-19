@@ -167,6 +167,7 @@ export default defineNuxtConfig({
       prerender: true,
     },
   },
+  spaLoadingTemplate: true,
   compatibilityDate: '2024-11-01',
   vite: {
     plugins: [tailwindcss()],
