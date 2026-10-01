@@ -27,7 +27,9 @@ const appFeaturs = computed(() => [
   >
     <article class="mt-8 flex flex-col items-center gap-6 lg:items-start">
       <section class="flex flex-col items-center lg:items-start">
-        <h2 class="text-6xl font-black">{{ $t('hero.titlePrefix') }}</h2>
+        <h2 class="text-6xl leading-tight font-black">
+          {{ $t('hero.titlePrefix') }}
+        </h2>
         <h1 class="main-heading text-6xl font-black">{{ $t('hero.title') }}</h1>
         <p class="text-lg font-normal">
           {{ $t('hero.description') }}

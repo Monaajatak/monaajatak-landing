@@ -587,6 +587,7 @@ body {
 html {
   overflow-x: clip;
   transition: all var(--transition);
+  font-size: clamp(13px, 1vw + 10px, 16px);
 }
 
 /* Subtle radial glow at top */
