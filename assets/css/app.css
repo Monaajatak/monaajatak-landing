@@ -4,11 +4,13 @@
    ============================================ */
 
 /* --- Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap');
+/* Cairo و Amiri تُحمَّل بوسم <link> في nuxt.config.ts لا بـ @import هنا:
+   الـ @import يؤخر ظهور الصفحة لأنه لا يبدأ إلا بعد تحميل هذا الملف. */
 
 @font-face {
     font-family: 'arsura';
-    src: url('/fonts/arsura.ttf') format('truetype');
+    src: url('/fonts/arsura.woff2') format('woff2'),
+         url('/fonts/arsura.ttf') format('truetype');
     font-display: swap;
     font-weight: 400;
     font-style: normal;

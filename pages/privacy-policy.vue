@@ -62,15 +62,11 @@ const formatIndex = (value: number) => {
   return (value + 1).toLocaleString('ar-EG')
 }
 
-useHead(() => ({
-  title: `${policyData.value.title} | مُناجاتك`,
-  meta: [
-    {
-      name: 'description',
-      content: policyData.value.intro || 'سياسة الخصوصية لتطبيق مُناجاتك'
-    }
-  ]
-}))
+usePageSeo({
+  title: () => `${policyData.value.title} | مُناجاتك`,
+  description: () => policyData.value.intro || 'سياسة الخصوصية لتطبيق مُناجاتك',
+  breadcrumbs: [['سياسة الخصوصية', '/privacy-policy']],
+})
 </script>
 
 <template>

@@ -142,6 +142,9 @@ useSeoMeta({
   twitterCard: 'summary',
   twitterTitle: seoTitle,
   twitterDescription: seoDescription,
+  // الرابط نفسه بمعاملاته هو ما يُشارَك، فلا يُفهرس؛ المحتوى المفهرَس صفحات `/listen`.
+  ogUrl: () => `${SITE}${route.fullPath}`,
+  robots: 'noindex, follow',
 })
 
 // ── فتح التطبيق ──

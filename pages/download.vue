@@ -65,12 +65,11 @@ onMounted(() => {
   }
 })
 
-useHead(() => ({
-  title: 'تحميل تطبيق مُناجاتك | أندرويد و iOS',
-  meta: [
-    { name: 'description', content: 'حمل تطبيق مُناجاتك الآن على أجهزة أندرويد و iOS وابدأ رحلتك الإيمانية مع واجهة مميزة وإمكانيات غير محدودة.' }
-  ]
-}))
+usePageSeo({
+  title: 'تحميل تطبيق مُناجاتك مجاناً | أندرويد و iOS وهواوي',
+  description: 'حمّل تطبيق مُناجاتك مجاناً على أندرويد (Google Play) و iOS (App Store) وهواوي (AppGallery): القرآن الكريم، مواقيت الصلاة والأذان، الأذكار والقبلة، بدون إعلانات.',
+  breadcrumbs: [['تحميل التطبيق', '/download']],
+})
 </script>
 
 <template>
@@ -123,8 +122,8 @@ useHead(() => ({
 
         <div class="download-image-wrapper">
           <div class="phone-mockup">
-            <img src="/images/app-mockup-light.png" alt="صورة التطبيق" class="mockup-img light-img" />
-            <img src="/images/app-mockup-dark.png" alt="صورة التطبيق" class="mockup-img dark-img" />
+            <img src="/images/app-mockup-light.webp" alt="صورة التطبيق" width="440" height="916" class="mockup-img light-img" />
+            <img src="/images/app-mockup-dark.webp" alt="صورة التطبيق" width="440" height="916" class="mockup-img dark-img" />
           </div>
         </div>
       </div>

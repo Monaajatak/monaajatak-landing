@@ -19,7 +19,7 @@
       <div v-if="loading" class="sp-state">
         <div class="sp-loading"></div>
       </div>
-      <div v-else-if="!reciter || !surahId" class="sp-state">
+      <div v-else-if="!surahExists" class="sp-state">
         <p>لم نجد هذه السورة</p>
         <button class="sp-cta" @click="goBack">عودة</button>
       </div>
@@ -145,10 +145,11 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useAudioPlayer } from '~/composables/useAudioPlayer'
 import { useAudioLibraryStore } from '~/composables/useAudioLibraryStore'
-import { resolveReciter, reciterSlug } from '~/utils/reciterSlug'
+import { reciterSlug } from '~/utils/reciterSlug'
+import { pickMoshaf, hasSurah } from '~/composables/useReciterData'
 import { recitationLink } from '~/utils/shareLinks'
 import { surahVerseCount } from '~/utils/surahVerses'
 import StarNumber from '~/components/AudioLibrary/StarNumber.vue'
@@ -161,50 +162,43 @@ const store = useAudioLibraryStore()
 const toArNum = player.toArabicDigits
 const fmt = player.formatTime
 
-const loading = ref(true)
-const reciters = ref([])
-const suwar = ref([])
 const showSpeed = ref(false)
 const showAdd = ref(false)
 const newNameSheet = ref(false)
 const newName = ref('')
 const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2]
 
-const load = async () => {
-  loading.value = true
-  try {
-    const [rRes, sRes] = await Promise.all([
-      $fetch('/api/mp3quran/reciters'),
-      $fetch('/api/mp3quran/suwar'),
-    ])
-    reciters.value = rRes.reciters || []
-    suwar.value = sRes.suwar || []
-  } catch (e) {
-    reciters.value = []
-    suwar.value = []
-  } finally {
-    loading.value = false
-  }
-}
-onMounted(async () => {
-  await load()
+const { reciter, suwar, loading } = await useReciterData()
+
+onMounted(() => {
   // القادم من رابط مشاركة (`?autoplay=1`) جاء ليسمع، لا ليضغط تشغيل من جديد.
-  if (route.query.autoplay && moshaf.value && surahId.value) {
-    playSurah(surahId.value)
-  }
+  // في التنقل داخل الموقع قد تصل البيانات بعد التركيب، فننتظرها.
+  if (!route.query.autoplay) return
+  let played = false
+  watch(
+    () => !!(moshaf.value && surahId.value),
+    (ready) => {
+      if (!ready || played) return
+      played = true
+      playSurah(surahId.value)
+    },
+    { immediate: true },
+  )
 })
 
-const reciter = computed(() => resolveReciter(reciters.value, route.params.reciter))
 const surahId = computed(() => parseInt(route.params.surah, 10) || null)
 
 // للقارئ الواحد عدة مصاحف/روايات بخوادم وقوائم سور مختلفة. رابط المشاركة
-// القادم من التطبيق يحمل `moshafId`، فنفتح الرواية نفسها لا أول واحدة.
-const moshaf = computed(() => {
-  const list = reciter.value?.moshaf || []
-  if (!list.length) return null
-  const wanted = parseInt(route.query.moshafId, 10)
-  return list.find((m) => m.id === wanted) || list[0]
-})
+// القادم من التطبيق يحمل `moshafId`، فنفتح الرواية نفسها لا الافتراضية.
+const moshaf = computed(() =>
+  pickMoshaf(reciter.value, { moshafId: parseInt(route.query.moshafId, 10), surahId: surahId.value }),
+)
+// رابط لسورة ليست عند هذا القارئ صفحة غير موجودة، لا صفحة فارغة تُفهرس.
+const surahExists = computed(() => !!moshaf.value && hasSurah(moshaf.value, surahId.value))
+if (import.meta.server && reciter.value && !surahExists.value) {
+  setResponseStatus(useRequestEvent(), 404)
+}
+
 const surahIds = computed(() =>
   String(moshaf.value?.surahList || '')
     .split(',')
@@ -349,8 +343,58 @@ const goBack = () => {
   else router.push('/listen')
 }
 
+const canonicalPath = computed(() =>
+  reciter.value && surahId.value ? `/listen/${reciterSlug(reciter.value)}/${surahId.value}` : null,
+)
+
+usePageSeo({
+  title: () =>
+    surahExists.value
+      ? `سورة ${surahName.value} بصوت ${reciter.value.name} — استماع أونلاين | مُناجاتك`
+      : 'السورة غير موجودة | مُناجاتك',
+  description: () => {
+    if (!surahExists.value) return 'لم نجد هذه التلاوة في المكتبة الصوتية لمُناجاتك.'
+    return `استمع إلى سورة ${surahName.value} (${isMakki.value ? 'مكية' : 'مدنية'}، عدد آياتها ${toArNum(verseCount.value)}) بصوت القارئ ${reciter.value.name}${
+      moshaf.value?.name ? ` — ${moshaf.value.name}` : ''
+    }. تلاوة كاملة بجودة عالية، مجاناً وبدون إعلانات على مُناجاتك.`
+  },
+  path: canonicalPath,
+  noindex: () => !surahExists.value,
+  breadcrumbs: () =>
+    reciter.value
+      ? [
+          ['المكتبة الصوتية', '/listen'],
+          [reciter.value.name, `/listen/${reciterSlug(reciter.value)}`],
+          ...(surahExists.value ? [[`سورة ${surahName.value}`, canonicalPath.value]] : []),
+        ]
+      : [['المكتبة الصوتية', '/listen']],
+  schema: () =>
+    surahExists.value
+      ? {
+          '@type': 'AudioObject',
+          name: `سورة ${surahName.value} — ${reciter.value.name}`,
+          contentUrl: trackUrl.value,
+          encodingFormat: 'audio/mpeg',
+          inLanguage: 'ar',
+          url: `https://www.monaajatak.app${canonicalPath.value}`,
+          author: { '@type': 'Person', name: reciter.value.name },
+          isPartOf: { '@id': 'https://www.monaajatak.app/#website' },
+        }
+      : null,
+})
+
+// شريط App Store في Safari يفتح التلاوة نفسها في التطبيق إن كان مثبَّتاً.
 useHead(() => ({
-  title: reciter.value && surahName.value ? `سورة ${surahName.value} | ${reciter.value.name} | مُناجاتك` : 'المكتبة الصوتية | مُناجاتك',
+  meta: surahExists.value
+    ? [{
+        name: 'apple-itunes-app',
+        content: `app-id=6759576802, app-argument=${recitationLink({
+          reciterId: reciter.value.id,
+          surahId: surahId.value,
+          moshafId: moshaf.value?.id,
+        })}`,
+      }]
+    : [],
 }))
 </script>
 

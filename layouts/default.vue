@@ -1,4 +1,6 @@
 <script setup>
+import { SITE_URL, SITE_NAME, OG_IMAGE, STORE_LINKS, SOCIAL_LINKS, absoluteUrl } from '~/utils/seo'
+
 const cursorDot = ref(null)
 const cursorOutline = ref(null)
 const isPointerFine = ref(true)
@@ -6,40 +8,75 @@ const route = useRoute()
 let domMutationObserver = null
 let revealObserver = null
 
+const SITE_DESCRIPTION = 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.'
+
+// صفحات `/app/**` مجرد محطات للروابط العميقة (noindex)، فلا رابط معياري لها.
+const canonicalUrl = computed(() =>
+  route.path === '/app' || route.path.startsWith('/app/') ? null : absoluteUrl(route.path)
+)
+
+useHead(() => ({
+  link: canonicalUrl.value ? [{ rel: 'canonical', href: canonicalUrl.value }] : [],
+  meta: canonicalUrl.value ? [{ property: 'og:url', content: canonicalUrl.value }] : [],
+}))
+
 useHead({
   script: [
     {
+      key: 'site-schema',
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
-        "@context": "https://schema.org",
-        "@graph": [
+        '@context': 'https://schema.org',
+        '@graph': [
           {
-            "@type": "WebSite",
-            "@id": "https://www.monaajatak.app/#website",
-            "url": "https://www.monaajatak.app/",
-            "name": "مُناجاتك",
-            "description": "مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.",
-            "inLanguage": "ar"
+            '@type': 'Organization',
+            '@id': `${SITE_URL}/#organization`,
+            name: SITE_NAME,
+            alternateName: 'Monaajatak',
+            url: `${SITE_URL}/`,
+            logo: {
+              '@type': 'ImageObject',
+              url: `${SITE_URL}/android-chrome-512x512.png`,
+              width: 512,
+              height: 512,
+            },
+            email: 'Monaajatak@gmail.com',
+            sameAs: SOCIAL_LINKS,
           },
           {
-            "@type": "SoftwareApplication",
-            "@id": "https://www.monaajatak.app/#software",
-            "name": "مُناجاتك",
-            "alternateName": "Monaajatak",
-            "applicationCategory": "LifestyleApplication",
-            "operatingSystem": "Android, iOS",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "USD"
-            },
-            "url": "https://www.monaajatak.app/",
-            "description": "مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد."
-          }
-        ]
-      })
-    }
-  ]
+            '@type': 'WebSite',
+            '@id': `${SITE_URL}/#website`,
+            url: `${SITE_URL}/`,
+            name: SITE_NAME,
+            alternateName: 'Monaajatak',
+            description: SITE_DESCRIPTION,
+            inLanguage: 'ar',
+            publisher: { '@id': `${SITE_URL}/#organization` },
+          },
+          {
+            '@type': 'MobileApplication',
+            '@id': `${SITE_URL}/#app`,
+            name: SITE_NAME,
+            alternateName: 'Monaajatak',
+            description: SITE_DESCRIPTION,
+            url: `${SITE_URL}/`,
+            image: OG_IMAGE.url,
+            screenshot: [
+              `${SITE_URL}/images/screenshots/01_App_Overview.png`,
+              `${SITE_URL}/images/screenshots/02_Quran_Reading.png`,
+              `${SITE_URL}/images/screenshots/05_Prayer_Times.png`,
+            ],
+            applicationCategory: 'LifestyleApplication',
+            operatingSystem: 'Android, iOS, HarmonyOS',
+            inLanguage: 'ar',
+            installUrl: [STORE_LINKS.googlePlay, STORE_LINKS.appStore, STORE_LINKS.appGallery],
+            offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+            publisher: { '@id': `${SITE_URL}/#organization` },
+          },
+        ],
+      }),
+    },
+  ],
 })
 
 const setupReveal = () => {

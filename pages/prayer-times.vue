@@ -5,7 +5,8 @@
         <h1>مواقيت الصلاة والأذان</h1>
         <p class="subtitle">تعرف على مواعيد الصلاة بدقة لأي مكان في العالم. تنبيهات حية للأذان لضمان عدم تفويت أي صلاة مع تطبيق مُناجاتك.</p>
         <div class="hero-actions">
-          <AppLinkLanding />
+          <NuxtLink to="/download" class="btn btn-primary">حمّل التطبيق مجاناً</NuxtLink>
+          <NuxtLink to="/listen" class="btn btn-outline">استمع للقرآن الآن</NuxtLink>
         </div>
       </div>
     </section>
@@ -17,17 +18,10 @@
 </template>
 
 <script setup>
-useHead({
+usePageSeo({
   title: 'مواقيت الصلاة والأذان | أوقات دقيقة لكل صلاة | مُناجاتك',
-  meta: [
-    { name: 'description', content: 'احصل على مواقيت الصلاة الدقيقة وتنبيهات الأذان الحية أينما كنت. تطبيق مُناجاتك يوفر لك أوقات الصلاة لكل دول العالم بدون تعقيد وبشكل مجاني.' },
-    { property: 'og:title', content: 'مواقيت الصلاة والأذان | أوقات دقيقة لكل صلاة | مُناجاتك' },
-    { property: 'og:description', content: 'احصل على مواقيت الصلاة الدقيقة وتنبيهات الأذان الحية أينما كنت. تطبيق مُناجاتك يوفر لك أوقات الصلاة لكل دول العالم بدون تعقيد وبشكل مجاني.' },
-    { property: 'og:url', content: 'https://www.monaajatak.app/prayer-times' },
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://www.monaajatak.app/prayer-times' }
-  ]
+  description: 'احصل على مواقيت الصلاة الدقيقة وتنبيهات الأذان الحية أينما كنت. تطبيق مُناجاتك يوفر لك أوقات الصلاة لكل دول العالم بدون تعقيد وبشكل مجاني.',
+  breadcrumbs: [['مواقيت الصلاة', '/prayer-times']],
 })
 </script>
 
@@ -53,6 +47,8 @@ useHead({
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: center;
 }
 @media (max-width: 768px) {

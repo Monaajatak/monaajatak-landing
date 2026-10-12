@@ -1,19 +1,37 @@
 import { defineSitemapEventHandler } from '#imports'
+import { reciterSlug } from '../../../utils/reciterSlug'
+import { getAllResources } from '../../../utils/resourcesData'
 
-export default defineSitemapEventHandler(async (e) => {
+/**
+ * الصفحات الديناميكية لخريطة الموقع: الموارد المفتوحة، وصفحة لكل قارئ
+ * وصفحة لكل سورة عنده (من أي مصحف/رواية). الروابط بلا معاملات، فهي الروابط
+ * المعيارية نفسها التي تعلنها الصفحات في `canonical`.
+ */
+export default defineSitemapEventHandler(async () => {
+  const resources = getAllResources().map((r) => ({ loc: `/resources/${r.id}` }))
+
   try {
-    // Fetch reciters from the local API
-    const response = await $fetch('/api/mp3quran/reciters')
-    const reciters = response.reciters || []
-    
-    // Map reciters to sitemap entries
-    return reciters.map((reciter: any) => ({
-      loc: `/listen/${reciter.slug}`,
-      changefreq: 'weekly',
-      priority: 0.6,
-    }))
+    const { reciters = [] } = await $fetch<{ reciters: any[] }>('/api/mp3quran/reciters')
+
+    return [...resources, ...reciters.flatMap((reciter) => {
+      const slug = reciterSlug(reciter)
+      if (!slug) return []
+
+      const surahIds = new Set<number>()
+      for (const m of reciter.moshaf || []) {
+        for (const n of String(m.surahList || '').split(',')) {
+          const id = parseInt(n, 10)
+          if (id) surahIds.add(id)
+        }
+      }
+
+      return [
+        { loc: `/listen/${slug}` },
+        ...[...surahIds].sort((a, b) => a - b).map((id) => ({ loc: `/listen/${slug}/${id}` })),
+      ]
+    })]
   } catch (error) {
-    console.error('Error generating dynamic sitemap URLs', error)
-    return []
+    console.error('[sitemap] تعذّر جلب قائمة القرّاء', error)
+    return resources
   }
 })

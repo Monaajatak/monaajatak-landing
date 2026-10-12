@@ -1,10 +1,9 @@
 <script setup>
-useHead(() => ({
+usePageSeo({
   title: 'التطوع معنا | مُناجاتك',
-  meta: [
-    { name: 'description', content: 'كن جزءاً من الأجر وشاركنا في تطوير وإثراء تطبيق مُناجاتك. انضم لفريق التطوع الآن.' }
-  ]
-}))
+  description: 'كن جزءاً من الأجر وشاركنا في تطوير وإثراء تطبيق مُناجاتك. انضم لفريق التطوع الآن.',
+  breadcrumbs: [['التطوع معنا', '/volunteer']],
+})
 </script>
 
 <template>
