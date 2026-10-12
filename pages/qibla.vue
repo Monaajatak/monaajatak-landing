@@ -5,7 +5,8 @@
         <h1>اتجاه القبلة بدقة</h1>
         <p class="subtitle">بوصلة القبلة الدقيقة لتحديد اتجاه الكعبة المشرفة في أي وقت ومن أي مكان في العالم باستخدام تطبيق مُناجاتك.</p>
         <div class="hero-actions">
-          <AppLinkLanding />
+          <NuxtLink to="/download" class="btn btn-primary">حمّل التطبيق مجاناً</NuxtLink>
+          <NuxtLink to="/listen" class="btn btn-outline">استمع للقرآن الآن</NuxtLink>
         </div>
       </div>
     </section>
@@ -17,17 +18,10 @@
 </template>
 
 <script setup>
-useHead({
+usePageSeo({
   title: 'اتجاه القبلة | تحديد دقيق لبوصلة القبلة | مُناجاتك',
-  meta: [
-    { name: 'description', content: 'تحديد اتجاه القبلة بدقة من أي مكان في العالم باستخدام بوصلة القبلة المدمجة في تطبيق مُناجاتك. صلاتك دائمًا في الاتجاه الصحيح.' },
-    { property: 'og:title', content: 'اتجاه القبلة | تحديد دقيق لبوصلة القبلة | مُناجاتك' },
-    { property: 'og:description', content: 'تحديد اتجاه القبلة بدقة من أي مكان في العالم باستخدام بوصلة القبلة المدمجة في تطبيق مُناجاتك. صلاتك دائمًا في الاتجاه الصحيح.' },
-    { property: 'og:url', content: 'https://www.monaajatak.app/qibla' },
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://www.monaajatak.app/qibla' }
-  ]
+  description: 'تحديد اتجاه القبلة بدقة من أي مكان في العالم باستخدام بوصلة القبلة المدمجة في تطبيق مُناجاتك. صلاتك دائمًا في الاتجاه الصحيح.',
+  breadcrumbs: [['اتجاه القبلة', '/qibla']],
 })
 </script>
 
@@ -53,6 +47,8 @@ useHead({
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: center;
 }
 @media (max-width: 768px) {

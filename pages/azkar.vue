@@ -5,7 +5,8 @@
         <h1>أذكار الصباح والمساء</h1>
         <p class="subtitle">حصّن نفسك يومياً مع أذكار الصباح والمساء، أذكار الاستيقاظ، والنوم. واجهة مريحة ومسبحة إلكترونية مدمجة لتسهيل الورد اليومي.</p>
         <div class="hero-actions">
-          <AppLinkLanding />
+          <NuxtLink to="/download" class="btn btn-primary">حمّل التطبيق مجاناً</NuxtLink>
+          <NuxtLink to="/listen" class="btn btn-outline">استمع للقرآن الآن</NuxtLink>
         </div>
       </div>
     </section>
@@ -17,17 +18,10 @@
 </template>
 
 <script setup>
-useHead({
+usePageSeo({
   title: 'أذكار الصباح والمساء | حصن المسلم | مُناجاتك',
-  meta: [
-    { name: 'description', content: 'اقرأ أذكار الصباح والمساء الصحيحة يومياً من خلال تطبيق مُناجاتك. واجهة سهلة الاستخدام ومسبحة إلكترونية وتنبيهات بمواعيد الأذكار.' },
-    { property: 'og:title', content: 'أذكار الصباح والمساء | حصن المسلم | مُناجاتك' },
-    { property: 'og:description', content: 'اقرأ أذكار الصباح والمساء الصحيحة يومياً من خلال تطبيق مُناجاتك. واجهة سهلة الاستخدام ومسبحة إلكترونية وتنبيهات بمواعيد الأذكار.' },
-    { property: 'og:url', content: 'https://www.monaajatak.app/azkar' },
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://www.monaajatak.app/azkar' }
-  ]
+  description: 'اقرأ أذكار الصباح والمساء الصحيحة يومياً من خلال تطبيق مُناجاتك. واجهة سهلة الاستخدام ومسبحة إلكترونية وتنبيهات بمواعيد الأذكار.',
+  breadcrumbs: [['الأذكار', '/azkar']],
 })
 </script>
 
@@ -53,6 +47,8 @@ useHead({
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: center;
 }
 @media (max-width: 768px) {

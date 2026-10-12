@@ -24,6 +24,7 @@
         :title="surahName(s)"
         :title-style="surahTitleStyle"
         :subtitle="`${isMakki(s) ? 'مكية' : 'مدنية'} • ${toArNum(verseCount(s))} آيات`"
+        :href="`/listen/${reciterSlug(reciter)}/${s}`"
         :on-tap="() => playSurah(s)"
       >
         <template #trailing>

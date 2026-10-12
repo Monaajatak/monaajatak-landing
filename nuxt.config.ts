@@ -23,15 +23,24 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة' },
         { property: 'og:description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://www.monaajatak.app/' },
         { property: 'og:locale', content: 'ar_AR' },
-        { property: 'og:image', content: '/images/app-mockup-dark.png' }, // صورة بديلة مؤقتة
         { property: 'og:site_name', content: 'مُناجاتك' },
+        { property: 'og:image', content: 'https://www.monaajatak.app/images/og-image.jpg' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:type', content: 'image/jpeg' },
+        { property: 'og:image:alt', content: 'مُناجاتك — رفيق الطاعة اليومي: القرآن الكريم، مواقيت الصلاة، الأذكار والقبلة' },
         // SEO Twitter Cards
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: 'مُناجاتك | القرآن الكريم، الأذكار، الأذان ومواقيت الصلاة' },
         { name: 'twitter:description', content: 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.' },
-        { name: 'twitter:image', content: '/images/app-mockup-dark.png' }
+        { name: 'twitter:image', content: 'https://www.monaajatak.app/images/og-image.jpg' },
+        { name: 'twitter:image:alt', content: 'مُناجاتك — رفيق الطاعة اليومي' },
+        { name: 'theme-color', content: '#118b82' },
+        { name: 'application-name', content: 'مُناجاتك' },
+        { name: 'apple-mobile-web-app-title', content: 'مُناجاتك' },
+        // شريط "افتح في App Store" الأصلي في Safari على iPhone
+        { name: 'apple-itunes-app', content: 'app-id=6759576802' }
       ],
       link: [
         { rel: 'icon', type: 'image/png', sizes: '48x48', href: '/favicon-48x48.png' },
@@ -60,7 +69,17 @@ export default defineNuxtConfig({
   },
 
   sitemap: {
-    exclude: ['/app/**', '/listen/*'] // نستثني صفحات القراء مؤقتاً لأنها تعتمد على client-side rendering
+    // صفحات القرّاء والسور (/listen/**) تأتي من مصدر ديناميكي يقرأ قائمة القرّاء.
+    sources: ['/api/__sitemap__/urls'],
+    // `/app/**` محطات للروابط العميقة، و`/play` و`/radio` تحويلات قديمة إليها.
+    exclude: ['/app', '/app/**', '/play', '/radio']
+  },
+
+  routeRules: {
+    // نسمح بالزحف على الـ API (يحتاجه Googlebot ليرندر الصفحات) دون فهرسته.
+    '/api/**': { headers: { 'X-Robots-Tag': 'noindex' } },
+    '/app': { headers: { 'X-Robots-Tag': 'noindex, follow' } },
+    '/app/**': { headers: { 'X-Robots-Tag': 'noindex, follow' } },
   },
 
   site: {

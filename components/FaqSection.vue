@@ -22,6 +22,22 @@ const faqs = ref([
   }
 ])
 
+useHead({
+  script: [{
+    key: 'faq-schema',
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.value.map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+    }),
+  }],
+})
+
 const toggleFaq = (index) => {
   faqs.value = faqs.value.map((f, i) => ({
     ...f,

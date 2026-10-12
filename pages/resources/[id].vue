@@ -1,17 +1,16 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { getResourceById } from '~/utils/resourcesData'
 
 const route = useRoute()
-const router = useRouter()
 
 const resourceId = route.params.id
 const resource = computed(() => getResourceById(resourceId))
 const showToast = ref(false)
 
 if (!resource.value) {
-  router.push('/resources')
+  await navigateTo('/resources')
 }
 
 const getIconType = (format) => {
@@ -33,20 +32,33 @@ const copyLink = () => {
   }
 }
 
-useHead(() => {
-  if (!resource.value) return {}
-  return {
-    title: `${resource.value.name} | مُناجاتك المفتوح`,
-    meta: [
-      { name: 'description', content: resource.value.description },
-      { property: 'og:title', content: `${resource.value.name} | تحميل مباشر` },
-      { property: 'og:description', content: resource.value.description },
-      { property: 'og:type', content: 'website' },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:title', content: `${resource.value.name} | تحميل مباشر` },
-      { name: 'twitter:description', content: resource.value.description }
-    ]
-  }
+const isDataset = computed(() => !['TTF', 'OTF', 'WOFF'].includes(resource.value?.format))
+
+usePageSeo({
+  title: () => `${resource.value?.name} | تحميل مباشر مفتوح المصدر | مُناجاتك`,
+  description: () => resource.value?.description,
+  breadcrumbs: () => [
+    ['الموارد المفتوحة', '/resources'],
+    [resource.value?.name, `/resources/${resourceId}`],
+  ],
+  // قواعد البيانات وملفات JSON تظهر في Google Dataset Search.
+  schema: () =>
+    resource.value && isDataset.value
+      ? {
+          '@type': 'Dataset',
+          name: resource.value.name,
+          description: resource.value.description,
+          url: `https://www.monaajatak.app/resources/${resourceId}`,
+          inLanguage: 'ar',
+          isAccessibleForFree: true,
+          creator: { '@id': 'https://www.monaajatak.app/#organization' },
+          distribution: {
+            '@type': 'DataDownload',
+            encodingFormat: resource.value.format,
+            contentUrl: resource.value.url,
+          },
+        }
+      : null,
 })
 </script>
 

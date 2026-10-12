@@ -108,6 +108,7 @@
                 :title="r.name"
                 :subtitle="r.moshaf?.[0]?.name || 'تلاوات القرآن'"
                 :title-badge="`${toArNum(r.moshaf?.[0]?.surahTotal || 0)} سورة`"
+                :href="`/listen/${reciterSlug(r)}`"
                 :on-tap="() => openReciter(r)"
               >
                 <template #trailing>
@@ -361,12 +362,11 @@ import NumberedTile from '~/components/AudioLibrary/NumberedTile.vue'
 import MiniPlayer from '~/components/AudioLibrary/MiniPlayer.vue'
 import FullPlayer from '~/components/AudioLibrary/FullPlayer.vue'
 
-useHead(() => ({
-  title: 'المكتبة الصوتية | مُناجاتك',
-  meta: [
-    { name: 'description', content: 'استمع للقرآن الكريم مباشرة بأصوات أشهر القراء والإذاعات القرآنية عبر المكتبة الصوتية في مُناجاتك.' }
-  ]
-}))
+usePageSeo({
+  title: 'استمع للقرآن الكريم أونلاين | أكثر من ٢٤٠ قارئاً وإذاعات مباشرة | مُناجاتك',
+  description: 'استمع للقرآن الكريم كاملاً مباشرة من المتصفح بأصوات أكثر من ٢٤٠ قارئاً وبروايات متعددة، مع إذاعات القرآن الكريم على مدار الساعة. مجاناً وبدون إعلانات على مُناجاتك.',
+  breadcrumbs: [['المكتبة الصوتية', '/listen']],
+})
 
 const player = useAudioPlayer()
 const store = useAudioLibraryStore()
