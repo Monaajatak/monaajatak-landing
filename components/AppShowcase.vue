@@ -1,14 +1,15 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
 
+// `img` اسم الصورة بلا امتداد: نسختا WebP بعرض 400 و800 يولّدهما generate-images.js
 const baseScreenshots = [
-  { img: '/images/screenshots/01_App_Overview.png', title: 'نظرة عامة', desc: 'تجربة مستخدم هادئة ومنظمة' },
-  { img: '/images/screenshots/02_Quran_Reading.png', title: 'القرآن الكريم', desc: 'قراءة بالرسم العثماني مع تحكم في الخط' },
-  { img: '/images/screenshots/03_Quran_Listening.png', title: 'الاستماع تلاوات', desc: 'أشهر القراء بأعلى جودة صوتية' },
-  { img: '/images/screenshots/04_Electronic_Sebha.png', title: 'السبحة الإلكترونية', desc: 'عداد تسبيح ذكي مع اهتزازات' },
-  { img: '/images/screenshots/06_Athkar_Daily.png', title: 'الأذكار اليومية', desc: 'أذكار الصباح والمساء وكل ما تحتاجه' },
-  { img: '/images/screenshots/07_Qibla_Compass.png', title: 'بوصلة القبلة', desc: 'تحديد دقيق لاتجاه القبلة من أي مكان' },
-  { img: '/images/screenshots/08_Dark_Light_Mode.png', title: 'الوضع الليلي', desc: 'دعم كامل للوضع الداكن لراحة عينك' }
+  { img: '/images/screenshots/01_App_Overview', title: 'نظرة عامة', desc: 'تجربة مستخدم هادئة ومنظمة' },
+  { img: '/images/screenshots/02_Quran_Reading', title: 'القرآن الكريم', desc: 'قراءة بالرسم العثماني مع تحكم في الخط' },
+  { img: '/images/screenshots/03_Quran_Listening', title: 'الاستماع تلاوات', desc: 'أشهر القراء بأعلى جودة صوتية' },
+  { img: '/images/screenshots/04_Electronic_Sebha', title: 'السبحة الإلكترونية', desc: 'عداد تسبيح ذكي مع اهتزازات' },
+  { img: '/images/screenshots/06_Athkar_Daily', title: 'الأذكار اليومية', desc: 'أذكار الصباح والمساء وكل ما تحتاجه' },
+  { img: '/images/screenshots/07_Qibla_Compass', title: 'بوصلة القبلة', desc: 'تحديد دقيق لاتجاه القبلة من أي مكان' },
+  { img: '/images/screenshots/08_Dark_Light_Mode', title: 'الوضع الليلي', desc: 'دعم كامل للوضع الداكن لراحة عينك' }
 ]
 
 // Clone array 3 times to create an infinite loop illusion
@@ -128,7 +129,17 @@ onUnmounted(() => {
                class="carousel-slide" 
                :class="{ active: virtualIndex === index }"
                @click="setSlideByVirtual(index)">
-            <img :src="screen.img" :alt="screen.title" class="screen-img" loading="lazy" decoding="async">
+            <img
+              :src="`${screen.img}-400.webp`"
+              :srcset="`${screen.img}-400.webp 400w, ${screen.img}-800.webp 800w`"
+              sizes="(max-width: 360px) 165px, (max-width: 480px) 192px, (max-width: 768px) 233px, 274px"
+              width="400"
+              height="867"
+              :alt="screen.title"
+              class="screen-img"
+              loading="lazy"
+              decoding="async"
+            >
           </div>
         </div>
         

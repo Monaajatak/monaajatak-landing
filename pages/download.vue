@@ -122,8 +122,8 @@ usePageSeo({
 
         <div class="download-image-wrapper">
           <div class="phone-mockup">
-            <img src="/images/app-mockup-light.png" alt="صورة التطبيق" class="mockup-img light-img" />
-            <img src="/images/app-mockup-dark.png" alt="صورة التطبيق" class="mockup-img dark-img" />
+            <img src="/images/app-mockup-light.webp" alt="صورة التطبيق" width="440" height="916" class="mockup-img light-img" />
+            <img src="/images/app-mockup-dark.webp" alt="صورة التطبيق" width="440" height="916" class="mockup-img dark-img" />
           </div>
         </div>
       </div>
