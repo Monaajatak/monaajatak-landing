@@ -1,5 +1,6 @@
 <template>
-  <section id="hero" class="hero reveal">
+  <!-- بلا `reveal`: محتوى أعلى الصفحة يظهر فوراً، فلا ينتظر الـ JS ليُرسم (LCP). -->
+  <section id="hero" class="hero">
     <!-- Animated Glowing Orbs -->
     <div class="hero-bg-glow glow-1"></div>
     <div class="hero-bg-glow glow-2"></div>
@@ -9,18 +10,18 @@
 
     <div class="container hero-grid">
       <div class="hero-content">
-        <div class="hero-logo-tagline reveal-delay-1">
+        <div class="hero-logo-tagline">
           <span class="tagline-dot"></span>
           <span>مُناجاتك — رفيقك الإيماني اليومي</span>
         </div>
         
-        <h1 class="reveal-delay-2">اجعل طاعتك أقرب مع <span class="text-teal">مُناجاتك</span></h1>
+        <h1>اجعل طاعتك أقرب مع <span class="text-teal">مُناجاتك</span></h1>
         
-        <p class="lead reveal-delay-3">
+        <p class="lead">
           تجربة هادئة وسريعة تجمع لك القرآن الكريم، الأذكار، والتسبيح في تطبيق واحد. صُمم ليرافقك في كل خطوة نحو رضا الله، بدون إعلانات وبشكل مجاني تماماً.
         </p>
 
-        <div class="hero-actions reveal-delay-4">
+        <div class="hero-actions">
                     <a href="/app" class="btn btn-primary btn-lg">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
             افتح التطبيق
@@ -31,7 +32,7 @@
           </a>
         </div>
 
-        <div class="hero-capsules reveal-delay-5">
+        <div class="hero-capsules">
           <div class="capsule">
             <span class="capsule-icon">⭐</span>
             <span class="capsule-text">تقييم 4.9/5</span>

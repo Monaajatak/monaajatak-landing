@@ -62,10 +62,8 @@ export default defineNuxtConfig({
 
   gtag: {
     // معرف التتبع الخاص بجوجل أنالاتيكس
-    id: 'G-14VLRZE6D7',
-    config: {
-      page_title: 'مُناجاتك'
-    }
+    // بلا `page_title` ثابت: GA4 يأخذ عنوان كل صفحة، فتتميز الصفحات في تقاريره.
+    id: 'G-14VLRZE6D7'
   },
 
   sitemap: {
@@ -76,6 +74,14 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    // الصفحات لا تختلف من زائر لآخر، فتُخزَّن على CDN Vercel بدل رندرتها لكل طلب.
+    // (s-maxage لا ISR: ISR في Nitro يُسقط معاملات الرابط قبل الرندر.)
+    // صفحات القرّاء والسور تضبط ترويستها بنفسها في useReciterData.
+    ...Object.fromEntries(
+      ['/', '/quran', '/azkar', '/duas', '/prayer-times', '/qibla', '/download', '/audio-library',
+        '/listen', '/resources', '/resources/**', '/privacy-policy', '/volunteer']
+        .map((path) => [path, { headers: { 'cache-control': 'public, s-maxage=3600, stale-while-revalidate=86400' } }])
+    ),
     // نسمح بالزحف على الـ API (يحتاجه Googlebot ليرندر الصفحات) دون فهرسته.
     '/api/**': { headers: { 'X-Robots-Tag': 'noindex' } },
     '/app': { headers: { 'X-Robots-Tag': 'noindex, follow' } },

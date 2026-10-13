@@ -33,6 +33,13 @@
     <!-- ══════════ Surah list ══════════ -->
     <div v-else class="alt-content">
       <SurahListView :reciter="reciter" :moshaf="moshaf" :suwar="suwar" @open="fullPlayerOpen = true" />
+
+      <section v-if="otherReciters.length" class="alt-others">
+        <h2>قرّاء آخرون</h2>
+        <div class="alt-others-list">
+          <NuxtLink v-for="r in otherReciters" :key="r.id" :to="`/listen/${r.slug}`" class="alt-chip">{{ r.name }}</NuxtLink>
+        </div>
+      </section>
     </div>
 
     <MiniPlayer v-if="player.currentTrack.value && !fullPlayerOpen" @open="fullPlayerOpen = true" />
@@ -59,7 +66,9 @@ const isSurahChild = computed(() => route.name === 'listen-reciter-surah')
 const fullPlayerOpen = ref(false)
 
 // تُشارَك مع صفحة السورة المتداخلة؛ ووسومها تعلو هذه الوسوم حين تُعرض.
-const { reciter, suwar, loading } = await useReciterData()
+const { reciter, suwar, popular, loading } = await useReciterData()
+
+const otherReciters = computed(() => popular.value.filter((r) => r.id !== reciter.value?.id).slice(0, 12))
 
 const moshaf = computed(() => pickMoshaf(reciter.value))
 const surahCount = computed(() => moshaf.value?.surahTotal || 0)
@@ -94,6 +103,15 @@ const goBack = () => {
 </script>
 
 <style scoped>
+.alt-others { margin: 26px 0 0; }
+.alt-others h2 { font-size: 15px; color: var(--text); margin: 0 0 10px; }
+.alt-others-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.alt-chip {
+  padding: 8px 14px; border-radius: 999px; border: var(--border); background: var(--surface);
+  color: var(--text); font-size: 13px; text-decoration: none; transition: all var(--transition-fast);
+}
+.alt-chip:hover { border-color: rgba(var(--primary-rgb), 0.4); color: var(--primary); }
+
 .alt-page {
   min-height: 100vh;
   position: relative;

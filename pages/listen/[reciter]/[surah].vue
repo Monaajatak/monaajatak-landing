@@ -8,7 +8,8 @@
         </button>
         <div class="sp-ab">
           <span>الآن تُشغّل</span>
-          <strong>{{ reciter?.name || 'القارئ' }}</strong>
+          <NuxtLink v-if="reciter" :to="reciterPath" class="sp-ab-link"><strong>{{ reciter.name }}</strong></NuxtLink>
+          <strong v-else>القارئ</strong>
         </div>
         <button class="sp-share" aria-label="مشاركة" @click="share">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
@@ -61,7 +62,7 @@
           <button class="sp-ctl" :disabled="!hasNext" aria-label="التالي" @click="player.next">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
           </button>
-          <button class="sp-ctl" :class="{ on: player.playbackRate.value !== 1 }" aria-label="سرعة التشغيل" @click="showSpeed = true">{{ player.playbackRate.value }}x</button>
+          <button class="sp-ctl" :class="{ on: player.playbackRate.value !== 1 }" :aria-label="`سرعة التشغيل ${player.playbackRate.value}x`" @click="showSpeed = true">{{ player.playbackRate.value }}x</button>
         </div>
 
         <!-- ══════════ Favorites + playlist ══════════ -->
@@ -76,17 +77,36 @@
           </button>
         </div>
 
+        <!-- ══════════ About ══════════ -->
+        <section class="sp-about">
+          <h2>عن سورة {{ surahName }}</h2>
+          <p>{{ aboutText }}</p>
+          <nav v-if="prevSurah || nextSurah" class="sp-nav" aria-label="التنقل بين السور">
+            <NuxtLink v-if="prevSurah" :to="surahPath(prevSurah)" class="sp-nav-link">
+              <small>السورة السابقة</small>
+              <span>{{ surahNameOf(prevSurah) }}</span>
+            </NuxtLink>
+            <NuxtLink v-if="nextSurah" :to="surahPath(nextSurah)" class="sp-nav-link sp-nav-next">
+              <small>السورة التالية</small>
+              <span>{{ surahNameOf(nextSurah) }}</span>
+            </NuxtLink>
+          </nav>
+        </section>
+
         <!-- ══════════ Queue ══════════ -->
         <div class="sp-queue-head">
-          <h3>سور القارئ</h3>
+          <h2>سور القارئ</h2>
           <span>{{ toArNum(surahIds.length) }} سورة</span>
         </div>
+        <!-- روابط حقيقية: تفتح صفحة السورة وتشغّلها معاً، وتتبعها الزواحف. -->
         <div class="sp-queue">
-          <button
+          <NuxtLink
             v-for="s in surahIds"
             :key="s"
+            :to="surahPath(s)"
+            replace
             :class="['sp-q', { cur: isCurrentSurah(s), now: isCurrentSurah(s) && player.isPlaying.value }]"
-            @click="playSurah(s)"
+            @click="onQueueClick($event, s)"
           >
             <StarNumber :number="toArNum(s)" color="var(--primary)" :size="34" />
             <span class="sp-q-name">{{ surahNameOf(s) }}</span>
@@ -94,8 +114,18 @@
             <span class="sp-q-play">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
             </span>
-          </button>
+          </NuxtLink>
         </div>
+
+        <!-- ══════════ Same surah, other reciters ══════════ -->
+        <section v-if="otherReciters.length" class="sp-others">
+          <h2>سورة {{ surahName }} بأصوات قرّاء آخرين</h2>
+          <div class="sp-others-list">
+            <NuxtLink v-for="r in otherReciters" :key="r.id" :to="`/listen/${r.slug}/${surahId}`" class="sp-chip">
+              {{ r.name }}
+            </NuxtLink>
+          </div>
+        </section>
       </template>
     </div>
 
@@ -168,7 +198,7 @@ const newNameSheet = ref(false)
 const newName = ref('')
 const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2]
 
-const { reciter, suwar, loading } = await useReciterData()
+const { reciter, suwar, popular, loading } = await useReciterData()
 
 onMounted(() => {
   // القادم من رابط مشاركة (`?autoplay=1`) جاء ليسمع، لا ليضغط تشغيل من جديد.
@@ -256,6 +286,44 @@ const playSurah = (s) => {
   const track = queue.find((t) => t.surahId === s)
   player.playTrack(track, queue)
 }
+
+const reciterPath = computed(() => (reciter.value ? `/listen/${reciterSlug(reciter.value)}` : '/listen'))
+const surahPath = (id) => `${reciterPath.value}/${id}`
+
+// النقرة العادية تشغّل السورة وتنتقل لصفحتها؛ النقرة مع مفتاح تفتحها في لسان جديد فقط.
+const onQueueClick = (e, s) => {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
+  playSurah(s)
+}
+
+const prevSurah = computed(() => surahIds.value[findIndex() - 1] || null)
+const nextSurah = computed(() => surahIds.value[findIndex() + 1] || null)
+
+// بداية كل جزء في مصحف المدينة (٦٠٤ صفحات).
+const JUZ_START_PAGES = [1, 22, 42, 62, 82, 102, 121, 142, 162, 182, 201, 222, 242, 262, 282, 302, 322, 342, 362, 382, 402, 422, 442, 462, 482, 502, 522, 542, 562, 582]
+const juzOfPage = (page) => JUZ_START_PAGES.findLastIndex((start) => page >= start) + 1
+
+// نص فريد لكل صفحة من بيانات السورة والتلاوة، لا قالب مكرر بين ٢٣ ألف صفحة.
+const aboutText = computed(() => {
+  const info = suwar.value.find((x) => x.id === surahId.value)
+  if (!info || !reciter.value) return ''
+  const n = toArNum
+  const pages = info.startPage === info.endPage
+    ? `الصفحة ${n(info.startPage)}`
+    : `الصفحات ${n(info.startPage)}–${n(info.endPage)}`
+  const fromJuz = juzOfPage(info.startPage)
+  const toJuz = juzOfPage(info.endPage)
+  const juz = fromJuz === toJuz ? `في الجزء ${n(fromJuz)}` : `من الجزء ${n(fromJuz)} إلى الجزء ${n(toJuz)}`
+  return `سورة ${surahName.value} ${isMakki.value ? 'مكية' : 'مدنية'}، عدد آياتها ${n(verseCount.value)}، وترتيبها ${n(surahId.value)} في المصحف الشريف. تقع في ${pages} من مصحف المدينة النبوية، ${juz}. استمع إليها كاملة بصوت القارئ ${reciter.value.name}${
+    moshaf.value?.name ? ` (${moshaf.value.name})` : ''
+  } مجاناً وبدون إعلانات.`
+})
+
+const otherReciters = computed(() =>
+  popular.value
+    .filter((r) => r.id !== reciter.value?.id && r.surahs.includes(surahId.value))
+    .slice(0, 12),
+)
 
 const isCurrentSurah = (s) => isCurrent.value && player.currentTrack.value?.surahId === s
 
@@ -429,7 +497,9 @@ useHead(() => ({
 }
 .sp-back:hover, .sp-share:hover { background: rgba(var(--primary-rgb), 0.08); color: var(--primary); }
 .sp-ab { text-align: center; display: flex; flex-direction: column; }
-.sp-ab span { font-size: 11px; color: var(--muted); }
+.sp-ab span { font-size: 12px; color: var(--muted); }
+.sp-ab-link { color: inherit; text-decoration: none; }
+.sp-ab-link:hover strong { color: var(--primary); }
 .sp-ab strong { font-size: 14px; color: var(--text); }
 
 .sp-state { padding: 80px 0; text-align: center; color: var(--muted); display: flex; flex-direction: column; gap: 16px; align-items: center; }
@@ -523,11 +593,12 @@ useHead(() => ({
   display: flex; align-items: center; justify-content: space-between;
   margin: 26px 0 8px;
 }
-.sp-queue-head h3 { font-size: 15px; color: var(--text); margin: 0; }
+.sp-queue-head h2 { font-size: 15px; color: var(--text); margin: 0; }
 .sp-queue-head span { font-size: 12px; color: var(--muted); }
 .sp-queue { display: flex; flex-direction: column; gap: 6px; }
 .sp-q {
   display: flex; align-items: center; gap: 12px;
+  color: inherit; text-decoration: none;
   padding: 10px 12px; border-radius: 12px;
   background: var(--surface); border: var(--border);
   font-family: var(--font-body); text-align: start; cursor: pointer;
@@ -536,9 +607,37 @@ useHead(() => ({
 .sp-q:hover { border-color: rgba(var(--primary-rgb), 0.35); }
 .sp-q.cur { border-color: rgba(var(--primary-rgb), 0.5); }
 .sp-q-name { font-size: 16px; font-weight: 600; color: var(--text); font-family: var(--font-quran); }
-.sp-q-sub { font-size: 11px; color: var(--muted); flex: 1; }
+.sp-q-sub { font-size: 12px; color: var(--muted); flex: 1; }
 .sp-q-play { color: var(--muted); display: flex; }
 .sp-q.now .sp-q-play { color: var(--primary); }
+
+/* about + navigation */
+.sp-about {
+  margin: 26px 0 0; padding: 16px; border-radius: 14px;
+  background: var(--surface); border: var(--border);
+}
+.sp-about h2 { font-size: 15px; color: var(--text); margin: 0 0 8px; }
+.sp-about p { font-size: 14px; line-height: 1.9; color: var(--text-secondary); margin: 0; }
+.sp-nav { display: flex; gap: 8px; margin-top: 14px; }
+.sp-nav-link {
+  flex: 1; display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 12px; border-radius: 10px; border: var(--border);
+  color: inherit; text-decoration: none; transition: border-color var(--transition-fast);
+}
+.sp-nav-link:hover { border-color: rgba(var(--primary-rgb), 0.4); }
+.sp-nav-next { text-align: end; }
+.sp-nav-link small { font-size: 12px; color: var(--muted); }
+.sp-nav-link span { font-size: 15px; font-weight: 700; color: var(--text); }
+
+/* same surah, other reciters */
+.sp-others { margin: 26px 0 0; }
+.sp-others h2 { font-size: 15px; color: var(--text); margin: 0 0 10px; }
+.sp-others-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.sp-chip {
+  padding: 8px 14px; border-radius: 999px; border: var(--border); background: var(--surface);
+  color: var(--text); font-size: 13px; text-decoration: none; transition: all var(--transition-fast);
+}
+.sp-chip:hover { border-color: rgba(var(--primary-rgb), 0.4); color: var(--primary); }
 
 /* sheets */
 .sp-sheet {
