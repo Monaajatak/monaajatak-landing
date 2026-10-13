@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { resolveReciter } from '~/utils/reciterSlug'
+import { resolveReciter, reciterSlug, POPULAR_RECITER_IDS } from '~/utils/reciterSlug'
 
 /**
  * بيانات صفحة القارئ وصفحة السورة: القارئ المطلوب في المسار وقائمة السور.
@@ -21,17 +21,28 @@ export const useReciterData = () => {
         $fetch('/api/mp3quran/reciters'),
         $fetch('/api/mp3quran/suwar'),
       ])
+      const all = rRes?.reciters || []
       return {
-        reciter: resolveReciter(rRes?.reciters || [], route.params.reciter),
+        reciter: resolveReciter(all, route.params.reciter),
         suwar: sRes?.suwar || [],
+        // روابط بين الصفحات: القرّاء الأشهر وسورهم (لـ"السورة نفسها بصوت قارئ آخر").
+        popular: POPULAR_RECITER_IDS.map((id) => all.find((r) => r.id === id))
+          .filter(Boolean)
+          .map((r) => ({ id: r.id, name: r.name, slug: reciterSlug(r), surahs: allSurahIds(r) })),
       }
     },
-    { lazy: import.meta.client },
+    {
+      lazy: import.meta.client,
+      // التنقل بين سور القارئ نفسه يعيد استخدام البيانات بدل جلب قائمة القرّاء كاملة.
+      getCachedData: (key, nuxtApp, ctx) =>
+        ctx.cause === 'refresh:manual' ? undefined : (nuxtApp.payload.data[key] ?? nuxtApp.static.data[key]),
+    },
   )
 
   const { data, status, error } = asyncData
   const reciter = computed(() => data.value?.reciter || null)
   const suwar = computed(() => data.value?.suwar || [])
+  const popular = computed(() => data.value?.popular || [])
   const loading = computed(() => status.value === 'idle' || status.value === 'pending')
 
   return asyncData.then(() => {
@@ -39,8 +50,13 @@ export const useReciterData = () => {
     if (event) {
       if (error.value) setResponseStatus(event, 503)
       else if (!reciter.value) setResponseStatus(event, 404)
+      // تُخزَّن على CDN Vercel لكل رابط بمعاملاته؛ أما تعثّر الـ API فلا يُخزَّن.
+      event.node.res.setHeader(
+        'cache-control',
+        error.value ? 'no-store' : 'public, s-maxage=86400, stale-while-revalidate=604800',
+      )
     }
-    return { reciter, suwar, loading, error }
+    return { reciter, suwar, popular, loading, error }
   })
 }
 
@@ -59,7 +75,11 @@ export const pickMoshaf = (reciter, { moshafId, surahId } = {}) => {
   return (surahId && complete.find((m) => hasSurah(m, surahId))) || complete[0] || null
 }
 
+/** أرقام السور المتاحة للقارئ في كل رواياته، مرتبة. */
+export const allSurahIds = (reciter) =>
+  [...new Set((reciter?.moshaf || []).flatMap((m) => String(m.surahList || '').split(',').map(Number).filter(Boolean)))]
+    .sort((a, b) => a - b)
+
 /** عدد السور المتاحة للقارئ في كل رواياته. */
-export const reciterSurahCount = (reciter) =>
-  new Set((reciter?.moshaf || []).flatMap((m) => String(m.surahList || '').split(',').filter(Boolean))).size
+export const reciterSurahCount = (reciter) => allSurahIds(reciter).length
 

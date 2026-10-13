@@ -106,8 +106,8 @@
                 :number="toArNum(reciterNumber(r) + 1)"
                 accent="var(--primary)"
                 :title="r.name"
-                :subtitle="r.moshaf?.[0]?.name || 'تلاوات القرآن'"
-                :title-badge="`${toArNum(r.moshaf?.[0]?.surahTotal || 0)} سورة`"
+                :subtitle="pickMoshaf(r)?.name || 'تلاوات القرآن'"
+                :title-badge="`${toArNum(reciterSurahCount(r))} سورة`"
                 :href="`/listen/${reciterSlug(r)}`"
                 :on-tap="() => openReciter(r)"
               >
@@ -358,12 +358,13 @@ import { ref, computed } from 'vue'
 import { useAudioPlayer } from '~/composables/useAudioPlayer'
 import { useAudioLibraryStore } from '~/composables/useAudioLibraryStore'
 import { reciterSlug } from '~/utils/reciterSlug'
+import { pickMoshaf, reciterSurahCount } from '~/composables/useReciterData'
 import NumberedTile from '~/components/AudioLibrary/NumberedTile.vue'
 import MiniPlayer from '~/components/AudioLibrary/MiniPlayer.vue'
 import FullPlayer from '~/components/AudioLibrary/FullPlayer.vue'
 
 usePageSeo({
-  title: 'استمع للقرآن الكريم أونلاين | أكثر من ٢٤٠ قارئاً وإذاعات مباشرة | مُناجاتك',
+  title: 'استمع للقرآن الكريم أونلاين | +٢٤٠ قارئ وإذاعات | مُناجاتك',
   description: 'استمع للقرآن الكريم كاملاً مباشرة من المتصفح بأصوات أكثر من ٢٤٠ قارئاً وبروايات متعددة، مع إذاعات القرآن الكريم على مدار الساعة. مجاناً وبدون إعلانات على مُناجاتك.',
   breadcrumbs: [['المكتبة الصوتية', '/listen']],
 })
@@ -383,12 +384,35 @@ const activeTab = ref('reciters')
 const fullPlayerOpen = ref(false)
 
 // ── data ──
-const loading = ref(true)
-const error = ref('')
-const reciters = ref([])
-const suwar = ref([])
-const riwayat = ref([])
+// القرّاء والسور والروايات تُجلب على الخادم: قائمة القرّاء (وروابطها) تصل في HTML
+// نفسه للزواحف. الإذاعات لا تحتاج ذلك فتُجلب في المتصفح.
+const {
+  data: library,
+  status: libraryStatus,
+  error: libraryError,
+  refresh: refreshLibrary,
+} = await useAsyncData(
+  'listen-library',
+  async () => {
+    const [rRes, sRes, rwRes] = await Promise.all([
+      $fetch('/api/mp3quran/reciters'),
+      $fetch('/api/mp3quran/suwar'),
+      $fetch('/api/mp3quran/riwayat'),
+    ])
+    return { reciters: rRes.reciters || [], suwar: sRes.suwar || [], riwayat: rwRes.riwayat || [] }
+  },
+  { lazy: import.meta.client },
+)
+const reciters = computed(() => library.value?.reciters || [])
+const suwar = computed(() => library.value?.suwar || [])
+const riwayat = computed(() => library.value?.riwayat || [])
 const radios = ref([])
+const radiosError = ref(false)
+
+const loading = computed(() => libraryStatus.value === 'idle' || libraryStatus.value === 'pending')
+const error = computed(() =>
+  libraryError.value || radiosError.value ? 'حدث خطأ أثناء الاتصال بخادم المكتبة الصوتية.' : '',
+)
 
 const searchQuery = ref('')
 const radioQuery = ref('')
@@ -412,30 +436,21 @@ const surahName = (id) => suwar.value.find((s) => s.id === id)?.name || `سور�
 const rewayaName = (id) => riwayat.value.find((r) => r.id === id)?.name || 'رواية'
 
 // ══════════ load ══════════
-const loadAll = async () => {
-  loading.value = true
-  error.value = ''
+const loadRadios = async () => {
+  radiosError.value = false
   try {
-    const [rRes, sRes, rwRes, rdRes] = await Promise.all([
-      $fetch('/api/mp3quran/reciters'),
-      $fetch('/api/mp3quran/suwar'),
-      $fetch('/api/mp3quran/riwayat'),
-      $fetch('/api/mp3quran/radios'),
-    ])
-    reciters.value = rRes.reciters || []
-    suwar.value = sRes.suwar || []
-    riwayat.value = rwRes.riwayat || []
+    const rdRes = await $fetch('/api/mp3quran/radios')
     radios.value = (rdRes.radios || []).filter((r) => r.name)
   } catch (e) {
     console.error(e)
-    error.value = 'حدث خطأ أثناء الاتصال بخادم المكتبة الصوتية.'
-  } finally {
-    loading.value = false
+    radiosError.value = true
   }
 }
 
+const loadAll = () => Promise.all([libraryError.value ? refreshLibrary() : null, loadRadios()])
+
 onMounted(async () => {
-  await loadAll()
+  await loadRadios()
   applyDeepLink()
 })
 

@@ -27,6 +27,9 @@ const ALIASES = {
   'abdul-muhsin-al-qasim': 67, 'al-qasim': 67,
 }
 
+/** القرّاء الأشهر (من له اسم مختصر أعلاه)، بترتيبهم هنا. */
+export const POPULAR_RECITER_IDS = [...new Set(Object.values(ALIASES))]
+
 const normalize = (s) =>
   String(s || '')
     .toLowerCase()
