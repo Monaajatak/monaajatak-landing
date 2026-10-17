@@ -34,5 +34,34 @@
   "loading": {
     "message": "Loading...",
     "pleaseWait": "Please wait a moment..."
+  },
+  "tools": {
+    "chipLabel": "Faith tools at your fingertips",
+    "titlePrefix": "One companion for",
+    "titleHighlight": "multiple faith habits",
+    "description": "We organized what you need in an easy and familiar journey: effortlessly read, remember, and listen without too many steps or a cluttered interface.",
+    "exploreExperience": "Explore Monaajatak experience",
+    "cards": {
+      "recitations": {
+        "title": "Fragrant Recitations",
+        "description": "Choose your reciter, and create your personalized listening playlist to return to whenever you wish."
+      },
+      "quran": {
+        "title": "The Holy Quran",
+        "description": "Comfortable reading, instant search, and tafsir to bring you closer to the meanings."
+      },
+      "eyeComfort": {
+        "title": "Eye Comfort",
+        "description": "Gentle night mode making your reading and browsing soothing in the evening."
+      },
+      "qibla": {
+        "title": "Closer to Your Qibla",
+        "description": "Accurate prayer times and Qibla compass to stay prepared wherever you are."
+      },
+      "azkar": {
+        "title": "Daily Adhkar",
+        "description": "An organized library accompanying your mornings, evenings, and special moments."
+      }
+    }
   }
 }
