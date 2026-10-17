@@ -1,6 +1,7 @@
 export const useGlobalLoading = () => {
   // Initially true so SSR HTML includes the loading state, preventing content flashes
   const isLoading = useState<boolean>('global_loading_is_active', () => true)
+
   const loadingMessage = useState<string>(
     'global_loading_custom_message',
     () => '',
