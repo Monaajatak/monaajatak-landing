@@ -9,47 +9,54 @@ import AthkarDaily from '~/assets/imgs/screenshots/06_Athkar_Daily.png'
 import QiblaCompass from '~/assets/imgs/screenshots/07_Qibla_Compass.png'
 import DarkLightMode from '~/assets/imgs/screenshots/08_Dark_Light_Mode.png'
 
-const baseScreenshots = [
+const { t } = useI18n()
+
+const staticScreenshots = [
   {
     img: Overview,
-    title: 'نظرة عامة',
-    desc: 'تجربة مستخدم هادئة ومنظمة',
+    key: 'overview',
   },
   {
     img: QuranReading,
-    title: 'القرآن الكريم',
-    desc: 'قراءة بالرسم العثماني مع تحكم في الخط',
+    key: 'quran',
   },
   {
     img: QuranListening,
-    title: 'الاستماع تلاوات',
-    desc: 'أشهر القراء بأعلى جودة صوتية',
+    key: 'listening',
   },
   {
     img: Electronic_Sebha,
-    title: 'السبحة الإلكترونية',
-    desc: 'عداد تسبيح ذكي مع اهتزازات',
+    key: 'sebha',
   },
   {
     img: AthkarDaily,
-    title: 'الأذكار اليومية',
-    desc: 'أذكار الصباح والمساء وكل ما تحتاجه',
+    key: 'athkar',
   },
   {
     img: QiblaCompass,
-    title: 'بوصلة القبلة',
-    desc: 'تحديد دقيق لاتجاه القبلة من أي مكان',
+    key: 'qibla',
   },
   {
     img: DarkLightMode,
-    title: 'الوضع الليلي',
-    desc: 'دعم كامل للوضع الداكن لراحة عينك',
+    key: 'darkMode',
   },
 ]
 
+const baseScreenshots = computed(() =>
+  staticScreenshots.map(item => ({
+    img: item.img,
+    title: t(`screenshots.slides.${item.key}.title`),
+    desc: t(`screenshots.slides.${item.key}.desc`),
+  })),
+)
+
 // Clone array 3 times to create an infinite loop illusion
-const screenshots = [...baseScreenshots, ...baseScreenshots, ...baseScreenshots]
-const totalBase = baseScreenshots.length
+const screenshots = computed(() => [
+  ...baseScreenshots.value,
+  ...baseScreenshots.value,
+  ...baseScreenshots.value,
+])
+const totalBase = staticScreenshots.length
 
 const virtualIndex = ref(totalBase) // Start at the middle block
 const isTransitioning = ref(true)
@@ -88,13 +95,6 @@ const nextSlide = () => {
   virtualIndex.value++
   checkBoundsAfterTransition()
 }
-
-// const prevSlide = () => {
-//   if (isThrottled) return
-//   isThrottled = true
-//   virtualIndex.value--
-//   checkBoundsAfterTransition()
-// }
 
 const setSlideByVirtual = targetVirtualIndex => {
   if (isThrottled) return

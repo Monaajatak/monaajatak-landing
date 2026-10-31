@@ -5,15 +5,16 @@
   >
     <div class="container">
       <div class="section-header reveal text-center">
-        <span class="badge-pill">جولة في التطبيق</span>
+        <span class="badge-pill">{{ $t('screenshots.badge') }}</span>
         <h2>
-          شاهد
-          <span class="text-gradient">مُناجاتك</span>
-          من الداخل
+          {{ $t('screenshots.titlePrefix') }}
+          <span class="text-gradient">
+            {{ $t('screenshots.titleHighlight') }}
+          </span>
+          {{ $t('screenshots.titleSuffix') }}
         </h2>
         <p class="section-desc">
-          استكشف واجهة التطبيق المصممة بعناية لتوفير أقصى درجات الهدوء والراحة
-          أثناء القراءة والذكر.
+          {{ $t('screenshots.description') }}
         </p>
       </div>
 

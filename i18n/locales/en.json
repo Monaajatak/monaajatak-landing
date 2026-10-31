@@ -63,5 +63,42 @@
         "description": "An organized library accompanying your mornings, evenings, and special moments."
       }
     }
+  },
+  "screenshots": {
+    "badge": "App Tour",
+    "titlePrefix": "See",
+    "titleHighlight": "Monaajatak",
+    "titleSuffix": "from within",
+    "description": "Explore the carefully designed app interface providing maximum tranquility and comfort during reading and remembrance.",
+    "slides": {
+      "overview": {
+        "title": "Overview",
+        "desc": "A calm and organized user experience"
+      },
+      "quran": {
+        "title": "The Holy Quran",
+        "desc": "Uthmani script reading with font controls"
+      },
+      "listening": {
+        "title": "Audio Recitations",
+        "desc": "Renowned reciters with pristine audio quality"
+      },
+      "sebha": {
+        "title": "Electronic Tasbih",
+        "desc": "Smart counter with haptic feedback"
+      },
+      "athkar": {
+        "title": "Daily Adhkar",
+        "desc": "Morning, evening, and essential supplications"
+      },
+      "qibla": {
+        "title": "Qibla Compass",
+        "desc": "Accurate Qibla direction from anywhere"
+      },
+      "darkMode": {
+        "title": "Night Mode",
+        "desc": "Full dark mode support for your eye comfort"
+      }
+    }
   }
 }
