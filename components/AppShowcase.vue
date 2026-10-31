@@ -1,39 +1,47 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
 
+import Overview from '~/assets/imgs/screenshots/01_App_Overview.png'
+import QuranReading from '~/assets/imgs/screenshots/02_Quran_Reading.png'
+import QuranListening from '~/assets/imgs/screenshots/03_Quran_Listening.png'
+import Electronic_Sebha from '~/assets/imgs/screenshots/04_Electronic_Sebha.png'
+import AthkarDaily from '~/assets/imgs/screenshots/06_Athkar_Daily.png'
+import QiblaCompass from '~/assets/imgs/screenshots/07_Qibla_Compass.png'
+import DarkLightMode from '~/assets/imgs/screenshots/08_Dark_Light_Mode.png'
+
 const baseScreenshots = [
   {
-    img: '/images/screenshots/01_App_Overview.png',
+    img: Overview,
     title: 'نظرة عامة',
     desc: 'تجربة مستخدم هادئة ومنظمة',
   },
   {
-    img: '/images/screenshots/02_Quran_Reading.png',
+    img: QuranReading,
     title: 'القرآن الكريم',
     desc: 'قراءة بالرسم العثماني مع تحكم في الخط',
   },
   {
-    img: '/images/screenshots/03_Quran_Listening.png',
+    img: QuranListening,
     title: 'الاستماع تلاوات',
     desc: 'أشهر القراء بأعلى جودة صوتية',
   },
   {
-    img: '/images/screenshots/04_Electronic_Sebha.png',
+    img: Electronic_Sebha,
     title: 'السبحة الإلكترونية',
     desc: 'عداد تسبيح ذكي مع اهتزازات',
   },
   {
-    img: '/images/screenshots/06_Athkar_Daily.png',
+    img: AthkarDaily,
     title: 'الأذكار اليومية',
     desc: 'أذكار الصباح والمساء وكل ما تحتاجه',
   },
   {
-    img: '/images/screenshots/07_Qibla_Compass.png',
+    img: QiblaCompass,
     title: 'بوصلة القبلة',
     desc: 'تحديد دقيق لاتجاه القبلة من أي مكان',
   },
   {
-    img: '/images/screenshots/08_Dark_Light_Mode.png',
+    img: DarkLightMode,
     title: 'الوضع الليلي',
     desc: 'دعم كامل للوضع الداكن لراحة عينك',
   },

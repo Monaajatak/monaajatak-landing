@@ -13,6 +13,8 @@ withDefaults(
     imageAlt?: string
     /** Custom class for the overflow image element */
     imageClass?: string
+    /** Image loading attribute */
+    imageLoading?: 'lazy' | 'eager'
     /** Top badge icon component */
     badgeIcon?: Component
     /** Enable subtle Islamic geometric watermark pattern background */
@@ -25,6 +27,7 @@ withDefaults(
     imageSrc: '',
     imageAlt: '',
     imageClass: '',
+    imageLoading: 'lazy',
     badgeIcon: undefined,
     hasPattern: false,
     wrapperClass: '',
@@ -34,7 +37,7 @@ withDefaults(
 
 <template>
   <div
-    class="group hover:shadow-primary/5 relative flex flex-col justify-between rounded-3xl border border-slate-100 bg-white p-5 pt-4 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl"
+    class="group hover:shadow-primary/5 relative flex flex-col justify-between rounded-3xl border border-slate-100 bg-white p-5 pt-4 shadow-lg transition-all duration-300 ease-out hover:-translate-y-1"
     :class="wrapperClass"
   >
     <!-- Background Watermark Pattern (Optional) -->
@@ -102,12 +105,14 @@ withDefaults(
         <slot name="image">
           <div
             v-if="imageSrc"
-            class="absolute -inset-e-14 -top-10 transition-transform duration-300 group-hover:scale-105"
-            :class="imageClass || 'h-24 w-28'"
+            class="absolute -inset-e-14 -top-10 h-24 w-28 transition-transform duration-300 group-hover:scale-105"
+            :class="imageClass"
           >
             <img
               :src="imageSrc"
               :alt="imageAlt || title"
+              :loading="imageLoading"
+              decoding="async"
               class="h-full w-full object-contain drop-shadow-md"
             />
           </div>

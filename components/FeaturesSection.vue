@@ -6,7 +6,12 @@ import MosqueIcon from '~/assets/icons/MosqueIcon.vue'
 import QuranIcon from '~/assets/icons/QuranIcon.vue'
 import ReciterIcon from '~/assets/icons/ReciterIcon.vue'
 import TasbihIcon from '~/assets/icons/TasbihIcon.vue'
+import QuranReading from '~/assets/imgs/screenshots/02_Quran_Reading.png'
+import DarkLightMode from '~/assets/imgs/screenshots/08_Dark_Light_Mode.png'
 import micIcon from '~/assets/imgs/tools-section/microphone_icon.png'
+import mosque from '~/assets/imgs/tools-section/mosque.png'
+import Sebha from '~/assets/imgs/tools-section/Sebha.png'
+import Vector from '~/assets/imgs/tools-section/Vector.vue'
 import ArrowButton from '~/components/common/button/ArrowButton.vue'
 import OverflowCard from '~/components/common/card/OverflowCard.vue'
 import ChipLabel from '~/components/common/chip/ChipLabel.vue'
@@ -17,7 +22,8 @@ const cards = computed(() => [
   {
     title: t('tools.cards.quran.title'),
     description: t('tools.cards.quran.description'),
-    imageSrc: '/images/monaajatak_mobile.svg',
+    imageSrc: QuranReading,
+    imageClass: 'h-24 w-30 rotate-10 top-1 -left-12',
     imageAlt: t('tools.cards.quran.title'),
     badgeIcon: QuranIcon,
     hasPattern: true,
@@ -33,23 +39,25 @@ const cards = computed(() => [
   {
     title: t('tools.cards.azkar.title'),
     description: t('tools.cards.azkar.description'),
-    imageSrc: micIcon,
+    imageSrc: Sebha,
     imageAlt: t('tools.cards.azkar.title'),
     badgeIcon: TasbihIcon,
   },
   {
     title: t('tools.cards.qibla.title'),
     description: t('tools.cards.qibla.description'),
-    imageSrc: micIcon,
+    imageSrc: mosque,
     imageAlt: t('tools.cards.qibla.title'),
     badgeIcon: MosqueIcon,
+    imageClass: 'w-30 h-30',
   },
   {
     title: t('tools.cards.eyeComfort.title'),
     description: t('tools.cards.eyeComfort.description'),
-    imageSrc: '/images/monaajatak_mobile.svg',
+    imageSrc: DarkLightMode,
     imageAlt: t('tools.cards.eyeComfort.title'),
     badgeIcon: MoonIcon,
+    imageClass: '-rotate-12',
   },
 ])
 </script>
@@ -64,7 +72,6 @@ const cards = computed(() => [
       <article
         class="order-2 flex flex-col gap-6 lg:order-1 lg:col-span-6 lg:col-start-7"
       >
-        <!-- Top Row (2 Cards: Quran & Recitations in RTL order) -->
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
           <overflow-card
             v-for="(card, index) in cards"
@@ -73,9 +80,11 @@ const cards = computed(() => [
             :description="card.description"
             :image-src="card.imageSrc"
             :image-alt="card.imageAlt"
+            :image-class="card.imageClass"
             :badge-icon="card.badgeIcon"
             :has-pattern="card.hasPattern"
             :wrapper-class="card.wrapperClass"
+            image-loading="lazy"
           />
         </div>
       </article>
@@ -85,7 +94,7 @@ const cards = computed(() => [
         class="order-1 flex flex-col items-start gap-6 lg:order-2 lg:col-span-5"
       >
         <!-- Reusable Component 1: Chip Label -->
-        <ChipLabel :text="t('tools.chipLabel')" />
+        <chip-label :text="t('tools.chipLabel')" />
 
         <!-- Main Title -->
         <h2
@@ -105,35 +114,19 @@ const cards = computed(() => [
           href="#experience"
           class="group mt-2 inline-flex items-center gap-3 transition-opacity hover:opacity-90"
         >
-          <ArrowButton
-            size="md"
-            :aria-label="t('tools.exploreExperience')"
-          />
           <span
             class="text-base font-black text-blue-500 transition-colors group-hover:text-blue-600 sm:text-lg"
           >
             {{ t('tools.exploreExperience') }}
           </span>
+          <arrow-button
+            size="md"
+            :aria-label="t('tools.exploreExperience')"
+          />
         </a>
 
-        <!-- Decorative Teal Ribbon SVG -->
-        <div
-          class="pointer-events-none mt-4 hidden w-full justify-end opacity-90 lg:flex"
-          aria-hidden="true"
-        >
-          <svg
-            class="h-20 w-48"
-            viewBox="0 0 200 80"
-            fill="none"
-            stroke="#00a2b5"
-            stroke-width="12"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path
-              d="M190 20 C140 75, 110 75, 80 40 C50 5, 20 20, 15 45 C10 70, 45 75, 80 50 C115 25, 150 25, 190 60"
-            />
-          </svg>
+        <div class="relative">
+          <Vector class="absolute -top-15 -left-30 -z-1 h-40 w-60" />
         </div>
       </article>
     </div>

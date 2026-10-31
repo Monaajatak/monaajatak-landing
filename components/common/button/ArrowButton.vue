@@ -79,6 +79,7 @@ const iconSizeClasses = computed(() => {
   >
     <svg
       :class="[iconSizeClasses, arrowPointsLeft ? 'rotate-0' : 'rotate-180']"
+      class="text-primary"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
