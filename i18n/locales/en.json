@@ -69,7 +69,8 @@
     "titlePrefix": "See",
     "titleHighlight": "Monaajatak",
     "titleSuffix": "from within",
-    "description": "Explore the carefully designed app interface providing maximum tranquility and comfort during reading and remembrance.",
+    "description": "Explore the carefully designed app interface providing maximum tranquility and comfort",
+    "descriptionSuffix": "while reading and remembering.",
     "slides": {
       "overview": {
         "title": "Overview",
