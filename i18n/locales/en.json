@@ -114,5 +114,42 @@
     "phoneAlt": "Quran reading screen in the Monaajatak app",
     "floatingCardTitle": "A reading closer to the heart",
     "floatingCardDesc": "Search, read, and benefit from the meanings"
+  },
+  "footer": {
+    "volunteer": {
+      "title": "Volunteer With Us",
+      "description": "We are seeking volunteers in design, programming, translation, and Islamic content review. Just one hour can deliver good words to thousands of hearts.",
+      "cta": "Join as a Volunteer",
+      "imageAlt": "Volunteer for Monaajatak app"
+    },
+    "taglinePart1": "All your worship in",
+    "taglinePart2": "one place.",
+    "brandDescription": "Your daily faith companion: an ad-free free app bringing together Quran, remembrance, and recitations in a peaceful experience.",
+    "sections": {
+      "appSections": "App Sections",
+      "quickLinks": "Quick Links",
+      "legal": "Legal"
+    },
+    "links": {
+      "audioLibrary": "Audio Library",
+      "prayerTimes": "Prayer Times",
+      "quran": "The Holy Quran",
+      "duas": "Supplications",
+      "qibla": "Qibla",
+      "azkar": "Daily Adhkar",
+      "features": "Features",
+      "story": "Our Story",
+      "team": "Team",
+      "faq": "FAQ",
+      "volunteerWithUs": "Volunteer With Us",
+      "privacyPolicy": "Privacy Policy",
+      "openResources": "Open Resources"
+    },
+    "copyright": "Monaajatak - All rights reserved",
+    "social": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "tiktok": "TikTok"
+    }
   }
 }

@@ -115,17 +115,3 @@ const { t } = useI18n()
           </div>
         </div>
       </div> -->
-
-<!-- <div class="phone-mockup-wrapper relative">
-            <div
-              class="mockup-bg-shape absolute -top-8 -right-8 h-[110%] w-[85%] rounded-[40px]"
-              aria-hidden="true"
-            />
-            <img
-              :src="QuranReadingScreenshot"
-              :alt="t('quranReading.phoneAlt')"
-              loading="lazy"
-              decoding="async"
-              class="phone-image relative z-10 h-auto w-64 rounded-[32px] shadow-2xl sm:w-72 lg:w-80"
-            />
-          </div> -->
