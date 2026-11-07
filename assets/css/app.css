@@ -95,30 +95,6 @@
   padding-inline: 28px;
 }
 
-@media (max-width: 1024px) {
-  .container {
-    max-width: 960px;
-  }
-}
-
-@media (max-width: 768px) {
-  .container {
-    padding-inline: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding-inline: 16px;
-  }
-}
-
-@media (max-width: 360px) {
-  .container {
-    padding-inline: 12px;
-  }
-}
-
 /* ── Custom Fonts ── */
 
 /* Thmanyah Sans (body font) */
