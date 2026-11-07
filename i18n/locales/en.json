@@ -101,5 +101,18 @@
         "desc": "Full dark mode support for your eye comfort"
       }
     }
+  },
+  "quranReading": {
+    "chipLabel": "The Quran at the heart of the experience",
+    "titleLine1": "Read peacefully, and return to what",
+    "titleHighlight": "touches you.",
+    "descBold1": "Clear Uthmani script, instant search,",
+    "descMiddle": " and tafsir that helps you pause at the verse you're looking for.",
+    "descBold2": "",
+    "descEnd": " Everything is organized so your focus stays with your reading.",
+    "cta": "Explore Monaajatak experience",
+    "phoneAlt": "Quran reading screen in the Monaajatak app",
+    "floatingCardTitle": "A reading closer to the heart",
+    "floatingCardDesc": "Search, read, and benefit from the meanings"
   }
 }
