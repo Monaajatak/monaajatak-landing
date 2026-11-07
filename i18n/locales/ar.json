@@ -115,6 +115,14 @@
     "floatingCardTitle": "قراءة أقرب إلى القلب",
     "floatingCardDesc": "ابحث اقرأ واستفد من المعاني"
   },
+  "ctaSection": {
+    "titleLine1": "تلاوات ترافـــق",
+    "titleLine2": "يومــــــك",
+    "downloadNow": "حمل التطبيق الآن",
+    "discoverFeatures": "اكتشف المميزات",
+    "availableOn": "متوفر الان علي",
+    "phoneAlt": "تطبيق مناجاتك على الهاتف"
+  },
   "footer": {
     "volunteer": {
       "title": "تطوّع معنا",
