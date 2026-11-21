@@ -549,8 +549,19 @@
 
 /* --- Reset --- */
 
-body {
+html[dir='rtl'] body,
+:root[dir='rtl'] body,
+[dir='rtl'] {
   direction: rtl;
+}
+
+html[dir='ltr'] body,
+:root[dir='ltr'] body,
+[dir='ltr'] {
+  direction: ltr;
+}
+
+body {
   font-family: var(--font-body);
   background-color: var(--body-bg);
   color: var(--text);

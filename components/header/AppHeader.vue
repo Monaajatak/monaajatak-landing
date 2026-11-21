@@ -43,6 +43,9 @@ const activeLink = computed(() => {
   })
 })
 
+const { locale } = useI18n()
+const isRTL = computed(() => locale.value === 'ar')
+
 const isActive = (link: NavLink) => {
   return activeLink.value?.label === link.label
 }
@@ -50,7 +53,10 @@ const isActive = (link: NavLink) => {
 
 <template>
   <!-- Outer wrapper handles sticky + hide-on-scroll -->
-  <div class="sticky top-0 z-50 bg-gray-50">
+  <div
+    class="sticky top-0 z-50 bg-gray-50"
+    :dir="isRTL ? 'rtl' : 'ltr'"
+  >
     <HeaderTicker />
     <!-- Main bar -->
     <header class="container flex items-center justify-between gap-4">

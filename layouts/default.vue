@@ -7,10 +7,13 @@ const { locale } = useI18n()
 let domMutationObserver = null
 let revealObserver = null
 
-useHead({
+useHead(() => ({
   htmlAttrs: {
-    lang: computed(() => locale.value),
-    dir: computed(() => (locale.value === 'ar' ? 'rtl' : 'ltr')),
+    lang: locale.value,
+    dir: locale.value === 'ar' ? 'rtl' : 'ltr',
+  },
+  bodyAttrs: {
+    dir: locale.value === 'ar' ? 'rtl' : 'ltr',
   },
   script: [
     {
@@ -22,15 +25,15 @@ useHead({
             '@type': 'WebSite',
             '@id': 'https://www.monaajatak.app/#website',
             url: 'https://www.monaajatak.app/',
-            name: 'مناجاتك',
+            name: locale.value === 'ar' ? 'مناجاتك' : 'Monaajatak',
             description:
               'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.',
-            inLanguage: 'ar',
+            inLanguage: locale.value,
           },
           {
             '@type': 'SoftwareApplication',
             '@id': 'https://www.monaajatak.app/#software',
-            name: 'مناجاتك',
+            name: locale.value === 'ar' ? 'مناجاتك' : 'Monaajatak',
             alternateName: 'Monaajatak',
             applicationCategory: 'LifestyleApplication',
             operatingSystem: 'Android, iOS',
@@ -47,7 +50,7 @@ useHead({
       }),
     },
   ],
-})
+}))
 
 const setupReveal = () => {
   if (revealObserver) revealObserver.disconnect()
@@ -142,10 +145,30 @@ watch(
     setupReveal()
   },
 )
+
+watch(
+  locale,
+  newLocale => {
+    if (import.meta.client) {
+      const dir = newLocale === 'ar' ? 'rtl' : 'ltr'
+      document.documentElement.setAttribute('dir', dir)
+      document.documentElement.setAttribute('lang', newLocale)
+      document.documentElement.style.direction = dir
+      if (document.body) {
+        document.body.setAttribute('dir', dir)
+        document.body.style.direction = dir
+      }
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
-  <div class="app-wrapper">
+  <div
+    class="app-wrapper"
+    :dir="locale === 'ar' ? 'rtl' : 'ltr'"
+  >
     <NuxtLoadingIndicator
       color="#00A2B5"
       :height="3"

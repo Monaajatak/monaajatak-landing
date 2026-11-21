@@ -14,16 +14,36 @@ const toggleLocale = () => {
   setLocale(next)
   const cookie = useCookie('i18n_locale')
   cookie.value = next
+  if (import.meta.client) {
+    const dir = next === 'ar' ? 'rtl' : 'ltr'
+    document.documentElement.setAttribute('dir', dir)
+    document.documentElement.setAttribute('lang', next)
+    document.documentElement.style.direction = dir
+    if (document.body) {
+      document.body.setAttribute('dir', dir)
+      document.body.style.direction = dir
+    }
+  }
 }
 
 onMounted(() => {
   const savedLocale = useCookie('i18n_locale').value
-  if (
-    savedLocale &&
-    (savedLocale === 'ar' || savedLocale === 'en') &&
-    savedLocale !== locale.value
-  ) {
+  const active =
+    savedLocale && (savedLocale === 'ar' || savedLocale === 'en')
+      ? savedLocale
+      : locale.value
+  if (savedLocale && savedLocale !== locale.value) {
     setLocale(savedLocale)
+  }
+  if (import.meta.client) {
+    const dir = active === 'ar' ? 'rtl' : 'ltr'
+    document.documentElement.setAttribute('dir', dir)
+    document.documentElement.setAttribute('lang', active)
+    document.documentElement.style.direction = dir
+    if (document.body) {
+      document.body.setAttribute('dir', dir)
+      document.body.style.direction = dir
+    }
   }
 })
 </script>
