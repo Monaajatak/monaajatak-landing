@@ -230,5 +230,19 @@
         "body": "Lightweight, fast, and easy to use, especially the tasbih counter and audio recitations."
       }
     }
+  },
+  "ticker": {
+    "items": {
+      "item1": "100% Free with Zero Advertisements",
+      "item2": "Complete Holy Quran in Uthmani Script",
+      "item3": "Daily Morning & Evening Adhkar",
+      "item4": "Accurate Prayer Times & Qibla Compass",
+      "item5": "Humble Recitations by Renowned Reciters",
+      "item6": "Smart Electronic Tasbih Counter",
+      "item7": "Intuitive & Seamless User Experience",
+      "item8": "Works Fully Offline Anywhere",
+      "item9": "Eye-Comfort Dark Mode Support",
+      "item10": "Continuous Updates & Enhancements"
+    }
   }
 }

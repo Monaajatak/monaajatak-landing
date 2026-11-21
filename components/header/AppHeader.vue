@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import HeaderTicker from './HeaderTicker.vue'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import type { NavLink } from './types'
 
@@ -50,6 +51,7 @@ const isActive = (link: NavLink) => {
 <template>
   <!-- Outer wrapper handles sticky + hide-on-scroll -->
   <div class="sticky top-0 z-50 bg-gray-50">
+    <HeaderTicker />
     <!-- Main bar -->
     <header class="container flex items-center justify-between gap-4">
       <!-- ── Desktop nav links (hidden below lg / 1024px) ── -->

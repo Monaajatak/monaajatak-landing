@@ -811,6 +811,25 @@ html {
   animation-play-state: paused;
 }
 
+/* Header Top Ticker Marquee */
+@keyframes tickerMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-ticker-marquee {
+  animation: tickerMarquee 50s linear infinite;
+  will-change: transform;
+}
+
+.ticker-bar:hover .animate-ticker-marquee {
+  animation-play-state: paused;
+}
+
 /* Decorative ring */
 .hero-logo-ring {
   position: absolute;
