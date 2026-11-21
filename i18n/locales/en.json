@@ -159,5 +159,37 @@
       "instagram": "Instagram",
       "tiktok": "TikTok"
     }
+  },
+  "faq": {
+    "chipLabel": "Clear answers before you begin",
+    "titlePart1": "Frequently Asked",
+    "titlePart2": "About Monaajatak",
+    "questionMarkAlt": "3D Question Mark Icon",
+    "items": {
+      "free": {
+        "question": "Is Monaajatak free?",
+        "answer": "Yes, Monaajatak is completely free and contains no advertisements throughout the entire experience."
+      },
+      "account": {
+        "question": "Do I need to create an account?",
+        "answer": "No, the app does not require any account creation or login. You can start immediately with full privacy."
+      },
+      "offline": {
+        "question": "Does the app work offline?",
+        "answer": "Yes, core features such as reading the Holy Quran, daily Adhkar, and the electronic tasbih work completely without an internet connection."
+      },
+      "feedback": {
+        "question": "How do I send a suggestion or feedback?",
+        "answer": "We always welcome your thoughts and suggestions! You can reach out directly via email or through the social links in the footer."
+      },
+      "bookmarks": {
+        "question": "Can I save what I listen to for later?",
+        "answer": "Yes, you can bookmark your favorite recitations and mark verses to easily resume listening at any time."
+      },
+      "darkMode": {
+        "question": "Does Monaajatak support dark mode?",
+        "answer": "Yes, the app fully supports dark mode to provide a calm and comfortable experience for your eyes during night reading and listening."
+      }
+    }
   }
 }
