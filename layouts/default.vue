@@ -3,10 +3,15 @@ const cursorDot = ref(null)
 const cursorOutline = ref(null)
 const isPointerFine = ref(true)
 const route = useRoute()
+const { locale } = useI18n()
 let domMutationObserver = null
 let revealObserver = null
 
 useHead({
+  htmlAttrs: {
+    lang: computed(() => locale.value),
+    dir: computed(() => (locale.value === 'ar' ? 'rtl' : 'ltr')),
+  },
   script: [
     {
       type: 'application/ld+json',

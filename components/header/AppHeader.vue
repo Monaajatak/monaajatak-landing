@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import LanguageSwitcher from './LanguageSwitcher.vue'
 import type { NavLink } from './types'
 
 import ClosedBook from '~/assets/icons/ClosedBook.vue'
@@ -81,6 +82,7 @@ const isActive = (link: NavLink) => {
 
       <!-- ── Desktop action buttons (hidden below lg) ── -->
       <section class="hidden shrink-0 items-center gap-3 lg:flex">
+        <LanguageSwitcher />
         <Button
           variant="flat"
           :text="$t('nav.downloadApp')"
@@ -104,22 +106,25 @@ const isActive = (link: NavLink) => {
         >
           <Logo />
         </nuxt-link>
-        <Button
-          variant="text"
-          :aria-expanded="isMenuOpen.toString()"
-          :aria-label="isMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'"
-          @click="toggleMenu"
-        >
-          <brand-book
-            v-if="isMenuOpen"
-            class="h-2 w-full"
-          />
-          <closed-book
-            v-else
-            color="var(--primary)"
-            class="h-6 w-full rtl:rotate-180"
-          />
-        </Button>
+        <div class="flex items-center gap-2">
+          <LanguageSwitcher />
+          <Button
+            variant="text"
+            :aria-expanded="isMenuOpen.toString()"
+            :aria-label="isMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'"
+            @click="toggleMenu"
+          >
+            <brand-book
+              v-if="isMenuOpen"
+              class="h-2 w-full"
+            />
+            <closed-book
+              v-else
+              color="var(--primary)"
+              class="h-6 w-full rtl:rotate-180"
+            />
+          </Button>
+        </div>
       </div>
     </header>
 
