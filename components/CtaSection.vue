@@ -108,15 +108,15 @@ onMounted(() => {
     class="download-cta container my-14 scroll-mt-28 py-6 sm:my-20 lg:my-24"
   >
     <div
-      class="bg-primary! relative overflow-hidden rounded-4xl p-6 shadow-2xl shadow-blue-900/15 sm:rounded-[40px] sm:p-10 lg:min-h-92.5 lg:px-12 lg:py-10 xl:px-16"
+      class="bg-primary! relative overflow-hidden rounded-4xl p-4 shadow-2xl shadow-blue-900/15 sm:rounded-[40px] lg:min-h-92.5 lg:px-12"
     >
       <!-- Content Layout: 3 Columns on Desktop (Hand Right, Text Center, Badges Left in RTL) -->
       <div
-        class="relative z-20 flex flex-col items-center justify-between gap-8 lg:flex-row lg:items-center"
+        class="relative z-20 flex flex-col items-center justify-between gap-12 lg:flex-row lg:items-center"
       >
         <!-- Center: Headline, CTA Buttons & Bullet Features (order-1 on mobile / order-2 on desktop) -->
         <div
-          class="order-1 flex max-w-xl flex-col items-center text-center lg:order-2 lg:max-w-lg xl:max-w-xl"
+          class="order-2 flex max-w-xl flex-col items-center text-center lg:order-2 lg:max-w-lg xl:max-w-xl"
         >
           <!-- Main Headline -->
           <h2
@@ -174,10 +174,10 @@ onMounted(() => {
 
         <!-- Store Badges: Single DRY Block (order-2 on mobile / order-3 on desktop in RTL = Left) -->
         <div
-          class="order-2 flex shrink-0 flex-col items-center lg:items-start ltr:lg:order-1 rtl:lg:order-3"
+          class="order-3 flex flex-col items-center lg:items-start ltr:lg:order-3 rtl:lg:order-3"
         >
           <span
-            class="mb-3 text-xs font-bold text-white sm:text-sm lg:mb-3.5 lg:text-base"
+            class="mb-3 self-center text-center text-xs font-bold text-white sm:text-sm lg:mb-3.5"
           >
             {{ t('ctaSection.availableOn') }}
           </span>
@@ -188,7 +188,7 @@ onMounted(() => {
               :href="store.href"
               target="_blank"
               rel="noopener noreferrer"
-              class="group inline-flex w-40 items-center gap-2.5 rounded-xl border border-white/20 bg-black/90 px-3 py-2 shadow-lg transition-all duration-300 hover:scale-105 hover:border-white/40 hover:bg-black sm:w-44 sm:gap-3 sm:px-3.5"
+              class="group inline-flex w-40 items-center gap-2.5 rounded-md border border-white bg-black/90 px-3 py-2 shadow-md transition-all duration-300 hover:scale-105 sm:w-44 sm:gap-3 sm:px-3.5"
             >
               <component
                 :is="store.icon"
@@ -213,7 +213,7 @@ onMounted(() => {
 
         <!-- Hand Phone Mockup (order-3 on mobile / order-1 on desktop in RTL = Right) -->
         <div
-          class="pointer-events-none relative order-3 w-64 shrink-0 self-center sm:w-80 md:w-88 lg:-mb-10 lg:w-[320px] lg:self-end xl:-mb-10 xl:w-90 ltr:lg:order-3 rtl:lg:order-1"
+          class="pointer-events-none relative order-1 w-64 shrink-0 self-center sm:w-80 md:w-88 lg:-mb-10 lg:w-[320px] lg:self-end xl:-mb-10 xl:w-90 ltr:lg:order-1 rtl:lg:order-1"
         >
           <img
             :src="handPhone"

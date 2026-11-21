@@ -16,9 +16,9 @@ const { t } = useI18n()
       class="container flex flex-col items-center gap-12 overflow-hidden lg:flex-row"
     >
       <!-- Phone Mockup Column (Right side in RTL) -->
-      <article class="z-10 order-2 h-full w-full flex-1 lg:order-1">
+      <article class="z-10 h-full w-full flex-1">
         <div
-          class="relative h-101 w-full overflow-hidden rounded-3xl bg-blue-600"
+          class="relative h-101 w-11/12 overflow-hidden rounded-3xl bg-blue-600"
         >
           <img
             :src="audioLib"
@@ -32,7 +32,7 @@ const { t } = useI18n()
       </article>
 
       <!-- Text / Info Column (Left side in RTL) -->
-      <article class="flex flex-col items-start gap-6">
+      <article class="flex flex-1 flex-col items-start gap-6">
         <!-- Chip Label -->
         <chip-label :text="t('quranReading.chipLabel')" />
 
@@ -78,40 +78,3 @@ const { t } = useI18n()
     </div>
   </section>
 </template>
-
-<!-- Bottom Floating Card -->
-<!-- <div class="floating-card-wrapper mt-12 flex justify-center lg:mt-16">
-        <div
-          class="floating-card inline-flex items-center gap-4 rounded-2xl bg-white px-6 py-4 shadow-lg"
-        >
-          <div
-            class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-500 text-white"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path
-                d="M4 19.5V4a2 2 0 0 1 2-2h10.9a2 2 0 0 1 2 2v15.5a2.5 2.5 0 0 1-2.5 2.5H6a2.5 2.5 0 0 1-2.5-2.5Z"
-              />
-              <path d="M9 2v8l3-2.25L15 10V2" />
-            </svg>
-          </div>
-          <div class="flex flex-col">
-            <span class="text-secondary text-lg font-black">
-              {{ t('quranReading.floatingCardTitle') }}
-            </span>
-            <span class="text-grey-600 text-sm">
-              {{ t('quranReading.floatingCardDesc') }}
-            </span>
-          </div>
-        </div>
-      </div> -->
