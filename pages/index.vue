@@ -4,11 +4,8 @@
     <LazyAppScreensSection />
     <LazyFeaturesSection />
     <LazyAudioLibrarySection />
-    <LazyStorySection />
-    <LazyTeamSection />
-    <LazyReviewsSection />
     <LazyCtaSection />
-    <LazyContactSection />
+    <ReviewsSection />
     <LazyFaqSection />
   </div>
 </template>

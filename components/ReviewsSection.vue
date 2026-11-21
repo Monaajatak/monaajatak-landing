@@ -1,394 +1,248 @@
-<script setup>
-import { computed } from 'vue'
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
 
-const { data: reviewsData } = await useAsyncData('google-play-reviews', () => $fetch('/api/google-play-reviews'))
+import ChipLabel from '~/components/common/chip/ChipLabel.vue'
 
-const reviews = computed(() => {
-  if (reviewsData.value && reviewsData.value.success && reviewsData.value.reviews) {
-    return reviewsData.value.reviews
-  }
-  return []
-})
+interface ReviewItem {
+  id: string
+  author: string
+  avatar?: string | null
+  date: string
+  title: string
+  body: string
+  source: string
+}
 
-const formatReview = (text) => {
+interface ApiReviewItem {
+  id?: string
+  author?: string
+  avatar?: string | null
+  date?: string | null
+  text?: string
+}
+
+const { t, locale } = useI18n()
+
+const isRTL = computed(() => locale.value === 'ar')
+
+const defaultReviewIds = [
+  'review1',
+  'review2',
+  'review3',
+  'review4',
+  'review5',
+] as const
+
+const fallbackReviews = computed<ReviewItem[]>(() =>
+  defaultReviewIds.map(id => ({
+    id,
+    author: t(`reviews.items.${id}.author`),
+    avatar: null,
+    date: t(`reviews.items.${id}.date`),
+    title: t(`reviews.items.${id}.title`),
+    body: t(`reviews.items.${id}.body`),
+    source: t('reviews.googlePlay'),
+  })),
+)
+
+const apiReviewsList = ref<ApiReviewItem[]>([])
+
+const formatReview = (text: string) => {
   if (!text) return { title: '', body: '' }
   const clean = text.trim()
   if (clean.length <= 40) return { title: clean, body: '' }
-  
+
   const lines = clean.split(/[\n.،]/)
   if (lines[0].length > 10 && lines[0].length < 50) {
-    return { 
-      title: lines[0], 
-      body: clean.substring(lines[0].length).replace(/^[\n.،\s]+/, '') 
+    return {
+      title: lines[0],
+      body: clean.substring(lines[0].length).replace(/^[\n.،\s]+/, ''),
     }
   }
-  
+
   const words = clean.split(' ')
   return {
     title: words.slice(0, 6).join(' '),
-    body: words.slice(6).join(' ')
+    body: words.slice(6).join(' '),
   }
 }
 
-const formatDate = (dateString) => {
+const formatDate = (dateString: string | null) => {
   if (!dateString) return ''
   const date = new Date(dateString)
   const now = new Date()
-  const diffTime = Math.abs(now - date)
+  const diffTime = Math.abs(now.getTime() - date.getTime())
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-  if (diffDays === 1) return 'أمس'
-  if (diffDays === 2) return 'منذ يومين'
-  if (diffDays <= 10) return `قبل ${diffDays} أيام`
-  if (diffDays <= 30) return `قبل ${diffDays} يوم`
+  if (diffDays <= 1) return isRTL.value ? 'منذ يوم' : '1 day ago'
+  if (diffDays === 2) return isRTL.value ? 'منذ يومين' : '2 days ago'
+  if (diffDays <= 10) {
+    return isRTL.value ? `منذ ${diffDays} أيام` : `${diffDays} days ago`
+  }
+  if (diffDays <= 30) {
+    return isRTL.value ? `منذ ${diffDays} يوماً` : `${diffDays} days ago`
+  }
   const diffMonths = Math.floor(diffDays / 30)
-  if (diffMonths === 1) return 'قبل شهر'
-  if (diffMonths <= 12) return `قبل ${diffMonths} أشهر`
-  return 'منذ فترة'
+  if (diffMonths === 1) return isRTL.value ? 'منذ شهر' : '1 month ago'
+  return isRTL.value ? `منذ ${diffMonths} أشهر` : `${diffMonths} months ago`
 }
+
+onMounted(async () => {
+  try {
+    const res = await $fetch<{ success: boolean; reviews?: ApiReviewItem[] }>(
+      '/api/google-play-reviews',
+    )
+    if (res?.success && Array.isArray(res.reviews) && res.reviews.length > 0) {
+      apiReviewsList.value = res.reviews
+    }
+  } catch {
+    // Keep fallback reviews
+  }
+})
+
+const reviews = computed<ReviewItem[]>(() => {
+  if (apiReviewsList.value.length > 0) {
+    return apiReviewsList.value.map((r: ApiReviewItem, idx: number) => {
+      const parsed = formatReview(r.text || '')
+      return {
+        id: r.id || String(idx),
+        author: r.author || 'مستخدم Google Play',
+        avatar: r.avatar || null,
+        date: formatDate(r.date || null),
+        title: parsed.title ? `«${parsed.title}»` : '«تطبيق رائع ومميز»',
+        body: parsed.body,
+        source: t('reviews.googlePlay'),
+      }
+    })
+  }
+
+  return fallbackReviews.value
+})
 </script>
 
 <template>
-  <section v-if="reviews.length > 0" id="reviews" class="reviews-section reveal">
-    <div class="container">
-      <div class="section-header">
-        <span class="badge reveal-delay-1">آراء مستخدمي التطبيق</span>
-        <h2 class="reveal-delay-2">ماذا يقول مستخدمو <span class="text-gradient">مُناجاتك؟</span></h2>
-        <p class="reveal-delay-3">
-          تجارب حقيقية من مجتمع مُناجاتك حول العالم.
+  <section
+    id="reviews"
+    class="relative overflow-hidden bg-blue-50 py-16 lg:py-24"
+  >
+    <div
+      class="container flex flex-col items-center justify-between gap-10 lg:flex-row lg:items-center lg:gap-14"
+    >
+      <!-- Text / Info Column (Right side in RTL, Left in LTR) -->
+      <article
+        class="flex shrink-0 flex-col items-start text-start lg:max-w-md xl:max-w-lg"
+      >
+        <!-- Chip Label -->
+        <chip-label :text="t('reviews.chipLabel')" />
+
+        <!-- Main Title -->
+        <h2
+          class="text-secondary mt-5 text-3xl font-black tracking-tight sm:text-4xl lg:text-[44px] lg:leading-[1.2]"
+        >
+          <span>{{ t('reviews.titlePart1') }}</span>
+          <br />
+          <span class="text-blue-500">
+            {{ t('reviews.titleHighlight') }}
+          </span>
+        </h2>
+
+        <!-- Description Paragraph -->
+        <p
+          class="text-secondary/80 mt-4 max-w-lg text-sm leading-relaxed sm:text-base"
+        >
+          {{ t('reviews.description') }}
         </p>
-      </div>
-    </div>
+      </article>
 
-    <div class="reviews-marquee-container" dir="rtl">
-      <div class="reviews-marquee-track">
-        <!-- Render the list twice to create the infinite scroll effect -->
-        <div v-for="i in 2" :key="i" class="reviews-marquee-content">
-          <div v-for="review in reviews" :key="review.id + '-' + i" class="review-card">
-            
-            <div class="card-top">
-              <div class="app-logo-box">
-                <img src="/images/Icon_Teal_SVG.svg" class="app-logo-img" alt="مُناجاتك">
-                <span class="app-name-sm">مناجاتك</span>
+      <!-- Reviews Cards Column (Window showing only 2 cards in the strip, continuous loop) -->
+      <div
+        class="marquee-container relative w-full min-w-0 overflow-hidden sm:max-w-[680px] lg:max-w-[680px] xl:max-w-[710px]"
+        dir="ltr"
+      >
+        <!-- Edge fade gradient for smooth visual cutoff -->
+        <div
+          class="pointer-events-none absolute inset-y-0 start-0 z-10 w-8 bg-gradient-to-r from-blue-50 to-transparent sm:w-16"
+          aria-hidden="true"
+        />
+
+        <div class="flex w-max gap-5 py-4">
+          <!-- Two sibling groups running the same marquee animation for seamless infinite loop -->
+          <div
+            v-for="group in 2"
+            :key="group"
+            class="animate-marquee-scroll flex shrink-0 gap-5"
+            :aria-hidden="group === 2 ? 'true' : undefined"
+          >
+            <article
+              v-for="item in reviews"
+              :key="item.id + '-g' + group"
+              :dir="isRTL ? 'rtl' : 'ltr'"
+              class="flex w-[280px] shrink-0 flex-col justify-between rounded-3xl border border-slate-100 bg-white p-6 shadow-md shadow-teal-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl sm:w-[320px] sm:p-7 md:w-[330px]"
+            >
+              <!-- Card Top: Google Play Tag with teal dot -->
+              <div
+                class="flex items-center gap-1.5 text-xs font-bold text-blue-500"
+              >
+                <span class="h-2 w-2 rounded-full bg-blue-500" />
+                <span>{{ item.source }}</span>
               </div>
-              <div class="stars" :aria-label="`${review.rating} من 5`">
-                <svg v-for="s in review.rating" :key="'star-full-'+s" class="star filled" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                <svg v-for="s in (5 - review.rating)" :key="'star-empty-'+s" class="star empty" viewBox="0 0 24 24"><path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/></svg>
+
+              <!-- Card Body: Title Quote & Content -->
+              <div class="my-4 flex-1">
+                <h3
+                  class="text-base leading-snug font-bold text-slate-900 sm:text-lg"
+                >
+                  {{ item.title }}
+                </h3>
+                <p
+                  v-if="item.body"
+                  class="mt-2 text-xs leading-relaxed text-slate-600 sm:text-sm"
+                >
+                  {{ item.body }}
+                </p>
               </div>
-            </div>
 
-            <div class="card-body">
-              <div class="quote-header">
-                <span class="quote-mark">”</span>
-                <h3 class="review-title">"{{ formatReview(review.text).title }}"</h3>
-              </div>
-              <p class="review-text" v-if="formatReview(review.text).body">
-                {{ formatReview(review.text).body }}
-              </p>
-            </div>
-
-            <div class="card-divider"></div>
-
-            <div class="card-footer">
-              <div class="reviewer-profile">
-                <div class="avatar-circle">
-                  <svg viewBox="0 0 24 24" class="avatar-icon"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              <!-- Divider & Card Footer: Author + Date + Cyan User Avatar -->
+              <div
+                class="flex items-center justify-between border-t border-slate-100 pt-4"
+              >
+                <div class="flex flex-col text-start">
+                  <span class="text-sm font-bold text-slate-800 sm:text-base">
+                    {{ item.author }}
+                  </span>
+                  <span class="mt-0.5 text-xs text-slate-400">
+                    {{ item.date }}
+                  </span>
                 </div>
-                <div class="reviewer-details">
-                  <div class="reviewer-name">
-                    {{ review.author }} <span class="dash">—</span>
-                  </div>
-                  <div class="review-meta">
-                    <svg class="verified-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/><path d="M9.999 14.172l-3.586-3.586L5 12l5 5 9-9-1.414-1.414z" fill="#111526"/></svg>
-                    <span class="review-date">{{ formatDate(review.date) }}</span>
-                  </div>
+
+                <!-- Teal Avatar with user photo or silhouette -->
+                <div
+                  class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-500 text-white shadow-xs sm:h-11 sm:w-11"
+                  aria-hidden="true"
+                >
+                  <img
+                    v-if="item.avatar"
+                    :src="item.avatar"
+                    :alt="item.author"
+                    class="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <svg
+                    v-else
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                    />
+                  </svg>
                 </div>
               </div>
-
-              <a href="https://play.google.com/store/apps/details?id=com.mahmoudmourad.monologue" target="_blank" rel="noopener noreferrer" class="google-play-pill">
-                <svg viewBox="0 0 24 24" class="play-icon">
-                  <path fill="#EA4335" d="M11.996 11.666L2.355 2.025a2.536 2.536 0 0 0-.355.707v18.536c0 .259.123.51.355.707l9.641-9.641z"/>
-                  <path fill="#34A853" d="M16.536 16.205l-4.54-4.539 4.54-4.54 3.738 2.158c1.168.674 1.168 1.77 0 2.444l-3.738 2.477z"/>
-                  <path fill="#4285F4" d="M11.996 11.666l4.54 4.539-14.181 8.188a2.52 2.52 0 0 1-1.775-.327l11.416-12.4z"/>
-                  <path fill="#FBBC04" d="M11.996 11.666L.58 23.082a2.52 2.52 0 0 1-1.775.327l13.191-11.743z"/>
-                </svg>
-                <span>Google Play</span>
-              </a>
-            </div>
-
+            </article>
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
-
-<style scoped>
-.reviews-section {
-    padding: 100px 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.section-header {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 60px;
-}
-
-/* Marquee Styles */
-.reviews-marquee-container {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-    padding: 20px 0;
-    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-}
-
-.reviews-marquee-track {
-    display: inline-flex;
-    /* Reduced time to 25s for faster movement */
-    animation: marquee-rtl 25s linear infinite;
-    gap: 24px;
-}
-
-.reviews-marquee-track:hover {
-    animation-play-state: paused;
-}
-
-.reviews-marquee-content {
-    display: inline-flex;
-    gap: 24px;
-    padding-left: 24px;
-}
-
-/* Review Card Styles */
-.review-card {
-    background: #111526;
-    border-radius: 24px;
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    width: 440px; 
-    min-height: 260px;
-    white-space: normal;
-    flex-shrink: 0;
-    text-align: right;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-    transition: transform 0.4s ease, border-color 0.4s ease;
-}
-
-.review-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(var(--primary-rgb), 0.5); /* Replaced purple with primary teal */
-}
-
-.card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 24px;
-}
-
-/* Logo Box */
-.app-logo-box {
-    background: rgba(var(--primary-rgb), 0.08);
-    border: 1px solid rgba(var(--primary-rgb), 0.2);
-    border-radius: 20px;
-    width: 72px;
-    height: 72px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.15);
-}
-
-.app-logo-img {
-    width: 32px;
-    height: auto;
-    margin-bottom: 4px;
-}
-
-.app-name-sm {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--primary);
-}
-
-/* Stars */
-.stars {
-    display: flex;
-    gap: 4px;
-}
-
-.star {
-    width: 24px;
-    height: 24px;
-}
-
-.star.filled {
-    fill: #facc15;
-}
-
-.star.empty {
-    fill: #4b5563;
-}
-
-/* Card Body */
-.card-body {
-    flex-grow: 1;
-}
-
-.quote-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.quote-mark {
-    font-family: Georgia, serif;
-    font-size: 64px;
-    line-height: 1;
-    color: var(--primary); /* Teal instead of purple */
-    margin-top: -10px;
-    user-select: none;
-}
-
-.review-title {
-    font-size: 24px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.4;
-    margin: 0;
-}
-
-.review-text {
-    font-size: 15px;
-    line-height: 1.8;
-    color: #9ca3af;
-    margin: 0;
-}
-
-/* Divider */
-.card-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    margin: 24px 0;
-}
-
-/* Card Footer */
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.reviewer-profile {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.avatar-circle {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(var(--primary-rgb), 0.15); /* Teal instead of purple */
-    border: 2px solid rgba(var(--primary-rgb), 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.avatar-icon {
-    width: 24px;
-    height: 24px;
-    fill: var(--primary); /* Teal */
-}
-
-.reviewer-details {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.reviewer-name {
-    color: #00d4ff;
-    font-size: 15px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.dash {
-    color: #4b5563;
-}
-
-.review-meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 4px;
-}
-
-.verified-icon {
-    width: 14px;
-    height: 14px;
-    fill: #00d4ff;
-}
-
-.review-date {
-    font-size: 13px;
-    color: #9ca3af;
-}
-
-/* Google Play Pill */
-.google-play-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 18px;
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: #000;
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.google-play-pill:hover {
-    background: #111;
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: scale(1.02);
-}
-
-.play-icon {
-    width: 18px;
-    height: 18px;
-}
-
-@keyframes marquee-rtl {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(50%); }
-}
-
-@media (max-width: 768px) {
-    .reviews-section { padding: 60px 0; }
-    .review-card { 
-        width: 340px;
-        padding: 24px; 
-    }
-    .review-title { font-size: 20px; }
-    .quote-mark { font-size: 48px; }
-    .app-logo-box { width: 56px; height: 56px; }
-    .app-logo-img { width: 24px; }
-    .app-name-sm { font-size: 9px; }
-}
-</style>

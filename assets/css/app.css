@@ -792,6 +792,25 @@ html {
   }
 }
 
+/* Reviews Continuous Seamless Marquee */
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - 1.25rem));
+  }
+}
+
+.animate-marquee-scroll {
+  animation: marqueeScroll 35s linear infinite;
+  will-change: transform;
+}
+
+.marquee-container:hover .animate-marquee-scroll {
+  animation-play-state: paused;
+}
+
 /* Decorative ring */
 .hero-logo-ring {
   position: absolute;

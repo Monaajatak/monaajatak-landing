@@ -191,5 +191,44 @@
         "answer": "Yes, the app fully supports dark mode to provide a calm and comfortable experience for your eyes during night reading and listening."
       }
     }
+  },
+  "reviews": {
+    "chipLabel": "From Monaajatak Community",
+    "titlePart1": "Words that inspire us to",
+    "titleHighlight": "Keep going.",
+    "description": "Every message we receive reminds us that peaceful details can make a real difference in someone's day.",
+    "googlePlay": "Google Play",
+    "items": {
+      "review1": {
+        "author": "Mohamed El-Morsy",
+        "date": "4 days ago",
+        "title": "“Everything I truly needed”",
+        "body": "I highly recommend it after seeing such a positive difference in my daily worship."
+      },
+      "review2": {
+        "author": "Maryam Samah",
+        "date": "1 day ago",
+        "title": "“May Allah bless you always”",
+        "body": "A respectful app, and the audio recitations library addition is wonderful."
+      },
+      "review3": {
+        "author": "Ahmed Khaled",
+        "date": "1 week ago",
+        "title": "“Excellent & Ad-Free App”",
+        "body": "May Allah reward you; a very peaceful experience for reading and listening without any distractions."
+      },
+      "review4": {
+        "author": "Sarah Abdulrahman",
+        "date": "2 weeks ago",
+        "title": "“Beautiful design & clear font”",
+        "body": "The best Islamic app: Quran and remembrance in one peaceful place that is gentle on the eyes."
+      },
+      "review5": {
+        "author": "Abdullah Al-Shammari",
+        "date": "1 month ago",
+        "title": "“A blessed ongoing charity”",
+        "body": "Lightweight, fast, and easy to use, especially the tasbih counter and audio recitations."
+      }
+    }
   }
 }
