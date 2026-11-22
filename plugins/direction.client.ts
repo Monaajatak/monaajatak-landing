@@ -1,5 +1,7 @@
 export default defineNuxtPlugin(nuxtApp => {
-  const i18n = nuxtApp.$i18n as { locale?: { value: string } } | undefined
+  const i18n = nuxtApp.$i18n as
+    | { locale?: { value: string }; setLocale?: (val: string) => void }
+    | undefined
 
   const applyDirection = (code: string) => {
     if (!import.meta.client) return
@@ -16,18 +18,22 @@ export default defineNuxtPlugin(nuxtApp => {
     }
   }
 
-  // Sync immediately on client start
-  const cookieLocale = useCookie('i18n_locale').value
-  const initialCode = cookieLocale || i18n?.locale?.value || 'ar'
-  applyDirection(initialCode)
+  // Force Arabic while language feature is hidden
+  const cookie = useCookie('i18n_locale')
+  if (cookie.value && cookie.value !== 'ar') {
+    cookie.value = 'ar'
+  }
+  if (i18n?.setLocale && i18n?.locale?.value !== 'ar') {
+    i18n.setLocale('ar')
+  }
+
+  applyDirection('ar')
 
   if (i18n?.locale) {
     watch(
       () => i18n.locale.value,
       newCode => {
-        if (newCode) {
-          applyDirection(newCode)
-        }
+        applyDirection(newCode || 'ar')
       },
       { immediate: true },
     )

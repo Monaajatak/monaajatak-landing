@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import HeaderTicker from './HeaderTicker.vue'
-import LanguageSwitcher from './LanguageSwitcher.vue'
 import type { NavLink } from './types'
 
 import ClosedBook from '~/assets/icons/ClosedBook.vue'
@@ -90,7 +89,6 @@ const isActive = (link: NavLink) => {
 
       <!-- ── Desktop action buttons (hidden below lg) ── -->
       <section class="hidden shrink-0 items-center gap-3 lg:flex">
-        <LanguageSwitcher />
         <Button
           variant="flat"
           :text="$t('nav.downloadApp')"
@@ -115,7 +113,6 @@ const isActive = (link: NavLink) => {
           <Logo />
         </nuxt-link>
         <div class="flex items-center gap-2">
-          <LanguageSwitcher />
           <Button
             variant="text"
             :aria-expanded="isMenuOpen.toString()"

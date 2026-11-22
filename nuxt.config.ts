@@ -19,11 +19,7 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'ar',
     strategy: 'no_prefix',
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_locale',
-      fallbackLocale: 'ar',
-    },
+    detectBrowserLanguage: false,
   },
   components: {
     dirs: [
