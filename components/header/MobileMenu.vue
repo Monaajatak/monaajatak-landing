@@ -38,14 +38,18 @@ const props = defineProps<{
         <!-- Divider + CTA buttons -->
         <div class="mobile-cta-divider mt-4 flex flex-col gap-3 pt-4">
           <Button
+            to="/download"
             variant="flat"
             block
             :text="$t('nav.downloadApp')"
+            @click="props.closeMenu"
           />
           <Button
+            to="/volunteer"
             variant="outlined"
             block
             :text="$t('nav.volunteerToMonaajatak')"
+            @click="props.closeMenu"
           >
             <template #prepend>
               <user-multiple />

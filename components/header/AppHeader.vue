@@ -90,10 +90,12 @@ const isActive = (link: NavLink) => {
       <!-- ── Desktop action buttons (hidden below lg) ── -->
       <section class="hidden shrink-0 items-center gap-3 lg:flex">
         <Button
+          to="/download"
           variant="flat"
           :text="$t('nav.downloadApp')"
         />
         <Button
+          to="/volunteer"
           variant="outlined"
           :text="$t('nav.volunteerToMonaajatak')"
         >

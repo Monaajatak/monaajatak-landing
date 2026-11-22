@@ -40,11 +40,13 @@ const appFeaturs = computed(() => [
       <section class="flex flex-col items-center lg:items-start">
         <div class="mb-4 flex gap-4">
           <Button
+            to="/download"
             variant="flat"
             :text="$t('nav.downloadApp')"
             :icon="DownloadIcon"
           />
           <Button
+            to="/volunteer"
             variant="outlined"
             :text="$t('nav.volunteerToMonaajatak')"
             :icon="MobileIcon"
