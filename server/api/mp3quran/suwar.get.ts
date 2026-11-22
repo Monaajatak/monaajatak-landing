@@ -1,4 +1,4 @@
-export default defineEventHandler(async () => {
+export default defineCachedEventHandler(async () => {
   const data = await $fetch('https://www.mp3quran.net/api/v3/suwar?language=ar')
   const suwar = (data?.suwar || []).map((s) => ({
     id: s.id,
@@ -8,4 +8,4 @@ export default defineEventHandler(async () => {
     makkia: Number(s.makkia) === 1,
   }))
   return { suwar }
-})
+}, { maxAge: 60 * 60 * 24, swr: true })

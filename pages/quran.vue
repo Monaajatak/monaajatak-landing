@@ -5,7 +5,8 @@
         <h1>القرآن الكريم بين يديك</h1>
         <p class="subtitle">اقرأ واستمع للقرآن الكريم في أي وقت وبدون الحاجة للإنترنت. تجربة هادئة، خطوط واضحة، وتصميم يريح العين مع تطبيق مُناجاتك.</p>
         <div class="hero-actions">
-          <AppLinkLanding />
+          <NuxtLink to="/download" class="btn btn-primary">حمّل التطبيق مجاناً</NuxtLink>
+          <NuxtLink to="/listen" class="btn btn-outline">استمع للقرآن الآن</NuxtLink>
         </div>
       </div>
     </section>
@@ -17,17 +18,10 @@
 </template>
 
 <script setup>
-useHead({
+usePageSeo({
   title: 'القرآن الكريم | قراءة واستماع بدون إنترنت | مُناجاتك',
-  meta: [
-    { name: 'description', content: 'تطبيق القرآن الكريم من مُناجاتك، يوفر لك قراءة واستماع للقرآن بدون إنترنت وتجربة مستخدم مريحة للعين خالية من الإعلانات.' },
-    { property: 'og:title', content: 'القرآن الكريم | قراءة واستماع بدون إنترنت | مُناجاتك' },
-    { property: 'og:description', content: 'تطبيق القرآن الكريم من مُناجاتك، يوفر لك قراءة واستماع للقرآن بدون إنترنت وتجربة مستخدم مريحة للعين خالية من الإعلانات.' },
-    { property: 'og:url', content: 'https://www.monaajatak.app/quran' },
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://www.monaajatak.app/quran' }
-  ]
+  description: 'تطبيق القرآن الكريم من مُناجاتك، يوفر لك قراءة واستماع للقرآن بدون إنترنت وتجربة مستخدم مريحة للعين خالية من الإعلانات.',
+  breadcrumbs: [['القرآن الكريم', '/quran']],
 })
 </script>
 
@@ -53,6 +47,8 @@ useHead({
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: center;
 }
 @media (max-width: 768px) {

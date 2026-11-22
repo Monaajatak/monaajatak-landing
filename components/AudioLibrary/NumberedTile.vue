@@ -12,7 +12,10 @@
 
     <div class="nt-body">
       <div class="nt-title-row">
-        <span class="nt-title" :style="titleStyle">{{ title }}</span>
+        <!-- العنوان رابط حقيقي حين يُعطى `href`: تتبعه الزواحف ويفتح في لسان جديد،
+             أما النقرة العادية فتمضي إلى `onTap` كما هي. -->
+        <a v-if="href" :href="href" class="nt-title nt-link" :style="titleStyle" @click="onLinkClick">{{ title }}</a>
+        <span v-else class="nt-title" :style="titleStyle">{{ title }}</span>
         <span v-if="titleBadge" class="nt-badge" :style="{ color: badgeColor }">{{ titleBadge }}</span>
       </div>
       <span v-if="subtitle" class="nt-subtitle" :style="subtitleStyle">{{ subtitle }}</span>
@@ -43,7 +46,16 @@ const props = defineProps({
   bg: { type: String, default: 'var(--surface)' },
   margin: { type: String, default: '0 0 6px 0' },
   onTap: { type: Function, default: null },
+  href: { type: String, default: '' },
 })
+
+const onLinkClick = (e) => {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
+    e.stopPropagation()
+    return
+  }
+  e.preventDefault()
+}
 
 const normalizedTitleStyle = computed(() => {
   const base = {
@@ -104,6 +116,10 @@ const cursorStyle = computed(() => (props.onTap ? 'pointer' : 'default'))
 }
 .nt-title {
   transition: color var(--transition-fast);
+}
+.nt-link {
+  color: inherit;
+  text-decoration: none;
 }
 .nt-badge {
   flex-shrink: 0;

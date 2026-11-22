@@ -1,15 +1,19 @@
 # ==========================================
 # robots.txt for Monaajatak
 # ==========================================
+#
+# /api/ مسموح بالزحف عليه عمداً: Googlebot يحتاجه ليرندر الصفحات التي تجلب
+# بياناتها في المتصفح. ولا يُفهرس لأن الخادم يرسل معه `X-Robots-Tag: noindex`،
+# وكذلك صفحات الروابط العميقة /app/**.
 
 User-agent: *
 Allow: /
 
-# Block non-public or API routes
-Disallow: /api/
-
-# AI crawlers explicitly allowed
+# AI crawlers & AI search engines explicitly allowed
 User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
@@ -21,7 +25,19 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot-Extended
 Allow: /
 
 User-agent: CCBot

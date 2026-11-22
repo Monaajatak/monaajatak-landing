@@ -71,7 +71,6 @@ export default defineNuxtConfig({
             'مناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد. تطبيق مجاني وبدون إعلانات.',
         },
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://www.monaajatak.app/' },
         { property: 'og:locale', content: 'ar_AR' },
         { property: 'og:locale:alternate', content: 'en_US' },
         {

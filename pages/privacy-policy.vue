@@ -62,15 +62,11 @@ const formatIndex = (value: number) => {
   return (value + 1).toLocaleString('ar-EG')
 }
 
-useHead(() => ({
-  title: `${policyData.value.title} | مُناجاتك`,
-  meta: [
-    {
-      name: 'description',
-      content: policyData.value.intro || 'سياسة الخصوصية لتطبيق مُناجاتك'
-    }
-  ]
-}))
+usePageSeo({
+  title: () => `${policyData.value.title} | مُناجاتك`,
+  description: () => policyData.value.intro || 'سياسة الخصوصية لتطبيق مُناجاتك',
+  breadcrumbs: [['سياسة الخصوصية', '/privacy-policy']],
+})
 </script>
 
 <template>
@@ -85,7 +81,7 @@ useHead(() => ({
           </svg>
         </div>
         <div class="hero-content">
-          <h2>{{ policyData.title }}</h2>
+          <h1>{{ policyData.title }}</h1>
           <p>{{ policyData.intro }}</p>
           <p v-if="policyData.ui?.show_last_updated" class="meta-line">
             آخر تحديث: {{ formatDate(policyMeta.last_updated) }}
@@ -168,7 +164,7 @@ useHead(() => ({
   text-align: right;
 }
 
-.hero-content h2 {
+.hero-content h1 {
   margin: 0;
   font-size: 24px;
   color: var(--text);

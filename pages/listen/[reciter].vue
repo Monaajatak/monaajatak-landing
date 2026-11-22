@@ -32,7 +32,14 @@
 
     <!-- ══════════ Surah list ══════════ -->
     <div v-else class="alt-content">
-      <SurahListView :reciter="reciter" :suwar="suwar" @open="fullPlayerOpen = true" />
+      <SurahListView :reciter="reciter" :moshaf="moshaf" :suwar="suwar" @open="fullPlayerOpen = true" />
+
+      <section v-if="otherReciters.length" class="alt-others">
+        <h2>قرّاء آخرون</h2>
+        <div class="alt-others-list">
+          <NuxtLink v-for="r in otherReciters" :key="r.id" :to="`/listen/${r.slug}`" class="alt-chip">{{ r.name }}</NuxtLink>
+        </div>
+      </section>
     </div>
 
     <MiniPlayer v-if="player.currentTrack.value && !fullPlayerOpen" @open="fullPlayerOpen = true" />
@@ -43,7 +50,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useAudioPlayer } from '~/composables/useAudioPlayer'
-import { resolveReciter } from '~/utils/reciterSlug'
+import { reciterSlug } from '~/utils/reciterSlug'
+import { pickMoshaf, reciterSurahCount } from '~/composables/useReciterData'
 import SurahListView from '~/components/AudioLibrary/SurahListView.vue'
 import MiniPlayer from '~/components/AudioLibrary/MiniPlayer.vue'
 import FullPlayer from '~/components/AudioLibrary/FullPlayer.vue'
@@ -55,44 +63,37 @@ const toArNum = player.toArabicDigits
 
 const isSurahChild = computed(() => route.name === 'listen-reciter-surah')
 
-const loading = ref(true)
-const reciters = ref([])
-const suwar = ref([])
 const fullPlayerOpen = ref(false)
 
-const load = async () => {
-  loading.value = true
-  try {
-    const [rRes, sRes] = await Promise.all([
-      $fetch('/api/mp3quran/reciters'),
-      $fetch('/api/mp3quran/suwar'),
-    ])
-    reciters.value = rRes.reciters || []
-    suwar.value = sRes.suwar || []
-  } catch (e) {
-    reciters.value = []
-    suwar.value = []
-  } finally {
-    loading.value = false
-  }
-}
+// تُشارَك مع صفحة السورة المتداخلة؛ ووسومها تعلو هذه الوسوم حين تُعرض.
+const { reciter, suwar, popular, loading } = await useReciterData()
 
-onMounted(() => {
-  if (!isSurahChild.value) load()
-})
+const otherReciters = computed(() => popular.value.filter((r) => r.id !== reciter.value?.id).slice(0, 12))
 
-const reciter = computed(() => resolveReciter(reciters.value, route.params.reciter))
-const moshaf = computed(() => reciter.value?.moshaf?.[0] || null)
+const moshaf = computed(() => pickMoshaf(reciter.value))
 const surahCount = computed(() => moshaf.value?.surahTotal || 0)
 
-useHead(() => {
-  if (isSurahChild.value) return {}
-  return {
-    title: reciter.value ? `${reciter.value.name} | المكتبة الصوتية | مُناجاتك` : 'المكتبة الصوتية | مُناجاتك',
-    meta: [
-      { name: 'description', content: reciter.value ? `استمع لسور القرآن الكريم بصوت القارئ ${reciter.value.name}.` : '' }
-    ]
-  }
+usePageSeo({
+  title: () =>
+    reciter.value
+      ? `${reciter.value.name} — استماع للقرآن الكريم كاملاً | مُناجاتك`
+      : 'القارئ غير موجود | مُناجاتك',
+  description: () => {
+    const r = reciter.value
+    if (!r) return 'لم نجد هذا القارئ في المكتبة الصوتية. تصفح أكثر من ٢٤٠ قارئاً في مُناجاتك.'
+    const riwayat = [...new Set(
+      [...(r.moshaf || [])].sort((a, b) => (b.surahTotal || 0) - (a.surahTotal || 0)).map((m) => m.name),
+    )].slice(0, 3).join('، ')
+    return `استمع إلى تلاوات القارئ ${r.name} لسور القرآن الكريم (${toArNum(surahCount.value)} سورة) أونلاين بجودة عالية${
+      riwayat ? ` — ${riwayat}` : ''
+    }. مجاناً وبدون إعلانات على مُناجاتك.`
+  },
+  path: () => (reciter.value ? `/listen/${reciterSlug(reciter.value)}` : null),
+  noindex: () => !reciter.value,
+  breadcrumbs: () => [
+    ['المكتبة الصوتية', '/listen'],
+    ...(reciter.value ? [[reciter.value.name, `/listen/${reciterSlug(reciter.value)}`]] : []),
+  ],
 })
 
 const goBack = () => {
@@ -102,6 +103,15 @@ const goBack = () => {
 </script>
 
 <style scoped>
+.alt-others { margin: 26px 0 0; }
+.alt-others h2 { font-size: 15px; color: var(--text); margin: 0 0 10px; }
+.alt-others-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.alt-chip {
+  padding: 8px 14px; border-radius: 999px; border: var(--border); background: var(--surface);
+  color: var(--text); font-size: 13px; text-decoration: none; transition: all var(--transition-fast);
+}
+.alt-chip:hover { border-color: rgba(var(--primary-rgb), 0.4); color: var(--primary); }
+
 .alt-page {
   min-height: 100vh;
   position: relative;

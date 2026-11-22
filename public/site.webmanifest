@@ -1,6 +1,11 @@
 {
   "name": "مُناجاتك",
   "short_name": "مُناجاتك",
+  "description": "رفيق الطاعة اليومي: القرآن الكريم، مواقيت الصلاة، الأذكار والقبلة",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -15,5 +20,16 @@
   ],
   "theme_color": "#118b82",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.mahmoudmourad.monologue",
+      "id": "com.mahmoudmourad.monologue"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://apps.apple.com/app/id6759576802"
+    }
+  ]
 }

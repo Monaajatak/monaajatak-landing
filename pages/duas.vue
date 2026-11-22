@@ -5,7 +5,8 @@
         <h1>موسوعة الأدعية الشاملة</h1>
         <p class="subtitle">مجموعة شاملة من الأدعية النبوية وأدعية القرآن الكريم مقسمة لتناسب كل موقف وحاجة في يومك.</p>
         <div class="hero-actions">
-          <AppLinkLanding />
+          <NuxtLink to="/download" class="btn btn-primary">حمّل التطبيق مجاناً</NuxtLink>
+          <NuxtLink to="/listen" class="btn btn-outline">استمع للقرآن الآن</NuxtLink>
         </div>
       </div>
     </section>
@@ -17,17 +18,10 @@
 </template>
 
 <script setup>
-useHead({
+usePageSeo({
   title: 'الأدعية اليومية | أدعية مستجابة وشاملة | مُناجاتك',
-  meta: [
-    { name: 'description', content: 'تصفح وشارك الأدعية اليومية وأدعية القرآن والسنة النبوية بكل سهولة. تطبيق مُناجاتك رفيقك للطاعة والتقرب إلى الله في كل وقت.' },
-    { property: 'og:title', content: 'الأدعية اليومية | أدعية مستجابة وشاملة | مُناجاتك' },
-    { property: 'og:description', content: 'تصفح وشارك الأدعية اليومية وأدعية القرآن والسنة النبوية بكل سهولة. تطبيق مُناجاتك رفيقك للطاعة والتقرب إلى الله في كل وقت.' },
-    { property: 'og:url', content: 'https://www.monaajatak.app/duas' },
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://www.monaajatak.app/duas' }
-  ]
+  description: 'تصفح وشارك الأدعية اليومية وأدعية القرآن والسنة النبوية بكل سهولة. تطبيق مُناجاتك رفيقك للطاعة والتقرب إلى الله في كل وقت.',
+  breadcrumbs: [['الأدعية', '/duas']],
 })
 </script>
 
@@ -53,6 +47,8 @@ useHead({
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: center;
 }
 @media (max-width: 768px) {

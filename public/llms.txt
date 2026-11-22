@@ -1,0 +1,31 @@
+# مُناجاتك (Monaajatak)
+
+> مُناجاتك رفيق الطاعة اليومي: تطبيق إسلامي مجاني بالكامل، بلا إعلانات ولا مشتريات ولا تسجيل دخول، لأندرويد و iOS وهواوي. يضم القرآن الكريم (قراءة واستماع)، مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، المسبحة الإلكترونية، واتجاه القبلة. ويتيح الموقع الاستماع للقرآن الكريم مباشرة من المتصفح بأصوات أكثر من ٢٤٠ قارئاً، إضافة إلى إذاعات القرآن الكريم.
+
+Monaajatak is a free, ad-free Islamic companion app (Android, iOS, HarmonyOS) in Arabic: Quran reading and listening, prayer times and adhan, morning/evening adhkar, duas, tasbih counter and Qibla compass. The website also streams full Quran recitations by 240+ reciters and live Quran radio stations.
+
+## أقسام الموقع
+
+- [الرئيسية](https://www.monaajatak.app/): نظرة عامة على التطبيق ومميزاته والأسئلة الشائعة
+- [استمع للقرآن الكريم](https://www.monaajatak.app/listen): المكتبة الصوتية — تلاوات كاملة لأكثر من ٢٤٠ قارئاً وإذاعات مباشرة
+- [صفحة القارئ](https://www.monaajatak.app/listen/mshary-alfasy): مثال لصفحة قارئ تضم كل سوره (المسار: /listen/{القارئ})
+- [صفحة السورة](https://www.monaajatak.app/listen/mshary-alfasy/1): مثال لصفحة تلاوة سورة بصوت قارئ (المسار: /listen/{القارئ}/{رقم السورة})
+- [القرآن الكريم](https://www.monaajatak.app/quran): قراءة واستماع للقرآن بدون إنترنت في التطبيق
+- [مواقيت الصلاة](https://www.monaajatak.app/prayer-times): مواقيت الصلاة وتنبيهات الأذان
+- [الأذكار](https://www.monaajatak.app/azkar): أذكار الصباح والمساء والنوم مع مسبحة إلكترونية
+- [الأدعية](https://www.monaajatak.app/duas): أدعية من القرآن والسنة
+- [القبلة](https://www.monaajatak.app/qibla): بوصلة اتجاه القبلة
+- [تحميل التطبيق](https://www.monaajatak.app/download): روابط المتاجر
+- [الموارد المفتوحة](https://www.monaajatak.app/resources): خطوط المصحف وقواعد بيانات التفسير والحديث مفتوحة المصدر
+
+## تحميل التطبيق
+
+- [Google Play](https://play.google.com/store/apps/details?id=com.mahmoudmourad.monologue)
+- [App Store](https://apps.apple.com/app/id6759576802)
+- [Huawei AppGallery](https://appgallery.huawei.com/app/C117271909)
+
+## Optional
+
+- [سياسة الخصوصية](https://www.monaajatak.app/privacy-policy): التطبيق لا يجمع بيانات شخصية ولا يطلب تسجيل دخول
+- [التطوع معنا](https://www.monaajatak.app/volunteer)
+- [خريطة الموقع](https://www.monaajatak.app/sitemap.xml)

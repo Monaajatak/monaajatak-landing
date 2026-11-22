@@ -1,4 +1,4 @@
-export default defineEventHandler(async () => {
+export default defineCachedEventHandler(async () => {
   const data = await $fetch('https://api.mp3quran.net/api_2/atheer/radios')
 
   const radios = (data?.reads || []).map((r) => {
@@ -28,4 +28,4 @@ export default defineEventHandler(async () => {
   })
 
   return { radios }
-})
+}, { maxAge: 60 * 60 * 6, swr: true })

@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineCachedEventHandler(async (event) => {
   const query = getQuery(event)
   const { rewaya, sura, reciter } = query
 
@@ -24,4 +24,8 @@ export default defineEventHandler(async (event) => {
   }))
 
   return { reciters }
+}, {
+  // القرّاء يتغيرون نادراً، والصفحات تُرندر على الخادم لكل زائر وزاحف.
+  maxAge: 60 * 60 * 6,
+  swr: true,
 })
