@@ -1,26 +1,20 @@
 <script setup>
-import { SITE_URL, SITE_NAME, OG_IMAGE, STORE_LINKS, SOCIAL_LINKS, absoluteUrl } from '~/utils/seo'
-
 const cursorDot = ref(null)
 const cursorOutline = ref(null)
 const isPointerFine = ref(true)
 const route = useRoute()
+const { locale } = useI18n()
 let domMutationObserver = null
 let revealObserver = null
 
-const SITE_DESCRIPTION = 'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.'
-
-// صفحات `/app/**` مجرد محطات للروابط العميقة (noindex)، فلا رابط معياري لها.
-const canonicalUrl = computed(() =>
-  route.path === '/app' || route.path.startsWith('/app/') ? null : absoluteUrl(route.path)
-)
-
 useHead(() => ({
-  link: canonicalUrl.value ? [{ rel: 'canonical', href: canonicalUrl.value }] : [],
-  meta: canonicalUrl.value ? [{ property: 'og:url', content: canonicalUrl.value }] : [],
-}))
-
-useHead({
+  htmlAttrs: {
+    lang: locale.value,
+    dir: locale.value === 'ar' ? 'rtl' : 'ltr',
+  },
+  bodyAttrs: {
+    dir: locale.value === 'ar' ? 'rtl' : 'ltr',
+  },
   script: [
     {
       key: 'site-schema',
@@ -29,68 +23,51 @@ useHead({
         '@context': 'https://schema.org',
         '@graph': [
           {
-            '@type': 'Organization',
-            '@id': `${SITE_URL}/#organization`,
-            name: SITE_NAME,
-            alternateName: 'Monaajatak',
-            url: `${SITE_URL}/`,
-            logo: {
-              '@type': 'ImageObject',
-              url: `${SITE_URL}/android-chrome-512x512.png`,
-              width: 512,
-              height: 512,
-            },
-            email: 'Monaajatak@gmail.com',
-            sameAs: SOCIAL_LINKS,
-          },
-          {
             '@type': 'WebSite',
-            '@id': `${SITE_URL}/#website`,
-            url: `${SITE_URL}/`,
-            name: SITE_NAME,
-            alternateName: 'Monaajatak',
-            description: SITE_DESCRIPTION,
-            inLanguage: 'ar',
-            publisher: { '@id': `${SITE_URL}/#organization` },
+            '@id': 'https://www.monaajatak.app/#website',
+            url: 'https://www.monaajatak.app/',
+            name: locale.value === 'ar' ? 'مناجاتك' : 'Monaajatak',
+            description:
+              'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.',
+            inLanguage: locale.value,
           },
           {
-            '@type': 'MobileApplication',
-            '@id': `${SITE_URL}/#app`,
-            name: SITE_NAME,
+            '@type': 'SoftwareApplication',
+            '@id': 'https://www.monaajatak.app/#software',
+            name: locale.value === 'ar' ? 'مناجاتك' : 'Monaajatak',
             alternateName: 'Monaajatak',
-            description: SITE_DESCRIPTION,
-            url: `${SITE_URL}/`,
-            image: OG_IMAGE.url,
-            screenshot: [
-              `${SITE_URL}/images/screenshots/01_App_Overview.png`,
-              `${SITE_URL}/images/screenshots/02_Quran_Reading.png`,
-              `${SITE_URL}/images/screenshots/05_Prayer_Times.png`,
-            ],
             applicationCategory: 'LifestyleApplication',
-            operatingSystem: 'Android, iOS, HarmonyOS',
-            inLanguage: 'ar',
-            installUrl: [STORE_LINKS.googlePlay, STORE_LINKS.appStore, STORE_LINKS.appGallery],
-            offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-            publisher: { '@id': `${SITE_URL}/#organization` },
+            operatingSystem: 'Android, iOS',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD',
+            },
+            url: 'https://www.monaajatak.app/',
+            description:
+              'مُناجاتك رفيقك اليومي للطاعة: اقرأ واستمع للقرآن الكريم، تابع مواقيت الصلاة والأذان، أذكار الصباح والمساء، الأدعية، القبلة والمزيد.',
           },
         ],
       }),
     },
   ],
-})
+}))
 
 const setupReveal = () => {
   if (revealObserver) revealObserver.disconnect()
   if (domMutationObserver) domMutationObserver.disconnect()
 
-  revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active')
-        revealObserver?.unobserve(entry.target)
-      }
-    })
-  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" })
+  revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active')
+          revealObserver?.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+  )
 
   const observeElements = () => {
     document.querySelectorAll('.reveal:not(.active)').forEach(el => {
@@ -106,7 +83,10 @@ const setupReveal = () => {
   })
 
   if (document.body) {
-    domMutationObserver.observe(document.body, { childList: true, subtree: true })
+    domMutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    })
   }
 }
 
@@ -117,10 +97,10 @@ onMounted(() => {
     return
   }
   // --- Custom Cursor Logic ---
-  window.addEventListener('mousemove', (e) => {
+  window.addEventListener('mousemove', e => {
     const posX = e.clientX
     const posY = e.clientY
-    
+
     if (cursorDot.value) {
       cursorDot.value.style.left = `${posX}px`
       cursorDot.value.style.top = `${posY}px`
@@ -128,16 +108,21 @@ onMounted(() => {
     }
 
     if (cursorOutline.value) {
-      cursorOutline.value.animate({
-        left: `${posX}px`,
-        top: `${posY}px`
-      }, { duration: 500, fill: "forwards" })
+      cursorOutline.value.animate(
+        {
+          left: `${posX}px`,
+          top: `${posY}px`,
+        },
+        { duration: 500, fill: 'forwards' },
+      )
       cursorOutline.value.style.opacity = 1
     }
   })
 
   // Hover effects
-  const interactables = document.querySelectorAll('a, button, .card, .nav-item, input, textarea')
+  const interactables = document.querySelectorAll(
+    'a, button, .card, .nav-item, input, textarea',
+  )
   interactables.forEach(el => {
     el.addEventListener('mouseenter', () => {
       if (cursorOutline.value) {
@@ -152,17 +137,44 @@ onMounted(() => {
   })
 
   setupReveal()
-
 })
 
-watch(() => route.fullPath, async () => {
-  await nextTick()
-  setupReveal()
-})
+watch(
+  () => route.fullPath,
+  async () => {
+    await nextTick()
+    setupReveal()
+  },
+)
+
+watch(
+  locale,
+  newLocale => {
+    if (import.meta.client) {
+      const dir = newLocale === 'ar' ? 'rtl' : 'ltr'
+      document.documentElement.setAttribute('dir', dir)
+      document.documentElement.setAttribute('lang', newLocale)
+      document.documentElement.style.direction = dir
+      if (document.body) {
+        document.body.setAttribute('dir', dir)
+        document.body.style.direction = dir
+      }
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
-  <div class="app-wrapper">
+  <div
+    class="app-wrapper"
+    :dir="locale === 'ar' ? 'rtl' : 'ltr'"
+  >
+    <NuxtLoadingIndicator
+      color="#00A2B5"
+      :height="3"
+    />
+    <GlobalLoadingScreen />
     <AppHeader />
     <main :class="{ 'inner-page': route.path !== '/' }">
       <slot />
@@ -170,9 +182,16 @@ watch(() => route.fullPath, async () => {
     <AppFooter />
 
     <!-- Custom Cursor -->
-    <div v-if="isPointerFine" class="cursor-dot" ref="cursorDot"></div>
-    <div v-if="isPointerFine" class="cursor-outline" ref="cursorOutline"></div>
-
+    <div
+      v-if="isPointerFine"
+      ref="cursorDot"
+      class="cursor-dot"
+    />
+    <div
+      v-if="isPointerFine"
+      ref="cursorOutline"
+      class="cursor-outline"
+    />
   </div>
 </template>
 

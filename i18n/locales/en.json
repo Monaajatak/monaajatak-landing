@@ -1,0 +1,248 @@
+{
+  "glopal": {
+    "monaajatak": "Monaajatak"
+  },
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "audioLibrary": "Audio Library",
+    "story": "Our Story",
+    "team": "Team",
+    "faq": "FAQ",
+    "resources": "Resources",
+    "volunteer": "Volunteer",
+    "downloadApp": "Download App",
+    "volunteerToMonaajatak": "Volunteer to Monaajatak",
+    "openApp": "Open App",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "toggleTheme": "Toggle Theme",
+    "menu": "Menu"
+  },
+  "hero": {
+    "titlePrefix": "Bring your worship closer with",
+    "title": "Monaajatak",
+    "description": "A serene and fast experience combining the Holy Quran, Adhkar, and Tasbih in one app. Designed to accompany you in every step toward Allah's pleasure, completely ad-free.",
+    "completelyFree": "Completely Free",
+    "noAds": "Ad-Free",
+    "offlineFeatures": "Core features offline",
+    "worshipOnePlace": "Your worship in one place",
+    "worshipSummary": "Quran, Adhkar, recitations, Tasbih, Qibla, and prayer times, all in one simple experience.",
+    "mobileAppAlt": "Monaajatak mobile app",
+    "personAlt": "Person using Monaajatak mobile app"
+  },
+  "loading": {
+    "message": "Loading...",
+    "pleaseWait": "Please wait a moment..."
+  },
+  "tools": {
+    "chipLabel": "Faith tools at your fingertips",
+    "titlePrefix": "One companion for",
+    "titleHighlight": "multiple faith habits",
+    "description": "We organized what you need in an easy and familiar journey: effortlessly read, remember, and listen without too many steps or a cluttered interface.",
+    "exploreExperience": "Explore Monaajatak experience",
+    "cards": {
+      "recitations": {
+        "title": "Fragrant Recitations",
+        "description": "Choose your reciter, and create your personalized listening playlist to return to whenever you wish."
+      },
+      "quran": {
+        "title": "The Holy Quran",
+        "description": "Comfortable reading, instant search, and tafsir to bring you closer to the meanings."
+      },
+      "eyeComfort": {
+        "title": "Eye Comfort",
+        "description": "Gentle night mode making your reading and browsing soothing in the evening."
+      },
+      "qibla": {
+        "title": "Closer to Your Qibla",
+        "description": "Accurate prayer times and Qibla compass to stay prepared wherever you are."
+      },
+      "azkar": {
+        "title": "Daily Adhkar",
+        "description": "An organized library accompanying your mornings, evenings, and special moments."
+      }
+    }
+  },
+  "screenshots": {
+    "badge": "App Tour",
+    "titlePrefix": "See",
+    "titleHighlight": "Monaajatak",
+    "titleSuffix": "from within",
+    "description": "Explore the carefully designed app interface providing maximum tranquility and comfort",
+    "descriptionSuffix": "while reading and remembering.",
+    "slides": {
+      "overview": {
+        "title": "Overview",
+        "desc": "A calm and organized user experience"
+      },
+      "quran": {
+        "title": "The Holy Quran",
+        "desc": "Uthmani script reading with font controls"
+      },
+      "listening": {
+        "title": "Audio Recitations",
+        "desc": "Renowned reciters with pristine audio quality"
+      },
+      "sebha": {
+        "title": "Electronic Tasbih",
+        "desc": "Smart counter with haptic feedback"
+      },
+      "athkar": {
+        "title": "Daily Adhkar",
+        "desc": "Morning, evening, and essential supplications"
+      },
+      "qibla": {
+        "title": "Qibla Compass",
+        "desc": "Accurate Qibla direction from anywhere"
+      },
+      "darkMode": {
+        "title": "Night Mode",
+        "desc": "Full dark mode support for your eye comfort"
+      }
+    }
+  },
+  "quranReading": {
+    "chipLabel": "The Quran at the heart of the experience",
+    "titleLine1": "Read peacefully, and return to what",
+    "titleHighlight": "touches you.",
+    "descBold1": "Clear Uthmani script, instant search,",
+    "descMiddle": " and tafsir that helps you pause at the verse you're looking for.",
+    "descBold2": "",
+    "descEnd": " Everything is organized so your focus stays with your reading.",
+    "cta": "Explore Monaajatak experience",
+    "phoneAlt": "Quran reading screen in the Monaajatak app",
+    "floatingCardTitle": "A reading closer to the heart",
+    "floatingCardDesc": "Search, read, and benefit from the meanings"
+  },
+  "ctaSection": {
+    "titleLine1": "Recitations that accompany",
+    "titleLine2": "your day",
+    "downloadNow": "Download App Now",
+    "discoverFeatures": "Discover Features",
+    "availableOn": "Available now on",
+    "phoneAlt": "Monaajatak mobile app in hand"
+  },
+  "footer": {
+    "volunteer": {
+      "title": "Volunteer With Us",
+      "description": "We are seeking volunteers in design, programming, translation, and Islamic content review. Just one hour can deliver good words to thousands of hearts.",
+      "cta": "Join as a Volunteer",
+      "imageAlt": "Volunteer for Monaajatak app"
+    },
+    "taglinePart1": "All your worship in",
+    "taglinePart2": "one place.",
+    "brandDescription": "Your daily faith companion: an ad-free free app bringing together Quran, remembrance, and recitations in a peaceful experience.",
+    "sections": {
+      "appSections": "App Sections",
+      "quickLinks": "Quick Links",
+      "legal": "Legal"
+    },
+    "links": {
+      "audioLibrary": "Audio Library",
+      "prayerTimes": "Prayer Times",
+      "quran": "The Holy Quran",
+      "duas": "Supplications",
+      "qibla": "Qibla",
+      "azkar": "Daily Adhkar",
+      "features": "Features",
+      "story": "Our Story",
+      "team": "Team",
+      "faq": "FAQ",
+      "volunteerWithUs": "Volunteer With Us",
+      "privacyPolicy": "Privacy Policy",
+      "openResources": "Open Resources"
+    },
+    "copyright": "Monaajatak - All rights reserved",
+    "social": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "tiktok": "TikTok"
+    }
+  },
+  "faq": {
+    "chipLabel": "Clear answers before you begin",
+    "titlePart1": "Frequently Asked",
+    "titlePart2": "About Monaajatak",
+    "questionMarkAlt": "3D Question Mark Icon",
+    "items": {
+      "free": {
+        "question": "Is Monaajatak free?",
+        "answer": "Yes, Monaajatak is completely free and contains no advertisements throughout the entire experience."
+      },
+      "account": {
+        "question": "Do I need to create an account?",
+        "answer": "No, the app does not require any account creation or login. You can start immediately with full privacy."
+      },
+      "offline": {
+        "question": "Does the app work offline?",
+        "answer": "Yes, core features such as reading the Holy Quran, daily Adhkar, and the electronic tasbih work completely without an internet connection."
+      },
+      "feedback": {
+        "question": "How do I send a suggestion or feedback?",
+        "answer": "We always welcome your thoughts and suggestions! You can reach out directly via email or through the social links in the footer."
+      },
+      "bookmarks": {
+        "question": "Can I save what I listen to for later?",
+        "answer": "Yes, you can bookmark your favorite recitations and mark verses to easily resume listening at any time."
+      },
+      "darkMode": {
+        "question": "Does Monaajatak support dark mode?",
+        "answer": "Yes, the app fully supports dark mode to provide a calm and comfortable experience for your eyes during night reading and listening."
+      }
+    }
+  },
+  "reviews": {
+    "chipLabel": "From Monaajatak Community",
+    "titlePart1": "Words that inspire us to",
+    "titleHighlight": "Keep going.",
+    "description": "Every message we receive reminds us that peaceful details can make a real difference in someone's day.",
+    "googlePlay": "Google Play",
+    "items": {
+      "review1": {
+        "author": "Mohamed El-Morsy",
+        "date": "4 days ago",
+        "title": "“Everything I truly needed”",
+        "body": "I highly recommend it after seeing such a positive difference in my daily worship."
+      },
+      "review2": {
+        "author": "Maryam Samah",
+        "date": "1 day ago",
+        "title": "“May Allah bless you always”",
+        "body": "A respectful app, and the audio recitations library addition is wonderful."
+      },
+      "review3": {
+        "author": "Ahmed Khaled",
+        "date": "1 week ago",
+        "title": "“Excellent & Ad-Free App”",
+        "body": "May Allah reward you; a very peaceful experience for reading and listening without any distractions."
+      },
+      "review4": {
+        "author": "Sarah Abdulrahman",
+        "date": "2 weeks ago",
+        "title": "“Beautiful design & clear font”",
+        "body": "The best Islamic app: Quran and remembrance in one peaceful place that is gentle on the eyes."
+      },
+      "review5": {
+        "author": "Abdullah Al-Shammari",
+        "date": "1 month ago",
+        "title": "“A blessed ongoing charity”",
+        "body": "Lightweight, fast, and easy to use, especially the tasbih counter and audio recitations."
+      }
+    }
+  },
+  "ticker": {
+    "items": {
+      "item1": "100% Free with Zero Advertisements",
+      "item2": "Complete Holy Quran in Uthmani Script",
+      "item3": "Daily Morning & Evening Adhkar",
+      "item4": "Accurate Prayer Times & Qibla Compass",
+      "item5": "Humble Recitations by Renowned Reciters",
+      "item6": "Smart Electronic Tasbih Counter",
+      "item7": "Intuitive & Seamless User Experience",
+      "item8": "Works Fully Offline Anywhere",
+      "item9": "Eye-Comfort Dark Mode Support",
+      "item10": "Continuous Updates & Enhancements"
+    }
+  }
+}
