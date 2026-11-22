@@ -25,6 +25,15 @@ const { t, locale } = useI18n()
 
 const isRTL = computed(() => locale.value === 'ar')
 
+const defaultPersonAvatar = '/images/default-avatar.svg'
+
+const onAvatarError = (event: Event) => {
+  const target = event.target as HTMLImageElement | null
+  if (target && target.src !== defaultPersonAvatar) {
+    target.src = defaultPersonAvatar
+  }
+}
+
 const defaultReviewIds = [
   'review1',
   'review2',
@@ -214,29 +223,19 @@ const reviews = computed<ReviewItem[]>(() => {
                   </span>
                 </div>
 
-                <!-- Teal Avatar with user photo or silhouette -->
+                <!-- Teal Avatar with user photo or fallback person image -->
                 <div
                   class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-500 text-white shadow-xs sm:h-11 sm:w-11"
                   aria-hidden="true"
                 >
                   <img
-                    v-if="item.avatar"
-                    :src="item.avatar"
+                    :src="item.avatar || defaultPersonAvatar"
                     :alt="item.author"
                     class="h-full w-full object-cover"
                     loading="lazy"
                     decoding="async"
+                    @error="onAvatarError"
                   />
-                  <svg
-                    v-else
-                    class="h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                    />
-                  </svg>
                 </div>
               </div>
             </article>

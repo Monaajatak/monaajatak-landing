@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <defs>
+    <linearGradient id="avatarBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00A2B5" />
+      <stop offset="100%" stop-color="#173B42" />
+    </linearGradient>
+    <linearGradient id="avatarSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFDFC4" />
+      <stop offset="100%" stop-color="#F0C8A0" />
+    </linearGradient>
+    <clipPath id="avatarClip">
+      <circle cx="60" cy="60" r="60" />
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#avatarClip)">
+    <rect width="120" height="120" fill="url(#avatarBg)" />
+    <path d="M60 76 C42 76 22 88 18 112 C17 118 22 120 28 120 L92 120 C98 120 103 118 102 112 C98 88 78 76 60 76 Z" fill="#E6F8FA" />
+    <path d="M52 76 L60 88 L68 76 Z" fill="#B3EDF2" />
+    <path d="M52 64 L52 76 Q60 80 68 76 L68 64 Z" fill="#E8BA93" />
+    <ellipse cx="60" cy="52" rx="20" ry="24" fill="url(#avatarSkin)" />
+    <path d="M39 48 C38 32 48 24 60 24 C72 24 82 32 81 48 C81 42 78 34 71 33 C64 32 56 32 49 33 C42 34 39 42 39 48 Z" fill="#2C3E50" />
+    <circle cx="39" cy="52" r="3.5" fill="#F0C8A0" />
+    <circle cx="81" cy="52" r="3.5" fill="#F0C8A0" />
+  </g>
+</svg>
